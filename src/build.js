@@ -205,11 +205,14 @@ function sobre() {
   return layout({ title: 'Sobre mí · Gastón Pérez', description: SOBRE.parrafos[0], body, active: 'sobre' });
 }
 
+// Los links a otros sitios abren en una pestaña nueva.
+const externos = (html) => html.replace(/<a ([^>]*?)href="(https?:\/\/[^"]+)"/g, '<a $1href="$2" target="_blank" rel="noopener"');
+
 // ---------------------------------------------------------------- escribir
 fs.mkdirSync(path.join(ROOT, 'trabajo'), { recursive: true });
 fs.mkdirSync(path.join(ROOT, 'proyectos'), { recursive: true });
-fs.writeFileSync(path.join(ROOT, 'index.html'), home());
-fs.writeFileSync(path.join(ROOT, 'sobre-mi.html'), sobre());
-empresas.forEach((c, i, l) => fs.writeFileSync(path.join(ROOT, 'trabajo', `${c.slug}.html`), paginaCaso(c, i, l)));
-propios.forEach((c, i, l) => fs.writeFileSync(path.join(ROOT, 'proyectos', `${c.slug}.html`), paginaCaso(c, i, l)));
+fs.writeFileSync(path.join(ROOT, 'index.html'), externos(home()));
+fs.writeFileSync(path.join(ROOT, 'sobre-mi.html'), externos(sobre()));
+empresas.forEach((c, i, l) => fs.writeFileSync(path.join(ROOT, 'trabajo', `${c.slug}.html`), externos(paginaCaso(c, i, l))));
+propios.forEach((c, i, l) => fs.writeFileSync(path.join(ROOT, 'proyectos', `${c.slug}.html`), externos(paginaCaso(c, i, l))));
 console.log(`OK: index, sobre-mi, ${empresas.length} casos, ${propios.length} proyectos`);

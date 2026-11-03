@@ -332,3 +332,13 @@ a:hover .proj-media .phone { transform: translateY(-4px) rotate(-1deg); }
 .proj-media .phone img, .proj-media .phone svg { width: 100%; height: 100%; }
 .proj:first-child .proj-media { height: 480px; min-height: 0; flex: 0 0 52%; }
 @media (max-width: 680px) { .proj:first-child .proj-media { height: auto; flex: none; } }
+
+/* ---------------------------------------------------------------- zoom suave en las tarjetas */
+.phone, .proj-media .phone { transform: none; transition: transform .9s cubic-bezier(.16,1,.3,1), box-shadow .9s cubic-bezier(.16,1,.3,1); transform-origin: 50% 60%; }
+a:hover .phone, a:hover .proj-media .phone { transform: scale(1.06); box-shadow: 0 34px 70px -28px rgba(0,0,0,.55); }
+.case-cover::before { transition: transform 1.2s cubic-bezier(.16,1,.3,1); }
+.case:hover .case-cover::before { transform: scale(1.25); }
+.case-num { transition: transform .9s cubic-bezier(.16,1,.3,1); transform-origin: left bottom; }
+.case:hover .case-num { transform: scale(1.04); }
+.proj, .case, .proj:hover, .case:hover { transform: none; }
+@media (prefers-reduced-motion: reduce) { a:hover .phone, .case:hover .case-num, .case:hover .case-cover::before { transform: none; } }
