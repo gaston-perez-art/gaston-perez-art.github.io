@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es-AR" data-tamano="grande">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fbf8f6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#151112" media="(prefers-color-scheme: dark)" />
+    <meta name="description" content="Control diario de la medicación." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="icon" href="icono-192.png" />
+    <!-- iOS pinta de negro las esquinas transparentes: el suyo va lleno, y él
+         lo redondea. -->
+    <link rel="apple-touch-icon" href="icono-apple-180.png" />
+    <title>Pastillas</title>
+    <script>
+      // El tema elegido se aplica antes de pintar. Si esperara a React, cada
+      // vez que abre la app vería un instante el verde de siempre y después
+      // el Coral: un parpadeo en cada apertura.
+      //
+      // La página pública del muro es siempre Coral, claro u oscuro según el
+      // teléfono o lo que haya elegido ahí, y con la letra normal: la abre
+      // gente que no es él.
+      try {
+        const raiz = document.documentElement;
+        let tema;
+        if (/^\/muro\/?$/.test(location.pathname)) {
+          raiz.dataset.tamano = 'normal';
+          tema =
+            localStorage.getItem('heart.muro.tema') ||
+            (matchMedia('(prefers-color-scheme: dark)').matches ? 'coral-oscuro' : 'coral');
+        } else {
+          tema = JSON.parse(localStorage.getItem('heart.v2'))?.ajustes?.tema;
+        }
+        // Automático (o nada guardado todavía) es Coral según el teléfono.
+        if (!tema || tema === 'auto') {
+          tema = matchMedia('(prefers-color-scheme: dark)').matches ? 'coral-oscuro' : 'coral';
+        }
+        raiz.dataset.tema = tema;
+      } catch {
+        /* sin estado guardado: sigue el del teléfono */
+      }
+    </script>
+    <script>
+      // `beforeinstallprompt` llega una sola vez, temprano, y no se repite. Si
+      // React todavía no montó cuando el navegador lo dispara, el evento se
+      // pierde y el botón de instalar no aparece nunca más. Lo agarramos acá,
+      // antes del bundle, y lo dejamos esperando.
+      window.__instalable = null;
+      addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        window.__instalable = e;
+        dispatchEvent(new Event('heart:instalable'));
+      });
+      addEventListener('appinstalled', () => {
+        window.__instalable = null;
+        dispatchEvent(new Event('heart:instalable'));
+      });
+    </script>
+    <script type="module" crossorigin src="/demos/heart/assets/index-eQR4d6zu.js"></script>
+    <link rel="stylesheet" crossorigin href="/demos/heart/assets/index-Ef8hpxEy.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

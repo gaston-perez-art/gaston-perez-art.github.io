@@ -221,13 +221,13 @@ const CASOS = [
     nombre: 'Heart',
     periodo: '2026',
     estado: ['live', 'En uso todos los días'],
-    arte: 'heart',
+    imagen: { src: 'img/heart.png', alt: 'Pantalla Hoy de Heart, con las tomas del día' },
     corto: 'Control diario de medicación para alguien que no quería aprender una app nueva.',
     titulo: 'Diez remedios por día, para alguien que no quería aprender una app nueva',
     bajada:
       'Una PWA para que un familiar mayor marque cada toma de un toque, y para que la familia vea desde su teléfono cómo va el día, qué remedio se está terminando y le deje un mensaje.',
-    links: [],
-    nota: 'El código es privado porque maneja datos de salud.',
+    links: [['Probar la demo', 'https://gaston-perez-art.github.io/demos/heart/']],
+    nota: 'La demo usa datos inventados y guarda todo en tu navegador. Con la barra que está sobre las pestañas podés cambiar entre la vista del paciente y la de la familia. El código es privado porque la app real maneja datos de salud.',
     meta: [
       ['Rol', 'Todo: discovery con el usuario real, diseño y desarrollo'],
       ['Estado', 'En uso diario desde 2026'],
