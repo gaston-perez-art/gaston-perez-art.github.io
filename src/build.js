@@ -51,6 +51,7 @@ function layout({ title, description, body, depth = 0, active = '' }) {
 ${body}
 </div>
 <footer class="foot">
+  <div class="lava lava-soft" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="w">
     <p class="foot-big">¿Construimos algo?</p>
     <p><a class="foot-mail" href="mailto:${SITE.email}">${SITE.email}</a></p>
@@ -146,13 +147,14 @@ function paginaCaso(c, i, lista) {
 
 function home() {
   const body = `
+<div class="hero-wrap"><div class="lava" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 <section class="hero w-wide">
   <p class="avail"><span class="dot"></span>Buenos Aires · abierto a nuevas conversaciones</p>
   <h1 class="display">${HOME.titulo}</h1>
   <p class="lede">${esc(HOME.bajada)}</p>
   <p class="cta-row"><a class="btn" href="#trabajo">Ver casos</a><a class="btn btn-ghost" href="#proyectos">Ver lo que construí</a></p>
   <p class="logos" aria-label="Empresas">Mercado Libre <i></i> Rappi <i></i> Henry <i></i> Bigbox <i></i> Coderhouse</p>
-</section>
+</section></div>
 
 <section class="w-wide" aria-label="Impacto">
   <div class="stats">${HOME.metricas
@@ -173,7 +175,7 @@ function home() {
 </section>
 
 <section class="w-wide sec">
-  <div class="sec-head"><p class="kicker">03 · Cómo trabajo</p><h2 class="h2">Cuatro reglas que no negocio</h2></div>
+  <div class="sec-head"><p class="kicker">03 · Proceso</p><h2 class="h2">Cómo trabajo</h2></div>
   <ol class="princ">${HOME.principios.map(([t, d], i) => `<li class="rev"><span class="pn">0${i + 1}</span><strong>${esc(t)}</strong><span>${esc(d)}</span></li>`).join('')}</ol>
 </section>`;
   return layout({
@@ -186,8 +188,8 @@ function home() {
 function sobre() {
   const body = `
 <article class="w about">
-  <p class="eyebrow">Sobre mí</p>
-  <h1 class="display sm">Ingeniero de procesos que se volvió <em>constructor de producto</em>.</h1>
+  <p class="eyebrow">Sobre mí · MBA Candidate</p>
+  <h1 class="display sm">Hago producto desde hace <em>ocho años</em>.</h1>
   <div class="prose">${SOBRE.parrafos.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
   <h2 class="h3">Trayectoria</h2>
   <ul class="tl">${SOBRE.trayectoria
