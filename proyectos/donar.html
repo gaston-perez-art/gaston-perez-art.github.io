@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>donAR · Gastón Pérez</title>
+<meta name="description" content="Publicás tu necesidad, un curador la verifica antes de que salga, donás directo a la persona y ves a dónde fue cada peso. Lo construí de la idea a un POC con datos reales: producto, diseño, código, legales y go-to-market.">
+<meta property="og:title" content="donAR · Gastón Pérez">
+<meta property="og:description" content="Publicás tu necesidad, un curador la verifica antes de que salga, donás directo a la persona y ves a dónde fue cada peso. Lo construí de la idea a un POC con datos reales: producto, diseño, código, legales y go-to-market.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Ir al contenido</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="logo" href="../index.html" aria-label="Inicio">Gastón Pérez</a>
+    <nav aria-label="Principal">
+      <a href="../index.html#trabajo">Trabajo</a>
+      <a href="../index.html#proyectos" aria-current="page">Proyectos</a>
+      <a href="../sobre-mi.html">Sobre mí</a>
+      <a class="nav-cta" href="mailto:gaston.product.expert@gmail.com">Contacto</a>
+    </nav>
+  </div>
+</header>
+<div id="contenido">
+<article class="cs">
+  <header class="cs-head w">
+    <a class="back" href="../index.html#proyectos">← Proyectos</a>
+    <p class="eyebrow">donAR · 2026 · <span class="badge poc">Demo web en vivo</span></p>
+    <h1>Colectas solidarias donde la confianza es el producto</h1>
+    <p class="lede">Publicás tu necesidad, un curador la verifica antes de que salga, donás directo a la persona y ves a dónde fue cada peso. Lo construí de la idea a un POC con datos reales: producto, diseño, código, legales y go-to-market.</p>
+    <p class="cta-row"><a class="btn" href="https://gaston-perez-art.github.io/donAR/">Probar la demo ↗</a><a class="btn btn-ghost" href="https://github.com/gaston-perez-art/donAR">Código ↗</a></p>
+    <p class="note">La demo pide crear una cuenta. Es a propósito: en donAR la identidad es obligatoria, porque todo se ata a una persona real.</p>
+  </header>
+  <div class="cs-hero w-wide"><div class="phone"><img src="../img/donar.png" alt="Pantalla de ingreso de donAR" loading="lazy" width="390" height="844"></div></div>
+  <div class="w">
+    <dl class="meta"><div><dt>Rol</dt><dd>Fundador y Product Builder. Todo</dd></div><div><dt>Estado</dt><dd>POC funcionando, iOS, Android y web</dd></div><div><dt>Stack</dt><dd>React Native · Expo · TypeScript · Supabase</dd></div><div><dt>Documentos</dt><dd>Paper fundacional, go-to-market, modelo de amenaza, privacidad y términos</dd></div></dl>
+    
+    <div class="prose"><h2>El problema</h2>
+<p>La solidaridad entre desconocidos ya funciona a gran escala, pero sin infraestructura que la sostenga. Las colectas virales prueban dos cosas a la vez: que la gente pone plata cuando la causa se percibe justa, y que la confianza es el punto frágil. En 2023 la Inspección General de Justicia declaró irregular el fideicomiso de una de las colectas más conocidas del país. La plata llegó; el modelo de administración quedó bajo sospecha.</p>
+<p>Las plataformas que existen en Argentina trabajan con ONGs, no con personas. GoFundMe permite colectas individuales, pero no verifica ni hace de la trazabilidad un producto. No encontré ninguna que junte las tres cosas: colecta persona a persona, una capa de confianza y una razón para volver.</p>
+<section class="dec rev"><p class="dec-k">Decisión</p><h3>Conectar sin custodiar</h3><p>La plata va directo del donante al beneficiado y nunca pasa por la app. La regulación del BCRA se dispara por tener saldos de terceros, no por conectar personas. Sin custodia: menos fricción, cero fondos ajenos y un encuadre regulatorio limpio. Lo respaldé con análisis de riesgo de lavado y una pregunta afinada para el abogado.</p><p class="dec-tr"><span>El trade-off</span>La plataforma nunca puede probar técnicamente que una transferencia llegó, porque no la ve pasar. Aceptarlo fue la premisa de diseño, no una debilidad a esconder.</p></section>
+<figure class="fig rev"><svg viewBox="0 0 640 300" role="img" aria-label="Tres capas de confianza: transparencia, confirmación humana e identidad verificada">
+    <g transform="translate(40,20)">
+      <rect width="560" height="76" rx="14" class="s-box"/>
+      <text x="24" y="34" class="s-t">1 · Transparencia</text>
+      <text x="24" y="56" class="s-m">El comprobante queda visible en el recorrido de la causa.</text>
+    </g>
+    <g transform="translate(40,112)">
+      <rect width="560" height="76" rx="14" class="s-acc-bg"/>
+      <text x="24" y="34" class="s-t">2 · Confirmación humana</text>
+      <text x="24" y="56" class="s-m">El beneficiado confirma que llegó. Es el único que ve la plata.</text>
+    </g>
+    <g transform="translate(40,204)">
+      <rect width="560" height="76" rx="14" class="s-box"/>
+      <text x="24" y="34" class="s-t">3 · Identidad verificada</text>
+      <text x="24" y="56" class="s-m">Quien pide y quien da son personas reales. Mentir expone.</text>
+    </g>
+  </svg><figcaption>Si la app no ve la plata, la confianza se construye en tres capas.</figcaption></figure>
+<section class="dec rev"><p class="dec-k">Decisión</p><h3>Solo la plata confirmada cuenta</h3><p>Un aporte con comprobante subido pero sin confirmar queda pendiente: no suma a la meta, no da puntos, no dispara el reconocimiento. Recién cuando el beneficiado confirma que le llegó, cuenta. El beneficiado es el único que ve la plata entrar y no gana nada confirmando lo que no recibió. Si no responde en 48 horas, el aporte se confirma solo, para que nadie quede trabado.</p></section>
+<section class="dec rev"><p class="dec-k">Decisión</p><h3>Gamificación por reconocimiento, sin premios</h3><p>Niveles, medallas y ranking mensual de quienes más ayudan, sin costo monetario. Si el premio es material, atraés donantes que buscan el premio y no la causa. Y así se puede medir lo que importa: si la gente vuelve por la causa.</p></section>
+<h2>Qué valida el MVP</h2>
+<div class="tbl"><table><thead><tr><th>Hipótesis</th><th>Métrica</th></tr></thead><tbody><tr><td>Hay personas dispuestas a exponer su necesidad y pasar por verificación</td><td>Causas creadas y porcentaje que completa la verificación</td></tr><tr><td>La gente dona a causas verificadas de desconocidos</td><td>Conversión de visitante a donante y causas que llegan a la meta</td></tr><tr><td>El reconocimiento retiene por la causa</td><td>Donantes que vuelven a aportar a una segunda causa</td></tr></tbody></table></div>
+<p>Si las tres dan señal a baja escala, hay producto. Si no, se aprendió barato.</p>
+<h2>Qué construí</h2>
+<ul class="list"><li>Feed de causas verificadas y panel de curaduría, donde un humano revisa la evidencia antes de publicar.</li><li>Donación por transferencia con comprobante, confirmación del beneficiado y auto-confirmación a las 48 horas.</li><li>Ranking mensual, medallas y tours de onboarding.</li><li>Mercado Pago integrado y apagado: se prende cuando exista el split de pagos y el OK legal.</li><li>Versión web desde el mismo código, para que cualquiera la pruebe sin instalar nada.</li></ul></div>
+    
+    
+  </div>
+  <a class="next w" href="heart.html"><span class="muted small">Siguiente</span><span class="next-t">Heart →</span></a>
+</article>
+</div>
+<footer class="foot">
+  <div class="w">
+    <p class="foot-big">¿Construimos algo?</p>
+    <p><a class="foot-mail" href="mailto:gaston.product.expert@gmail.com">gaston.product.expert@gmail.com</a></p>
+    <p class="foot-links"><a href="https://linkedin.com/in/gastonmartinperez">LinkedIn</a><a href="https://github.com/gaston-perez-art">GitHub</a><a href="https://adplist.org/mentors/gaston-perez">ADPList</a></p>
+    <p class="muted small">Este sitio también lo construí yo: HTML y CSS generados desde un archivo de contenido. <a href="https://github.com/gaston-perez-art/gaston-perez-art.github.io">Código</a></p>
+  </div>
+</footer>
+<script>
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rev').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>

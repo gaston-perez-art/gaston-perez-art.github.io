@@ -8,17 +8,31 @@ Senior Product Manager con ocho años construyendo producto en Mercado Libre, Ra
 
 | Proyecto | Qué es | Estado | Links |
 |---|---|---|---|
-| **donAR** | Colectas solidarias P2P donde el dinero va directo de persona a persona | POC funcionando | [código](https://github.com/gaston-perez-art/donAR) |
+| **donAR** | Colectas solidarias P2P donde el dinero va directo de persona a persona | Demo web en vivo | [demo](https://gaston-perez-art.github.io/donAR/) · [código](https://github.com/gaston-perez-art/donAR) |
 | **Heart** | Control diario de medicación para un familiar, con vista para la familia | En uso diario | código privado (datos de salud) |
 | **Tecla** | Servicio técnico y soporte a docentes bonaerenses, serverless de costo cero | En vivo, validando | [sitio](https://www.somostecla.com) · [código](https://github.com/gaston-perez-art/tecla) |
 | **Entrená con Jime** | Web y herramientas de trabajo para una entrenadora de fuerza | En vivo | [sitio](https://entrenaconjime.com) · [código](https://github.com/gaston-perez-art/jimenapp) |
 | **Fulbito** | Tabla de un torneo familiar de fútbol 5 donde compite el jugador | En vivo | [sitio](https://gaston-perez-art.github.io/fulbito/) · [código](https://github.com/gaston-perez-art/fulbito) |
 
+También hay casos de estudio de mi trabajo en Bigbox, Mercado Libre, Henry y Rappi, contados sin pantallas ni datos internos.
+
 ## Cómo está hecho
 
-HTML y CSS, sin build ni dependencias. Se publica con GitHub Pages desde `main`.
+HTML y CSS estáticos, generados con Node sin dependencias. Se publica con GitHub Pages desde `main`.
 
-Para sumar un proyecto, copiar un bloque `<article class="project">` en `index.html` y completar las cuatro piezas: qué es, la decisión que lo define, qué hice y stack.
+```
+src/contenido.js   Todo el texto del sitio. Se edita acá.
+src/figuras.js     Diagramas e ilustraciones en SVG.
+src/build.js       Genera index.html, sobre-mi.html, trabajo/ y proyectos/.
+estilos.css        Estilos, con modo claro y oscuro.
+img/               Capturas de los proyectos.
+```
+
+```bash
+node src/build.js
+```
+
+Los `.html` generados no se editan a mano: la próxima corrida los pisa. Para sumar un proyecto, agregar un objeto a `CASOS` en `contenido.js` con su decisión central, y volver a generar.
 
 ## Contacto
 

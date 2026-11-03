@@ -4,139 +4,156 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gastón Pérez · Product Builder</title>
-<meta name="description" content="Senior Product Manager y Product Builder. Ocho años construyendo producto en Mercado Libre, Rappi, Henry y Bigbox, y los productos que construyo con mis propias manos.">
+<meta name="description" content="Senior Product Manager y Product Builder. Casos de producto en Mercado Libre, Rappi, Henry y Bigbox, y los productos que construyo de punta a punta.">
 <meta property="og:title" content="Gastón Pérez · Product Builder">
-<meta property="og:description" content="Senior Product Manager que también construye. Proyectos en vivo, decisiones y resultados.">
+<meta property="og:description" content="Senior Product Manager y Product Builder. Casos de producto en Mercado Libre, Rappi, Henry y Bigbox, y los productos que construyo de punta a punta.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111'/%3E%3Ctext x='16' y='22' font-family='system-ui' font-size='16' font-weight='700' fill='%23fff' text-anchor='middle'%3EGP%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-<a class="skip" href="#proyectos">Ir a los proyectos</a>
-
-<header class="wrap hero">
-  <p class="kicker"><span class="dot" aria-hidden="true"></span> Buenos Aires · abierto a conversar</p>
-  <h1>Gastón Pérez</h1>
-  <p class="role">Senior Product Manager · Product Builder</p>
-  <p class="lead">Hace ocho años que construyo producto. En Mercado Libre, Rappi, Henry y Bigbox lo hice con equipos. Ahora también lo construyo con mis manos: de la idea al producto en uso, con IA como herramienta de trabajo diaria.</p>
-  <nav class="links" aria-label="Contacto">
-    <a href="mailto:gaston.product.expert@gmail.com">Email</a>
-    <a href="https://linkedin.com/in/gastonmartinperez">LinkedIn</a>
-    <a href="https://github.com/gaston-perez-art">GitHub</a>
-  </nav>
+<a class="skip" href="#contenido">Ir al contenido</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="logo" href="index.html" aria-label="Inicio">Gastón Pérez</a>
+    <nav aria-label="Principal">
+      <a href="index.html#trabajo">Trabajo</a>
+      <a href="index.html#proyectos">Proyectos</a>
+      <a href="sobre-mi.html">Sobre mí</a>
+      <a class="nav-cta" href="mailto:gaston.product.expert@gmail.com">Contacto</a>
+    </nav>
+  </div>
 </header>
+<div id="contenido">
 
-<section class="wrap" aria-labelledby="t-impacto">
-  <h2 id="t-impacto" class="label">Impacto en producto</h2>
-  <ul class="stats">
-    <li><strong>2,58% → 4,5%</strong><span>Conversión end-to-end con personalización, en un mes. Bigbox.</span></li>
-    <li><strong>1,4% → 3,4%</strong><span>Recompra con un loop de agradecimiento del agasajado. Bigbox.</span></li>
-    <li><strong>75–80%</strong><span>Consultas de sellers resueltas por un agente con IA. Mercado Libre.</span></li>
-    <li><strong>−35%</strong><span>Costo operativo de corrección con la API de OpenAI. Henry.</span></li>
-  </ul>
+<section class="hero w-wide">
+  <p class="avail"><span class="dot"></span>Buenos Aires · abierto a nuevas conversaciones</p>
+  <h1 class="display">Construyo producto.<br><em>Con equipos y con mis manos.</em></h1>
+  <p class="lede">Ocho años haciendo producto en Mercado Libre, Rappi, Henry y Bigbox, en e-commerce, marketplaces, delivery y EdTech. Hoy además construyo de punta a punta, de la idea al producto en uso, con IA como herramienta de trabajo diaria.</p>
+  <p class="cta-row"><a class="btn" href="#trabajo">Ver casos</a><a class="btn btn-ghost" href="#proyectos">Ver lo que construí</a></p>
+  <p class="logos" aria-label="Empresas">Mercado Libre <i></i> Rappi <i></i> Henry <i></i> Bigbox <i></i> Coderhouse</p>
 </section>
 
-<main id="proyectos" class="wrap" aria-labelledby="t-proyectos">
-  <h2 id="t-proyectos" class="label">Lo que construí</h2>
-  <p class="intro">Cinco productos hechos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.</p>
-
-  <article class="project">
-    <div class="p-head">
-      <h3>donAR</h3>
-      <span class="badge poc">POC funcionando</span>
-    </div>
-    <p class="p-what">Colectas solidarias P2P donde la confianza es el producto. Publicás una necesidad, un curador verifica la evidencia antes de que salga, donás directo a la persona y ves a dónde fue cada peso.</p>
-    <dl class="p-facts">
-      <div><dt>La decisión</dt><dd>El dinero nunca pasa por la app: va de una persona a otra. Menos fricción, cero custodia de fondos y un encuadre regulatorio limpio, respaldado con análisis de riesgo de lavado.</dd></div>
-      <div><dt>Qué hice</dt><dd>Producto, diseño y desarrollo. Paper fundacional, go-to-market, modelo de amenaza y borradores legales.</dd></div>
-      <div><dt>Stack</dt><dd>React Native · Expo · TypeScript · Supabase</dd></div>
-    </dl>
-    <p class="p-links"><a href="https://github.com/gaston-perez-art/donAR">Código</a></p>
-  </article>
-
-  <article class="project">
-    <div class="p-head">
-      <h3>Heart</h3>
-      <span class="badge live">En uso diario</span>
-    </div>
-    <p class="p-what">Control diario de la medicación para alguien de mi familia que no quería aprender una app nueva. Él marca cada toma de un toque; la familia ve el estado del día, el stock que se termina y un muro de mensajes.</p>
-    <dl class="p-facts">
-      <div><dt>La decisión</dt><dd>El día arranca a las 4 AM, no a medianoche: la pastilla de las 00:30 cuenta para el día anterior. Y la app registra, no interpreta: ni colores por rango ni diagnósticos.</dd></div>
-      <div><dt>Qué hice</dt><dd>Todo. Discovery con el usuario real, diseño para letra grande y uso sin conexión, roles y permisos por fila.</dd></div>
-      <div><dt>Stack</dt><dd>React · Vite · PWA · Supabase con RLS</dd></div>
-    </dl>
-    <p class="p-links"><span class="muted">Código privado: maneja datos de salud.</span></p>
-  </article>
-
-  <article class="project">
-    <div class="p-head">
-      <h3>Tecla</h3>
-      <span class="badge live">En vivo · validando</span>
-    </div>
-    <p class="p-what">Servicio técnico informático y soporte a docentes del sistema educativo bonaerense. Dos unidades de negocio en una sola landing, con unos 10 clientes por mes en la unidad de Soporte.</p>
-    <dl class="p-facts">
-      <div><dt>La decisión</dt><dd>Arquitectura serverless de costo cero: GitHub Pages, Cloudflare, Google Forms y GA4. Validar demanda antes de invertir un peso en backend.</dd></div>
-      <div><dt>Qué hice</dt><dd>Cofundador. Modelo de negocio, sitio en producción con dominio propio y el plan de negocios, que es mi tesis del MBA.</dd></div>
-      <div><dt>Stack</dt><dd>HTML · CSS · JS · Cloudflare · GA4</dd></div>
-    </dl>
-    <p class="p-links"><a href="https://www.somostecla.com">Ver sitio</a><a href="https://github.com/gaston-perez-art/tecla">Código</a></p>
-  </article>
-
-  <article class="project">
-    <div class="p-head">
-      <h3>Entrená con Jime</h3>
-      <span class="badge live">En vivo</span>
-    </div>
-    <p class="p-what">Presencia online y herramientas de trabajo para una entrenadora de fuerza especializada en mujeres +35. La web consigue alumnas; las planillas ordenan cómo las acompaña.</p>
-    <dl class="p-facts">
-      <div><dt>La decisión</dt><dd>Un solo archivo autocontenido y contacto directo por WhatsApp. Su clienta no llena formularios: escribe.</dd></div>
-      <div><dt>Qué hice</dt><dd>Sitio, ficha de ingreso, planificador de mesociclos y calculadora nutricional.</dd></div>
-      <div><dt>Stack</dt><dd>HTML · CSS · JS · Excel</dd></div>
-    </dl>
-    <p class="p-links"><a href="https://entrenaconjime.com">Ver sitio</a><a href="https://github.com/gaston-perez-art/jimenapp">Código</a></p>
-  </article>
-
-  <article class="project">
-    <div class="p-head">
-      <h3>Fulbito</h3>
-      <span class="badge live">En vivo</span>
-    </div>
-    <p class="p-what">Tabla de posiciones de un torneo familiar de fútbol 5, 12 fechas. Los equipos se rearman cada sábado, así que compite el jugador, no el equipo.</p>
-    <dl class="p-facts">
-      <div><dt>La decisión</dt><dd>Los goles no se cuentan por jugador. En un fútbol 5 nadie lleva esa cuenta, y una planilla que nadie puede completar de verdad es una planilla que miente.</dd></div>
-      <div><dt>Qué hice</dt><dd>Reglas, sorteo de equipos, carga protegida y tabla que se actualiza al instante para todo el grupo.</dd></div>
-      <div><dt>Stack</dt><dd>JS vanilla · Supabase · GitHub Pages</dd></div>
-    </dl>
-    <p class="p-links"><a href="https://gaston-perez-art.github.io/fulbito/">Ver sitio</a><a href="https://github.com/gaston-perez-art/fulbito">Código</a></p>
-  </article>
-</main>
-
-<section class="wrap" aria-labelledby="t-como">
-  <h2 id="t-como" class="label">Cómo construyo</h2>
-  <ol class="principles">
-    <li><strong>Primero el problema de una persona concreta.</strong> Todos estos productos tienen un usuario con nombre. Si no puedo nombrarlo, no lo construyo.</li>
-    <li><strong>Una decisión que lo define.</strong> Cada producto tiene un trade-off escrito y defendido. Es lo que no se rompe cuando el producto crece.</li>
-    <li><strong>Lo mínimo que valida.</strong> Costo cero hasta que haya demanda. Backend cuando hace falta, no antes.</li>
-    <li><strong>IA como herramienta, criterio como producto.</strong> Claude Code, v0 y Cursor me dan velocidad. El juicio sobre qué construir sigue siendo mío.</li>
-  </ol>
+<section class="w-wide" aria-label="Impacto">
+  <div class="stats"><div class="stat rev"><strong><s>2,58%</s> 4,5%</strong><span>Conversión end-to-end con personalización, en un mes</span><em>Bigbox</em></div><div class="stat rev"><strong><s>1,4%</s> 3,4%</strong><span>Recompra con un loop de agradecimiento. El objetivo era 2%</span><em>Bigbox</em></div><div class="stat rev"><strong>75–80%</strong><span>Consultas de sellers resueltas por un agente con IA</span><em>Mercado Libre</em></div><div class="stat rev"><strong>−35%</strong><span>Costo operativo de corrección con la API de OpenAI</span><em>Henry</em></div></div>
 </section>
 
-<section class="wrap" aria-labelledby="t-exp">
-  <h2 id="t-exp" class="label">Experiencia</h2>
-  <ul class="timeline">
-    <li><span class="when">2026 – hoy</span><span class="what"><b>Senior Product Owner</b> · Bigbox. E-commerce B2C en 5 países de LatAm.</span></li>
-    <li><span class="when">2025 – 2026</span><span class="what"><b>Product Shipping Specialist</b> · Mercado Libre. Portal de sellers de food delivery.</span></li>
-    <li><span class="when">2022 – 2025</span><span class="what"><b>Product Manager</b> · Henry. Plataforma educativa y de cobranzas, de cero a uno.</span></li>
-    <li><span class="when">2022</span><span class="what"><b>Product Lead</b> · Rappi. Portal B2B de restaurantes, 3 Product Owners.</span></li>
-    <li><span class="when">2021 – 2022</span><span class="what"><b>Growth Product Owner</b> · Coderhouse. Expansión a México y Brasil.</span></li>
-    <li><span class="when">2018 – 2021</span><span class="what"><b>Cofundador</b> · Mobius. App con IA/ML para preservar la voz de quienes ya no están.</span></li>
-  </ul>
-  <p class="muted small">MBA, Universidad de Palermo (promedio 9,13). Mentor de producto en ADPList.</p>
+<section id="trabajo" class="w-wide sec">
+  <div class="sec-head"><p class="kicker">01 · Trabajo</p><h2 class="h2">Producto en empresas que operan a escala</h2><p class="muted">Cuatro casos contados por sus decisiones: qué problema había, qué elegí, qué resigné y qué pasó.</p></div>
+  <div class="cases"><a class="case rev c-violeta" href="trabajo/bigbox.html">
+  <div class="case-cover"><span class="case-num">1,4% → 3,4%</span><span class="case-numt">recompra</span></div>
+  <div class="case-body">
+    <p class="eyebrow">Bigbox · 2026 – hoy</p>
+    <h3>De un catálogo de regalos a un marketplace que aprende de cada usuario</h3>
+    <span class="more">Leer el caso</span>
+  </div>
+</a>
+<a class="case rev c-amarillo" href="trabajo/mercadolibre.html">
+  <div class="case-cover"><span class="case-num">75–80%</span><span class="case-numt">consultas resueltas por IA</span></div>
+  <div class="case-body">
+    <p class="eyebrow">Mercado Libre · 2025 – 2026</p>
+    <h3>El portal donde los restaurantes de Mercado Libre gestionan su operación</h3>
+    <span class="more">Leer el caso</span>
+  </div>
+</a>
+<a class="case rev c-verde" href="trabajo/henry.html">
+  <div class="case-cover"><span class="case-num">0 → 1</span><span class="case-numt">dos productos a producción</span></div>
+  <div class="case-body">
+    <p class="eyebrow">Henry · 2022 – 2025</p>
+    <h3>Dos productos de la hoja en blanco a producción</h3>
+    <span class="more">Leer el caso</span>
+  </div>
+</a>
+<a class="case rev c-coral" href="trabajo/rappi.html">
+  <div class="case-cover"><span class="case-num">Top 5</span><span class="case-numt">proyectos de rentabilidad</span></div>
+  <div class="case-body">
+    <p class="eyebrow">Rappi · 2022</p>
+    <h3>El portal que usan cientos de miles de restaurantes todos los días</h3>
+    <span class="more">Leer el caso</span>
+  </div>
+</a></div>
 </section>
 
-<footer class="wrap footer">
-  <p>¿Construimos algo? <a href="mailto:gaston.product.expert@gmail.com">gaston.product.expert@gmail.com</a></p>
-  <p class="muted small">Este sitio también lo construí yo. <a href="https://github.com/gaston-perez-art/gaston-perez-art.github.io">Código</a></p>
+<section id="proyectos" class="w-wide sec">
+  <div class="sec-head"><p class="kicker">02 · Proyectos</p><h2 class="h2">Lo que construyo con mis manos</h2><p class="muted">Cinco productos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.</p></div>
+  <div class="projs"><a class="proj rev" href="proyectos/donar.html">
+  <div class="proj-media"><div class="phone"><img src="img/donar.png" alt="Pantalla de ingreso de donAR" loading="lazy" width="390" height="844"></div></div>
+  <div class="proj-body">
+    <div class="proj-top"><h3>donAR</h3><span class="badge poc">Demo web en vivo</span></div>
+    <p>Colectas solidarias persona a persona, donde la confianza es el producto.</p>
+    <span class="more">Ver el proyecto</span>
+  </div>
+</a>
+<a class="proj rev" href="proyectos/heart.html">
+  <div class="proj-media"><div class="phone phone-art"><svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMin slice" role="img" aria-label="Ilustración: un corazón con el trazo de un monitor y la frase Un día más">
+    <rect width="390" height="844" class="s-art-bg"/>
+    <text x="32" y="96" class="s-art-k">HOY</text>
+    <text x="32" y="140" class="s-art-h">10 de 10</text>
+    <rect x="32" y="180" width="326" height="60" rx="14" class="s-art-card"/><circle cx="62" cy="210" r="11" class="s-art-ok"/><rect x="88" y="203" width="150" height="12" rx="6" class="s-art-line"/><rect x="32" y="254" width="326" height="60" rx="14" class="s-art-card"/><circle cx="62" cy="284" r="11" class="s-art-ok"/><rect x="88" y="277" width="132" height="12" rx="6" class="s-art-line"/><rect x="32" y="328" width="326" height="60" rx="14" class="s-art-card"/><circle cx="62" cy="358" r="11" class="s-art-ok"/><rect x="88" y="351" width="114" height="12" rx="6" class="s-art-line"/><rect x="32" y="402" width="326" height="60" rx="14" class="s-art-card"/><circle cx="62" cy="432" r="11" class="s-art-ok"/><rect x="88" y="425" width="96" height="12" rx="6" class="s-art-line"/>
+    <path d="M195 640 C120 585 90 545 120 512 C142 488 178 496 195 522 C212 496 248 488 270 512 C300 545 270 585 195 640 Z" class="s-art-heart"/>
+    <path d="M60 575 L140 575 L158 545 L178 605 L196 560 L210 575 L330 575" class="s-art-ekg"/>
+    <text x="195" y="712" text-anchor="middle" class="s-art-h">Un día más</text>
+  </svg></div></div>
+  <div class="proj-body">
+    <div class="proj-top"><h3>Heart</h3><span class="badge live">En uso todos los días</span></div>
+    <p>Control diario de medicación para alguien que no quería aprender una app nueva.</p>
+    <span class="more">Ver el proyecto</span>
+  </div>
+</a>
+<a class="proj rev" href="proyectos/tecla.html">
+  <div class="proj-media"><div class="phone"><img src="img/tecla.png" alt="Sitio de Tecla, sección para docentes" loading="lazy" width="390" height="844"></div></div>
+  <div class="proj-body">
+    <div class="proj-top"><h3>Tecla</h3><span class="badge live">En vivo · validando</span></div>
+    <p>Servicio técnico y soporte a docentes bonaerenses, con arquitectura de costo cero.</p>
+    <span class="more">Ver el proyecto</span>
+  </div>
+</a>
+<a class="proj rev" href="proyectos/entrena-con-jime.html">
+  <div class="proj-media"><div class="phone"><img src="img/jime.jpg" alt="Sitio de Jimena Ibañez, entrenadora" loading="lazy" width="390" height="844"></div></div>
+  <div class="proj-body">
+    <div class="proj-top"><h3>Entrená con Jime</h3><span class="badge live">En vivo</span></div>
+    <p>Web y herramientas de trabajo para una entrenadora de fuerza de mujeres +35.</p>
+    <span class="more">Ver el proyecto</span>
+  </div>
+</a>
+<a class="proj rev" href="proyectos/fulbito.html">
+  <div class="proj-media"><div class="phone phone-art"><svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMin slice" role="img" aria-label="Ilustración: tabla de posiciones de un torneo de fútbol 5">
+    <rect width="390" height="844" class="s-fb-bg"/>
+    <text x="32" y="92" class="s-fb-h">APERTURA</text>
+    <text x="32" y="130" class="s-fb-h">2026</text>
+    <text x="32" y="160" class="s-fb-k">FÚTBOL EN FAMILIA</text>
+    <rect x="32" y="190" width="22" height="5" rx="2" class="s-fb-on"/><rect x="59.5" y="190" width="22" height="5" rx="2" class="s-fb-on"/><rect x="87" y="190" width="22" height="5" rx="2" class="s-fb-on"/><rect x="114.5" y="190" width="22" height="5" rx="2" class="s-fb-on"/><rect x="142" y="190" width="22" height="5" rx="2" class="s-fb-on"/><rect x="169.5" y="190" width="22" height="5" rx="2" class="s-fb-on"/><rect x="197" y="190" width="22" height="5" rx="2" class="s-fb-on"/><rect x="224.5" y="190" width="22" height="5" rx="2" class="s-fb-off"/><rect x="252" y="190" width="22" height="5" rx="2" class="s-fb-off"/><rect x="279.5" y="190" width="22" height="5" rx="2" class="s-fb-off"/><rect x="307" y="190" width="22" height="5" rx="2" class="s-fb-off"/><rect x="334.5" y="190" width="22" height="5" rx="2" class="s-fb-off"/>
+    <g transform="translate(32,240)"><rect width="326" height="50" rx="10" class="s-fb-row s-fb-top"/><text x="18" y="31" class="s-fb-n">1</text><rect x="48" y="20" width="140" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">21</text></g><g transform="translate(32,302)"><rect width="326" height="50" rx="10" class="s-fb-row"/><text x="18" y="31" class="s-fb-n">2</text><rect x="48" y="20" width="118" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">19</text></g><g transform="translate(32,364)"><rect width="326" height="50" rx="10" class="s-fb-row"/><text x="18" y="31" class="s-fb-n">3</text><rect x="48" y="20" width="96" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">17</text></g><g transform="translate(32,426)"><rect width="326" height="50" rx="10" class="s-fb-row"/><text x="18" y="31" class="s-fb-n">4</text><rect x="48" y="20" width="140" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">15</text></g><g transform="translate(32,488)"><rect width="326" height="50" rx="10" class="s-fb-row"/><text x="18" y="31" class="s-fb-n">5</text><rect x="48" y="20" width="118" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">13</text></g><g transform="translate(32,550)"><rect width="326" height="50" rx="10" class="s-fb-row"/><text x="18" y="31" class="s-fb-n">6</text><rect x="48" y="20" width="96" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">11</text></g><g transform="translate(32,612)"><rect width="326" height="50" rx="10" class="s-fb-row"/><text x="18" y="31" class="s-fb-n">7</text><rect x="48" y="20" width="140" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">9</text></g><g transform="translate(32,674)"><rect width="326" height="50" rx="10" class="s-fb-row"/><text x="18" y="31" class="s-fb-n">8</text><rect x="48" y="20" width="118" height="10" rx="5" class="s-fb-name"/><text x="306" y="31" text-anchor="end" class="s-fb-n">7</text></g>
+  </svg></div></div>
+  <div class="proj-body">
+    <div class="proj-top"><h3>Fulbito</h3><span class="badge live">En vivo</span></div>
+    <p>Tabla de un torneo familiar de fútbol 5 donde compite el jugador, no el equipo.</p>
+    <span class="more">Ver el proyecto</span>
+  </div>
+</a></div>
+</section>
+
+<section class="w-wide sec">
+  <div class="sec-head"><p class="kicker">03 · Cómo trabajo</p><h2 class="h2">Cuatro reglas que no negocio</h2></div>
+  <ol class="princ"><li class="rev"><span class="pn">01</span><strong>Primero la persona.</strong><span>Todo lo que construyo tiene un usuario con nombre. Si no lo puedo nombrar, todavía no entendí el problema.</span></li><li class="rev"><span class="pn">02</span><strong>Una decisión que lo define.</strong><span>Cada producto tiene un trade-off escrito y defendido. Es lo que no se rompe cuando el producto crece.</span></li><li class="rev"><span class="pn">03</span><strong>Lo mínimo que valida.</strong><span>Costo cero hasta que haya demanda. Backend cuando hace falta, no antes. Si no da señal, se aprendió barato.</span></li><li class="rev"><span class="pn">04</span><strong>IA como herramienta, criterio como producto.</strong><span>Claude Code, v0 y Cursor me dan velocidad. Qué construir y qué dejar afuera sigue siendo mi trabajo.</span></li></ol>
+</section>
+</div>
+<footer class="foot">
+  <div class="w">
+    <p class="foot-big">¿Construimos algo?</p>
+    <p><a class="foot-mail" href="mailto:gaston.product.expert@gmail.com">gaston.product.expert@gmail.com</a></p>
+    <p class="foot-links"><a href="https://linkedin.com/in/gastonmartinperez">LinkedIn</a><a href="https://github.com/gaston-perez-art">GitHub</a><a href="https://adplist.org/mentors/gaston-perez">ADPList</a></p>
+    <p class="muted small">Este sitio también lo construí yo: HTML y CSS generados desde un archivo de contenido. <a href="https://github.com/gaston-perez-art/gaston-perez-art.github.io">Código</a></p>
+  </div>
 </footer>
+<script>
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rev').forEach((el) => io.observe(el));
+</script>
 </body>
 </html>
