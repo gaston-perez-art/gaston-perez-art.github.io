@@ -342,3 +342,28 @@ a:hover .phone, a:hover .proj-media .phone { transform: scale(1.06); box-shadow:
 .case:hover .case-num { transform: scale(1.04); }
 .proj, .case, .proj:hover, .case:hover { transform: none; }
 @media (prefers-reduced-motion: reduce) { a:hover .phone, .case:hover .case-num, .case:hover .case-cover::before { transform: none; } }
+
+/* ---------------------------------------------------------------- capturas v3: enteras, sin marco */
+.proj-media { position: relative; overflow: hidden; aspect-ratio: 4 / 3.8; display: flex; align-items: center; justify-content: center; padding: 28px; }
+.proj-media .phone,
+.cs-hero .phone { height: 100%; width: auto; max-width: none; aspect-ratio: auto; padding: 0; background: transparent; border-radius: 20px; overflow: hidden; box-shadow: 0 0 0 1px color-mix(in srgb, var(--fg) 12%, transparent), 0 24px 48px -24px rgba(0,0,0,.5); }
+.proj-media .phone img, .proj-media .phone svg,
+.cs-hero .phone img, .cs-hero .phone svg { height: 100%; width: auto; max-width: none; aspect-ratio: auto; object-fit: contain; border-radius: 0; display: block; }
+.proj-media .phone svg { aspect-ratio: 390 / 844; }
+.cs-hero .phone { height: min(640px, 80vh); margin: 0 auto; transform: none; }
+.proj:first-child .proj-media { height: auto; min-height: 460px; flex: 0 0 50%; }
+@media (max-width: 680px) { .proj:first-child .proj-media { min-height: 0; flex: none; } .cs-hero .phone { height: 520px; } }
+
+/* ---------------------------------------------------------------- capturas v4: caja fija, imagen contenida */
+.proj-media { height: 400px; aspect-ratio: auto; padding: 28px; }
+.proj:first-child .proj-media { height: 480px; min-height: 0; flex: 0 0 48%; }
+.proj-media .phone, .cs-hero .phone { height: 100%; width: 100%; display: flex; align-items: center; justify-content: center; background: none; box-shadow: none; border-radius: 0; overflow: visible; padding: 0; transform: none !important; }
+.proj-media .phone img, .cs-hero .phone img { max-height: 100%; max-width: 100%; height: auto; width: auto; object-fit: contain; border-radius: 18px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--fg) 12%, transparent), 0 24px 48px -24px rgba(0,0,0,.55); transition: transform .9s cubic-bezier(.16,1,.3,1); }
+.proj-media .phone svg, .cs-hero .phone svg { height: 100%; width: auto; aspect-ratio: 390 / 844; border-radius: 18px; transition: transform .9s cubic-bezier(.16,1,.3,1); }
+a:hover .proj-media .phone img, a:hover .proj-media .phone svg { transform: scale(1.05); }
+.cs-hero .phone { height: min(640px, 80vh); }
+@media (max-width: 680px) { .proj-media, .proj:first-child .proj-media { height: 360px; flex: none; } .cs-hero .phone { height: 520px; } }
+@media (prefers-reduced-motion: reduce) { a:hover .proj-media .phone img, a:hover .proj-media .phone svg { transform: none; } }
+.proj:first-child .proj-media { height: auto; align-self: stretch; min-height: 480px; }
+.proj:first-child .proj-media .phone { position: absolute; inset: 28px; width: auto; height: auto; }
+@media (max-width: 680px) { .proj:first-child .proj-media { min-height: 360px; } }
