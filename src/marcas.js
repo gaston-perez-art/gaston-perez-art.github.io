@@ -13,7 +13,9 @@ const MARCAS = {
 const barra = (x, y, w, c = '#e6e6ea', h = 8) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${c}"/>`;
 const caja = (x, y, w, h, c, r = 10) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${c}"/>`;
 const pantalla = (id, x, y, w, h, contenido, oscura = false) => `
-  <g transform="translate(${x},${y})" filter="url(#sh-${id})">
+  <g transform="translate(${x},${y})">
+    <rect x="6" y="16" width="${w}" height="${h}" rx="18" fill="#000" opacity=".18"/>
+    <rect x="2" y="8" width="${w}" height="${h}" rx="17" fill="#000" opacity=".14"/>
     <rect width="${w}" height="${h}" rx="16" fill="${oscura ? '#1a1a1d' : '#ffffff'}"/>
     <g clip-path="none">${contenido}</g>
   </g>`;
@@ -77,7 +79,6 @@ function interfaz(slug) {
       ${[0, 1, 2].map((i) => `<circle cx="30" cy="${168 + i * 24}" r="8" fill="#ff441f"/>${barra(46, 164 + i * 24, 110 - i * 20, '#efeae8', 8)}`).join('')}`);
   }
   return `<svg class="mock" viewBox="-30 -30 580 460" aria-hidden="true">
-    <defs><filter id="sh-${id}" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity="${slug === 'henry' ? 0.6 : 0.28}"/></filter></defs>
     <g transform="rotate(-12 260 200)">${s}</g>
   </svg>`;
 }

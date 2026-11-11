@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <title>Mercado Libre · Gastón Pérez</title>
 <meta name="description" content="Senior IC on the food delivery seller portal. Everything that affects a restaurant’s operational performance went through my surfaces: orders, finance, reputation, help and communication.">
 <meta property="og:title" content="Mercado Libre · Gastón Pérez">
@@ -49,9 +49,10 @@
   <div class="w-wide cs-cover"><div class="case-cover case-cover-big" style="--b-bg:#ffe600;--b-fg:#2d3277;--b-ac:#3483fa;view-transition-name:cover-mercadolibre">
     <img class="case-logo" src="../../img/logos/mercadolibre.svg" alt="" style="--logo-h:1.05">
     <div class="case-mock" data-parallax><svg class="mock" viewBox="-30 -30 580 460" aria-hidden="true">
-    <defs><filter id="sh-mercadolibre" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity="0.28"/></filter></defs>
     <g transform="rotate(-12 260 200)">
-  <g transform="translate(0,0)" filter="url(#sh-mercadolibre)">
+  <g transform="translate(0,0)">
+    <rect x="6" y="16" width="340" height="240" rx="18" fill="#000" opacity=".18"/>
+    <rect x="2" y="8" width="340" height="240" rx="17" fill="#000" opacity=".14"/>
     <rect width="340" height="240" rx="16" fill="#ffffff"/>
     <g clip-path="none">
       <rect x="0" y="0" width="340" height="36" rx="16" fill="#ffe600"/><rect x="0" y="20" width="340" height="16" rx="0" fill="#ffe600"/><rect x="16" y="14" width="70" height="9" rx="4.5" fill="#2d3277"/>
@@ -61,7 +62,9 @@
       <circle cx="214" cy="78" r="9" fill="#00a650"/><rect x="232" y="74" width="80" height="8" rx="4" fill="#e6e6ec"/><circle cx="214" cy="114" r="9" fill="#3483fa"/><rect x="232" y="110" width="60" height="8" rx="4" fill="#e6e6ec"/><circle cx="214" cy="150" r="9" fill="#00a650"/><rect x="232" y="146" width="80" height="8" rx="4" fill="#e6e6ec"/><circle cx="214" cy="186" r="9" fill="#ffb020"/><rect x="232" y="182" width="60" height="8" rx="4" fill="#e6e6ec"/>
       <rect x="20" y="200" width="300" height="10" rx="5" fill="#f3f3f6"/></g>
   </g>
-  <g transform="translate(290,120)" filter="url(#sh-mercadolibre)">
+  <g transform="translate(290,120)">
+    <rect x="6" y="16" width="210" height="250" rx="18" fill="#000" opacity=".18"/>
+    <rect x="2" y="8" width="210" height="250" rx="17" fill="#000" opacity=".14"/>
     <rect width="210" height="250" rx="16" fill="#ffffff"/>
     <g clip-path="none">
       <rect x="18" y="18" width="90" height="9" rx="4.5" fill="#2d3277"/>
@@ -135,6 +138,9 @@
     h.setAttribute('data-theme', nuevo);
     try { localStorage.setItem('tema', nuevo); } catch (e) {}
   });
+  // Si algo falla, se muestra todo igual: el contenido nunca queda escondido.
+  const mostrarTodo = () => document.querySelectorAll('.rev').forEach((el) => el.classList.add('in'));
+  try {
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Entrada escalonada: los hermanos de una misma grilla aparecen uno detrás de otro.
   document.querySelectorAll('.rev').forEach((el) => {
@@ -146,12 +152,12 @@
     if (quieto || el.dataset.ok) return;
     el.dataset.ok = 1;
     const final = el.textContent;
-    const nums = final.match(/d+(?:[.,]d+)?/g);
+    const nums = final.match(/\d+(?:[.,]\d+)?/g);
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
       const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = final.replace(/d+(?:[.,]d+)?/g, (n) => {
+      el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
       });
@@ -169,7 +175,7 @@
   document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
-  if (!quieto && capas.length) {
+  if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {
     let pedido = false;
     const mover = () => {
       pedido = false;
@@ -184,6 +190,7 @@
     addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mover); } }, { passive: true });
     mover();
   }
+  } catch (e) { mostrarTodo(); }
 </script>
 </body>
 </html>

@@ -53,7 +53,7 @@ const UI = {
 };
 
 // Tema: oscuro por defecto; la elección se recuerda en el navegador.
-const HEAD_TEMA = `<script>try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>`;
+const HEAD_TEMA = `<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>`;
 const ICONO_TEMA = `<svg class="i-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="i-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>`;
 
 function generar(lang) {
@@ -132,6 +132,9 @@ ${body}
     h.setAttribute('data-theme', nuevo);
     try { localStorage.setItem('tema', nuevo); } catch (e) {}
   });
+  // Si algo falla, se muestra todo igual: el contenido nunca queda escondido.
+  const mostrarTodo = () => document.querySelectorAll('.rev').forEach((el) => el.classList.add('in'));
+  try {
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Entrada escalonada: los hermanos de una misma grilla aparecen uno detrás de otro.
   document.querySelectorAll('.rev').forEach((el) => {
@@ -143,12 +146,12 @@ ${body}
     if (quieto || el.dataset.ok) return;
     el.dataset.ok = 1;
     const final = el.textContent;
-    const nums = final.match(/\d+(?:[.,]\d+)?/g);
+    const nums = final.match(/\\d+(?:[.,]\\d+)?/g);
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
       const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
+      el.textContent = final.replace(/\\d+(?:[.,]\\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
       });
@@ -166,7 +169,7 @@ ${body}
   document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
-  if (!quieto && capas.length) {
+  if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {
     let pedido = false;
     const mover = () => {
       pedido = false;
@@ -181,6 +184,7 @@ ${body}
     addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mover); } }, { passive: true });
     mover();
   }
+  } catch (e) { mostrarTodo(); }
 </script>
 </body>
 </html>

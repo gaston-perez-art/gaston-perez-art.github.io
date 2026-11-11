@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <title>Sobre mí · Gastón Pérez</title>
 <meta name="description" content="Empecé lejos del software. En 2015 entré a Penalty como asistente de ingeniería y planificación, y seis años después era Project Manager. Coordiné una operación de más de once personas, implementé lean y Kanban en la línea de montaje y diseñé procesos que todavía se usan.">
 <meta property="og:title" content="Sobre mí · Gastón Pérez">
@@ -65,6 +65,9 @@
     h.setAttribute('data-theme', nuevo);
     try { localStorage.setItem('tema', nuevo); } catch (e) {}
   });
+  // Si algo falla, se muestra todo igual: el contenido nunca queda escondido.
+  const mostrarTodo = () => document.querySelectorAll('.rev').forEach((el) => el.classList.add('in'));
+  try {
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Entrada escalonada: los hermanos de una misma grilla aparecen uno detrás de otro.
   document.querySelectorAll('.rev').forEach((el) => {
@@ -76,12 +79,12 @@
     if (quieto || el.dataset.ok) return;
     el.dataset.ok = 1;
     const final = el.textContent;
-    const nums = final.match(/d+(?:[.,]d+)?/g);
+    const nums = final.match(/\d+(?:[.,]\d+)?/g);
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
       const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = final.replace(/d+(?:[.,]d+)?/g, (n) => {
+      el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
       });
@@ -99,7 +102,7 @@
   document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
-  if (!quieto && capas.length) {
+  if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {
     let pedido = false;
     const mover = () => {
       pedido = false;
@@ -114,6 +117,7 @@
     addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mover); } }, { passive: true });
     mover();
   }
+  } catch (e) { mostrarTodo(); }
 </script>
 </body>
 </html>
