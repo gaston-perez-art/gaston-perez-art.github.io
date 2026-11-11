@@ -5,6 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 const figuras = require('./figuras');
+const marcas = require('./marcas');
 
 const ROOT = path.join(__dirname, '..');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -18,7 +19,7 @@ const UI = {
     footBig: '¿Construimos algo?', footNota: 'Este sitio también lo construí yo: HTML y CSS generados desde un archivo de contenido.', codigo: 'Código',
     leerCaso: 'Leer el caso', verProyecto: 'Ver el proyecto', decision: 'Decisión', tradeoff: 'El trade-off',
     herramientas: 'Herramientas', siguiente: 'Siguiente', trabajo: 'Trabajo', proyectos: 'Proyectos',
-    notaEmpresa: 'Contado sin pantallas ni datos internos. Las métricas son las que comparto públicamente en mi perfil.',
+    notaEmpresa: 'Contado sin pantallas ni datos internos: la interfaz de la portada es una ilustración. Las métricas son las que comparto públicamente en mi perfil.',
     avail: 'Buenos Aires · abierto a nuevas conversaciones', verCasos: 'Ver casos', verConstrui: 'Ver lo que construí', empresas: 'Empresas', impacto: 'Impacto',
     secTrabajo: ['01 · Trabajo', 'Producto en empresas que operan a escala', 'Cuatro casos contados por sus decisiones: qué problema había, qué elegí, qué resigné y qué pasó.'],
     secProyectos: ['02 · Proyectos', 'Lo que construyo con mis manos', (n) => `${n} productos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.`],
@@ -36,7 +37,7 @@ const UI = {
     footBig: 'Shall we build something?', footNota: 'I built this site too: HTML and CSS generated from a content file.', codigo: 'Code',
     leerCaso: 'Read the case', verProyecto: 'See the project', decision: 'Decision', tradeoff: 'The trade-off',
     herramientas: 'Tools', siguiente: 'Next', trabajo: 'Work', proyectos: 'Projects',
-    notaEmpresa: 'Told without internal screens or data. The metrics are the ones I share publicly on my profile.',
+    notaEmpresa: 'Told without internal screens or data: the interface on the cover is an illustration. The metrics are the ones I share publicly on my profile.',
     avail: 'Buenos Aires · open to new conversations', verCasos: 'See cases', verConstrui: 'See what I built', empresas: 'Companies', impacto: 'Impact',
     secTrabajo: ['01 · Work', 'Product at companies operating at scale', 'Four cases told through their decisions: what the problem was, what I chose, what I gave up and what happened.'],
     secProyectos: ['02 · Projects', 'What I build with my own hands', (n) => `${n} end-to-end products. Each one solves a real problem for someone I know, and each one has a decision that defines it.`],
@@ -127,8 +128,55 @@ ${body}
     h.setAttribute('data-theme', nuevo);
     try { localStorage.setItem('tema', nuevo); } catch (e) {}
   });
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.rev').forEach((el) => io.observe(el));
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Entrada escalonada: los hermanos de una misma grilla aparecen uno detrás de otro.
+  document.querySelectorAll('.rev').forEach((el) => {
+    const hermanos = [...el.parentElement.children].filter((x) => x.classList.contains('rev'));
+    el.style.setProperty('--d', (hermanos.indexOf(el) % 4) * 90 + 'ms');
+  });
+  // Los números cuentan desde cero cuando aparecen.
+  const contar = (el) => {
+    if (quieto || el.dataset.ok) return;
+    el.dataset.ok = 1;
+    const final = el.textContent;
+    const nums = final.match(/\d+(?:[.,]\d+)?/g);
+    if (!nums) return;
+    const t0 = performance.now(), dur = 1100;
+    const paso = (t) => {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
+        const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
+        return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
+      });
+      if (k < 1) requestAnimationFrame(paso); else el.textContent = final;
+    };
+    requestAnimationFrame(paso);
+  };
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.count').forEach(contar);
+    if (e.target.classList.contains('count')) contar(e.target);
+    io.unobserve(e.target);
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
+  // Parallax suave de las interfaces dentro de las portadas.
+  const capas = [...document.querySelectorAll('[data-parallax]')];
+  if (!quieto && capas.length) {
+    let pedido = false;
+    const mover = () => {
+      pedido = false;
+      const h = innerHeight;
+      capas.forEach((el) => {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > h) return;
+        const p = (r.top + r.height / 2 - h / 2) / h;
+        el.style.setProperty('--py', (p * -36).toFixed(1) + 'px');
+      });
+    };
+    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mover); } }, { passive: true });
+    mover();
+  }
 </script>
 </body>
 </html>
@@ -143,21 +191,31 @@ ${body}
   const assets = (depth) => '../'.repeat(depth);
 
   function cardEmpresa(c) {
-    return `<a class="case rev c-${c.color}" href="trabajo/${c.slug}.html">
-  <div class="case-cover"><span class="case-num">${esc(c.portada.valor)}</span><span class="case-numt">${esc(c.portada.texto)}</span></div>
+    return `<a class="case rev" href="trabajo/${c.slug}.html">
+  ${portada(c, assets(base))}
   <div class="case-body">
     <p class="eyebrow">${esc(c.nombre)} · ${esc(c.periodo)}</p>
+    <p class="case-metric"><span class="case-num count">${esc(c.portada.valor)}</span> <span class="case-numt">${esc(c.portada.texto)}</span></p>
     <h3>${esc(c.titulo)}</h3>
     <span class="more">${t.leerCaso}</span>
   </div>
 </a>`;
   }
 
+  // Portada de marca: color, logo e interfaz ilustrada. Comparte nombre de transición
+  // con la página del caso, así la tarjeta se expande al entrar.
+  function portada(c, a, grande = false) {
+    return `<div class="case-cover${grande ? ' case-cover-big' : ''}" style="${marcas.estilo(c.slug)};view-transition-name:cover-${c.slug}">
+    ${marcas.logo(c.slug, a)}
+    <div class="case-mock" data-parallax>${marcas.interfaz(c.slug)}</div>
+  </div>`;
+  }
+
   function cardPropio(c, i, lista) {
     // La primera va ancha; si sobra una sola en la última fila, va a lo ancho.
     const cls = i === 0 ? ' proj-wide' : i === lista.length - 1 && (lista.length + 1) % 3 === 1 ? ' proj-wide proj-full' : '';
     return `<a class="proj rev${cls}" href="proyectos/${c.slug}.html">
-  <div class="proj-media">${arte(c, assets(base))}</div>
+  <div class="proj-media" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base))}</div>
   <div class="proj-body">
     <div class="proj-top"><h3>${esc(c.nombre)}</h3><span class="badge ${c.estado[0]}">${esc(c.estado[1])}</span></div>
     <p>${esc(c.corto)}</p>
@@ -195,10 +253,10 @@ ${body}
     ${c.links && c.links.length ? `<p class="cta-row">${c.links.map(([x, h], k) => `<a class="btn${k ? ' btn-ghost' : ''}" href="${h}">${esc(x)} ↗</a>`).join('')}</p>` : ''}
     ${c.nota ? `<p class="note">${esc(c.nota)}</p>` : ''}
   </header>
-  ${c.tipo === 'propio' ? `<div class="cs-hero w-wide">${arte(c, assets(base + 1))}</div>` : `<div class="cs-band c-${c.color}"><div class="w-wide"><span class="case-num big">${esc(c.portada.valor)}</span><span class="case-numt">${esc(c.portada.texto)}</span></div></div>`}
+  ${c.tipo === 'propio' ? `<div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base + 1))}</div></div>` : `<div class="w-wide cs-cover">${portada(c, assets(base + 1), true)}</div>`}
   <div class="w">
     <dl class="meta">${c.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
-    ${c.resultados ? `<div class="results">${c.resultados.map(([n, x]) => `<div class="rev"><strong>${esc(n)}</strong><span>${esc(x)}</span></div>`).join('')}</div>` : ''}
+    ${c.resultados ? `<div class="results">${c.resultados.map(([n, x]) => `<div class="rev"><strong class="count">${esc(n)}</strong><span>${esc(x)}</span></div>`).join('')}</div>` : ''}
     <div class="prose">${c.cuerpo.map(bloque).join('\n')}</div>
     ${c.herramientas ? `<p class="tools-used"><span>${t.herramientas}</span>${esc(c.herramientas)}</p>` : ''}
     ${c.tipo === 'empresa' ? `<p class="note">${t.notaEmpresa}</p>` : ''}
@@ -219,7 +277,7 @@ ${body}
 <div class="hero-wrap"><div class="lava" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 <section class="hero w-wide">
   <p class="avail"><span class="dot"></span>${t.avail}</p>
-  <h1 class="display">${HOME.titulo}</h1>
+  <h1 class="display lines">${HOME.titulo.split('<br>').map((l, i) => `<span class="ln"><span style="--i:${i}">${l}</span></span>`).join('')}</h1>
   <p class="lede">${esc(HOME.bajada)}</p>
   <p class="cta-row"><a class="btn" href="#trabajo">${t.verCasos}</a><a class="btn btn-ghost" href="#proyectos">${t.verConstrui}</a></p>
   <p class="logos" aria-label="${t.empresas}">Mercado Libre <i></i> Rappi <i></i> Henry <i></i> Bigbox <i></i> Coderhouse</p>
@@ -227,7 +285,7 @@ ${body}
 
 <section class="w-wide" aria-label="${t.impacto}">
   <div class="stats">${HOME.metricas
-    .map((m) => `<div class="stat rev"><strong>${m.antes ? `<s>${esc(m.antes)}</s> ` : ''}${esc(m.valor)}</strong><span>${esc(m.texto)}</span><em>${esc(m.donde)}</em></div>`)
+    .map((m) => `<div class="stat rev"><strong>${m.antes ? `<s>${esc(m.antes)}</s> ` : ''}<span class="count">${esc(m.valor)}</span></strong><span>${esc(m.texto)}</span><em>${esc(m.donde)}</em></div>`)
     .join('')}</div>
 </section>
 

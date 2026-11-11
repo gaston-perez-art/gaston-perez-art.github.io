@@ -65,8 +65,55 @@
     h.setAttribute('data-theme', nuevo);
     try { localStorage.setItem('tema', nuevo); } catch (e) {}
   });
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.rev').forEach((el) => io.observe(el));
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Entrada escalonada: los hermanos de una misma grilla aparecen uno detrás de otro.
+  document.querySelectorAll('.rev').forEach((el) => {
+    const hermanos = [...el.parentElement.children].filter((x) => x.classList.contains('rev'));
+    el.style.setProperty('--d', (hermanos.indexOf(el) % 4) * 90 + 'ms');
+  });
+  // Los números cuentan desde cero cuando aparecen.
+  const contar = (el) => {
+    if (quieto || el.dataset.ok) return;
+    el.dataset.ok = 1;
+    const final = el.textContent;
+    const nums = final.match(/d+(?:[.,]d+)?/g);
+    if (!nums) return;
+    const t0 = performance.now(), dur = 1100;
+    const paso = (t) => {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = final.replace(/d+(?:[.,]d+)?/g, (n) => {
+        const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
+        return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
+      });
+      if (k < 1) requestAnimationFrame(paso); else el.textContent = final;
+    };
+    requestAnimationFrame(paso);
+  };
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.count').forEach(contar);
+    if (e.target.classList.contains('count')) contar(e.target);
+    io.unobserve(e.target);
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
+  // Parallax suave de las interfaces dentro de las portadas.
+  const capas = [...document.querySelectorAll('[data-parallax]')];
+  if (!quieto && capas.length) {
+    let pedido = false;
+    const mover = () => {
+      pedido = false;
+      const h = innerHeight;
+      capas.forEach((el) => {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > h) return;
+        const p = (r.top + r.height / 2 - h / 2) / h;
+        el.style.setProperty('--py', (p * -36).toFixed(1) + 'px');
+      });
+    };
+    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mover); } }, { passive: true });
+    mover();
+  }
 </script>
 </body>
 </html>

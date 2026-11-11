@@ -46,7 +46,7 @@
     <p class="cta-row"><a class="btn" href="https://gaston-perez-art.github.io/demos/billetera/" target="_blank" rel="noopener">Probar la demo ↗</a><a class="btn btn-ghost" href="https://github.com/gaston-perez-art/billetera-hogar" target="_blank" rel="noopener">Código ↗</a></p>
     <p class="note">La demo usa montos inventados y guarda todo en tu navegador, sin login. Podés cargar un gasto, marcar un pago fijo como pagado y ver cómo cambia el reparto. "Volver a los datos de demo", en Ajustes, deja todo como al principio.</p>
   </header>
-  <div class="cs-hero w-wide"><div class="phone"><img src="../img/billetera.png" alt="Inicio de Billetera Hogar: lo que tienen entre los dos y lo que le queda a cada uno" loading="lazy" width="390" height="844"></div></div>
+  <div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-billetera-hogar"><div class="phone"><img src="../img/billetera.png" alt="Inicio de Billetera Hogar: lo que tienen entre los dos y lo que le queda a cada uno" loading="lazy" width="390" height="844"></div></div></div>
   <div class="w">
     <dl class="meta"><div><dt>Rol</dt><dd>Todo: producto, diseño y desarrollo</dd></div><div><dt>Estado</dt><dd>En uso, reemplazó a la planilla de la casa</dd></div><div><dt>Stack</dt><dd>Next.js · TypeScript · Tailwind · Supabase con RLS y Realtime · PWA</dd></div><div><dt>Usuarios</dt><dd>Dos personas que comparten los gastos de la casa, cada una con su login</dd></div></dl>
     
@@ -82,8 +82,55 @@
     h.setAttribute('data-theme', nuevo);
     try { localStorage.setItem('tema', nuevo); } catch (e) {}
   });
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.rev').forEach((el) => io.observe(el));
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Entrada escalonada: los hermanos de una misma grilla aparecen uno detrás de otro.
+  document.querySelectorAll('.rev').forEach((el) => {
+    const hermanos = [...el.parentElement.children].filter((x) => x.classList.contains('rev'));
+    el.style.setProperty('--d', (hermanos.indexOf(el) % 4) * 90 + 'ms');
+  });
+  // Los números cuentan desde cero cuando aparecen.
+  const contar = (el) => {
+    if (quieto || el.dataset.ok) return;
+    el.dataset.ok = 1;
+    const final = el.textContent;
+    const nums = final.match(/d+(?:[.,]d+)?/g);
+    if (!nums) return;
+    const t0 = performance.now(), dur = 1100;
+    const paso = (t) => {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = final.replace(/d+(?:[.,]d+)?/g, (n) => {
+        const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
+        return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
+      });
+      if (k < 1) requestAnimationFrame(paso); else el.textContent = final;
+    };
+    requestAnimationFrame(paso);
+  };
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.count').forEach(contar);
+    if (e.target.classList.contains('count')) contar(e.target);
+    io.unobserve(e.target);
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
+  // Parallax suave de las interfaces dentro de las portadas.
+  const capas = [...document.querySelectorAll('[data-parallax]')];
+  if (!quieto && capas.length) {
+    let pedido = false;
+    const mover = () => {
+      pedido = false;
+      const h = innerHeight;
+      capas.forEach((el) => {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > h) return;
+        const p = (r.top + r.height / 2 - h / 2) / h;
+        el.style.setProperty('--py', (p * -36).toFixed(1) + 'px');
+      });
+    };
+    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mover); } }, { passive: true });
+    mover();
+  }
 </script>
 </body>
 </html>

@@ -46,7 +46,7 @@
     <p class="cta-row"><a class="btn" href="https://gaston-perez-art.github.io/demos/heart/" target="_blank" rel="noopener">Try the demo ↗</a></p>
     <p class="note">The demo uses made-up data and stores everything in your browser. Use the bar above the tabs to switch between the patient view and the family view. The app is in Spanish. The code is private because the real app handles health data.</p>
   </header>
-  <div class="cs-hero w-wide"><div class="phone"><img src="../../img/heart.png" alt="Heart Today screen, with the day’s doses" loading="lazy" width="390" height="844"></div></div>
+  <div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-heart"><div class="phone"><img src="../../img/heart.png" alt="Heart Today screen, with the day’s doses" loading="lazy" width="390" height="844"></div></div></div>
   <div class="w">
     <dl class="meta"><div><dt>Role</dt><dd>Everything: discovery with the real user, design and development</dd></div><div><dt>Status</dt><dd>In daily use since 2026</dd></div><div><dt>Stack</dt><dd>React · Vite · PWA · Supabase with RLS</dd></div><div><dt>Users</dt><dd>A patient and his family. Same app; the role decides which screen opens</dd></div></dl>
     
@@ -95,8 +95,55 @@
     h.setAttribute('data-theme', nuevo);
     try { localStorage.setItem('tema', nuevo); } catch (e) {}
   });
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.rev').forEach((el) => io.observe(el));
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Entrada escalonada: los hermanos de una misma grilla aparecen uno detrás de otro.
+  document.querySelectorAll('.rev').forEach((el) => {
+    const hermanos = [...el.parentElement.children].filter((x) => x.classList.contains('rev'));
+    el.style.setProperty('--d', (hermanos.indexOf(el) % 4) * 90 + 'ms');
+  });
+  // Los números cuentan desde cero cuando aparecen.
+  const contar = (el) => {
+    if (quieto || el.dataset.ok) return;
+    el.dataset.ok = 1;
+    const final = el.textContent;
+    const nums = final.match(/d+(?:[.,]d+)?/g);
+    if (!nums) return;
+    const t0 = performance.now(), dur = 1100;
+    const paso = (t) => {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = final.replace(/d+(?:[.,]d+)?/g, (n) => {
+        const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
+        return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
+      });
+      if (k < 1) requestAnimationFrame(paso); else el.textContent = final;
+    };
+    requestAnimationFrame(paso);
+  };
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.count').forEach(contar);
+    if (e.target.classList.contains('count')) contar(e.target);
+    io.unobserve(e.target);
+  }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
+  // Parallax suave de las interfaces dentro de las portadas.
+  const capas = [...document.querySelectorAll('[data-parallax]')];
+  if (!quieto && capas.length) {
+    let pedido = false;
+    const mover = () => {
+      pedido = false;
+      const h = innerHeight;
+      capas.forEach((el) => {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > h) return;
+        const p = (r.top + r.height / 2 - h / 2) / h;
+        el.style.setProperty('--py', (p * -36).toFixed(1) + 'px');
+      });
+    };
+    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mover); } }, { passive: true });
+    mover();
+  }
 </script>
 </body>
 </html>
