@@ -18,14 +18,14 @@ const UI = {
     skip: 'Ir al contenido', inicio: 'Inicio', nav: ['Trabajo', 'Proyectos', 'Sobre mí'], contacto: 'Contacto', principal: 'Principal',
     tema: 'Cambiar entre modo claro y oscuro',
     footBig: '¿Construimos algo?', footNota: 'Este sitio también lo construí yo: HTML y CSS generados desde un archivo de contenido.', codigo: 'Código',
-    leerCaso: 'Leer el caso', verProyecto: 'Ver el proyecto', decision: 'Decisión', tradeoff: 'El trade-off',
+    leerCaso: 'Leer el caso', verProyecto: 'Ver el proyecto', tradeoff: 'A cambio',
     herramientas: 'Herramientas', siguiente: 'Siguiente', trabajo: 'Trabajo', proyectos: 'Proyectos',
     notaEmpresa: 'Contado sin pantallas ni datos internos: la interfaz de la portada es una ilustración. Las métricas son las que comparto públicamente en mi perfil.',
     avail: 'Buenos Aires · abierto a nuevas conversaciones', verCasos: 'Ver casos', verConstrui: 'Ver lo que construí', empresas: 'Empresas', impacto: 'Impacto',
     secTrabajo: ['01 · Trabajo', 'Producto en empresas que operan a escala', 'Cuatro casos contados por sus decisiones: qué problema había, qué elegí, qué resigné y qué pasó.'],
     secProyectos: ['02 · Proyectos', 'Lo que construyo con mis manos', (n) => `${n} productos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.`],
     numeros: { 5: 'Cinco', 6: 'Seis', 7: 'Siete' },
-    comienzos: 'Donde empecé', tldr: 'En 30 segundos', funciones: 'Qué se puede hacer', arquitectura: 'Cómo está construido', decisiones: 'Decisiones de producto',
+    comienzos: 'Donde empecé', tldr: 'En 30 segundos', funciones: 'Qué se puede hacer', arquitectura: 'Cómo está construido', decisiones: 'Cómo lo pensé',
     secProceso: ['03 · Proceso', 'Cómo trabajo'],
     homeTitle: 'Gastón Pérez · Product Builder',
     homeDesc: 'Senior Product Manager y Product Builder. Casos de producto en Mercado Libre, Rappi, Henry y Bigbox, y los productos que construyo de punta a punta.',
@@ -37,14 +37,14 @@ const UI = {
     skip: 'Skip to content', inicio: 'Home', nav: ['Work', 'Projects', 'About'], contacto: 'Contact', principal: 'Main',
     tema: 'Switch between light and dark mode',
     footBig: 'Shall we build something?', footNota: 'I built this site too: HTML and CSS generated from a content file.', codigo: 'Code',
-    leerCaso: 'Read the case', verProyecto: 'See the project', decision: 'Decision', tradeoff: 'The trade-off',
+    leerCaso: 'Read the case', verProyecto: 'See the project', tradeoff: 'The cost',
     herramientas: 'Tools', siguiente: 'Next', trabajo: 'Work', proyectos: 'Projects',
     notaEmpresa: 'Told without internal screens or data: the interface on the cover is an illustration. The metrics are the ones I share publicly on my profile.',
     avail: 'Buenos Aires · open to new conversations', verCasos: 'See cases', verConstrui: 'See what I built', empresas: 'Companies', impacto: 'Impact',
     secTrabajo: ['01 · Work', 'Product at companies operating at scale', 'Four cases told through their decisions: what the problem was, what I chose, what I gave up and what happened.'],
     secProyectos: ['02 · Projects', 'What I build with my own hands', (n) => `${n} end-to-end products. Each one solves a real problem for someone I know, and each one has a decision that defines it.`],
     numeros: { 5: 'Five', 6: 'Six', 7: 'Seven' },
-    comienzos: 'Where I started', tldr: 'In 30 seconds', funciones: 'What you can do', arquitectura: 'How it is built', decisiones: 'Product decisions',
+    comienzos: 'Where I started', tldr: 'In 30 seconds', funciones: 'What you can do', arquitectura: 'How it is built', decisiones: 'How I thought it through',
     secProceso: ['03 · Process', 'How I work'],
     homeTitle: 'Gastón Pérez · Product Builder',
     homeDesc: 'Senior Product Manager and Product Builder. Product cases at Mercado Libre, Rappi, Henry and Bigbox, and the products I build end to end.',
@@ -144,7 +144,7 @@ ${body}
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\\d+(?:[.,]\\d+)?/g);
@@ -253,7 +253,7 @@ ${body}
         .map((f) => `<tr>${f.map((x) => `<td>${esc(x)}</td>`).join('')}</tr>`)
         .join('')}</tbody></table></div>`;
     if (k === 'decision')
-      return `<section class="dec rev"><p class="dec-k">${t.decision}</p><h3>${esc(a[0])}</h3><p>${esc(a[1])}</p>${
+      return `<section class="dec rev"><h3>${esc(a[0])}</h3><p>${esc(a[1])}</p>${
         a[2] ? `<p class="dec-tr"><span>${t.tradeoff}</span>${esc(a[2])}</p>` : ''
       }</section>`;
     if (k === 'fig') return `<figure class="fig rev">${FIG[a[0]]}<figcaption>${esc(a[1])}</figcaption></figure>`;

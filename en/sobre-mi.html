@@ -76,7 +76,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

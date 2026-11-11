@@ -61,11 +61,11 @@
     <div class="feats"><section class="feat rev"><h3>Para todos</h3><ul><li>Tabla de posiciones por jugador, actualizada al instante</li><li>Historial de fechas con los equipos y el resultado</li><li>El pozo: la cuota por fecha jugada, calculada sola</li><li>Instalable en el celular</li></ul></section><section class="feat rev"><h3>Para el que carga</h3><ul><li>Sorteo de quiénes vienen y de capitanes, con una rueda que no repite</li><li>Carga del resultado con clave: solo suma quien pasó por el sorteo</li><li>Corregir o borrar una fecha; las siguientes se renumeran solas</li></ul></section></div>
     <h2 class="sec2">Cómo está construido</h2>
     <ol class="stack rev"><li><span class="stack-k">Sitio</span><span>JavaScript sin framework ni build: cuatro archivos</span></li><li><span class="stack-k">Datos</span><span>Supabase leído por REST, sin sumar la librería</span></li><li><span class="stack-k">Seguridad</span><span>RLS y funciones de carga protegidas con clave</span></li><li><span class="stack-k">Hosting</span><span>GitHub Pages, instalable como PWA</span></li></ol>
-    <h2 class="sec2">Decisiones de producto</h2>
+    <h2 class="sec2">Cómo lo pensé</h2>
     
-    <div class="prose"><section class="dec rev"><p class="dec-k">Decisión</p><h3>Los goles no se cuentan por jugador</h3><p>El marcador es del equipo y es de cada uno de los que estuvo adentro. En un fútbol 5 nadie puede llevar la cuenta de quién hizo cada gol, y una planilla que nadie puede completar de verdad es una planilla que miente. Los goles solo desempatan.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Solo suma el que jugó</h3><p>Antes de jugar se hace el sorteo con los que vienen. Después, solo se puede cargar a quien pasó por el sorteo. Un marcador vacío no vale como cero: el botón de guardar queda bloqueado hasta que estén los dos.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>El invitado compite como todos</h3><p>El que vino un sábado suelto puso la cuota como todos, así que entra en la tabla con su única fecha y queda abajo, sin ensuciar la punta.</p></section></div>
+    <div class="prose"><section class="dec rev"><h3>Los goles no se cuentan por jugador</h3><p>El marcador es del equipo y es de cada uno de los que estuvo adentro. En un fútbol 5 nadie puede llevar la cuenta de quién hizo cada gol, y una planilla que nadie puede completar de verdad es una planilla que miente. Los goles solo desempatan.</p></section>
+<section class="dec rev"><h3>Solo suma el que jugó</h3><p>Antes de jugar se hace el sorteo con los que vienen. Después, solo se puede cargar a quien pasó por el sorteo. Un marcador vacío no vale como cero: el botón de guardar queda bloqueado hasta que estén los dos.</p></section>
+<section class="dec rev"><h3>El invitado compite como todos</h3><p>El que vino un sábado suelto puso la cuota como todos, así que entra en la tabla con su única fecha y queda abajo, sin ensuciar la punta.</p></section></div>
     
     
   </div>
@@ -99,7 +99,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

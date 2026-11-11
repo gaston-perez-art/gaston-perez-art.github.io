@@ -61,11 +61,11 @@
     <div class="feats"><section class="feat rev"><h3>For everyone</h3><ul><li>Standings by player, updated instantly</li><li>Match history with teams and scores</li><li>The pot: the fee per match played, calculated automatically</li><li>Installable on the phone</li></ul></section><section class="feat rev"><h3>For the organizer</h3><ul><li>Draw of who plays and of captains, with a rotation that does not repeat</li><li>Result entry with a password: only players from the draw score</li><li>Edit or delete a match day; the following ones renumber themselves</li></ul></section></div>
     <h2 class="sec2">How it is built</h2>
     <ol class="stack rev"><li><span class="stack-k">Site</span><span>Framework-free JavaScript, no build: four files</span></li><li><span class="stack-k">Data</span><span>Supabase read over REST, without adding the library</span></li><li><span class="stack-k">Security</span><span>RLS and password-protected write functions</span></li><li><span class="stack-k">Hosting</span><span>GitHub Pages, installable as a PWA</span></li></ol>
-    <h2 class="sec2">Product decisions</h2>
+    <h2 class="sec2">How I thought it through</h2>
     
-    <div class="prose"><section class="dec rev"><p class="dec-k">Decision</p><h3>Goals are not counted per player</h3><p>The score belongs to the team and to everyone who was on the pitch. In 5-a-side nobody can keep track of who scored each goal, and a sheet nobody can truly fill in is a sheet that lies. Goals only break ties.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Only those who played score</h3><p>Before playing, teams are drawn from whoever shows up. Afterwards, only players who went through the draw can be entered. An empty score is not a zero: the save button stays locked until both are in.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>The guest competes like everyone else</h3><p>Whoever came for a single Saturday paid the fee like everyone, so they join the table with their one match day and sit at the bottom, without messing up the top.</p></section></div>
+    <div class="prose"><section class="dec rev"><h3>Goals are not counted per player</h3><p>The score belongs to the team and to everyone who was on the pitch. In 5-a-side nobody can keep track of who scored each goal, and a sheet nobody can truly fill in is a sheet that lies. Goals only break ties.</p></section>
+<section class="dec rev"><h3>Only those who played score</h3><p>Before playing, teams are drawn from whoever shows up. Afterwards, only players who went through the draw can be entered. An empty score is not a zero: the save button stays locked until both are in.</p></section>
+<section class="dec rev"><h3>The guest competes like everyone else</h3><p>Whoever came for a single Saturday paid the fee like everyone, so they join the table with their one match day and sit at the bottom, without messing up the top.</p></section></div>
     
     
   </div>
@@ -99,7 +99,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

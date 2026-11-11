@@ -54,11 +54,11 @@
     <div class="feats"><section class="feat rev"><h3>Sitio</h3><ul><li>Switch entre Soporte técnico y Para docentes, con color propio por unidad</li><li>Botón de contacto fijo que abre el formulario</li><li>Equipo con foto y LinkedIn, y la cinta de empresas donde trabajamos</li><li>Diseño mobile-first</li></ul></section><section class="feat rev"><h3>Crecimiento</h3><ul><li>Cada contacto entra directo a una planilla de Google</li><li>Analítica con GA4</li><li>SEO: datos estructurados, sitemap y Open Graph</li></ul></section></div>
     <h2 class="sec2">Cómo está construido</h2>
     <ol class="stack rev"><li><span class="stack-k">Sitio</span><span>Un solo HTML con CSS y JS, sin build</span></li><li><span class="stack-k">Hosting</span><span>GitHub Pages con dominio propio y HTTPS</span></li><li><span class="stack-k">Contactos</span><span>Google Forms guarda cada lead en Google Sheets</span></li><li><span class="stack-k">Analítica</span><span>Google Analytics 4</span></li><li><span class="stack-k">Costo mensual</span><span>Cero. No hay servidor que mantener</span></li></ol>
-    <h2 class="sec2">Decisiones de producto</h2>
+    <h2 class="sec2">Cómo lo pensé</h2>
     
     <div class="prose"><h2>Dos negocios, una landing</h2>
 <p>Un switch arriba separa las dos unidades. El sitio no vende ni cobra: presenta, mide y junta contactos.</p>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Serverless de costo cero</h3><p>Hosting en GitHub Pages, DNS en Cloudflare, leads a Google Sheets por un formulario y analítica en GA4. No hay servidor que mantener. Cuando el producto docente necesite guardar el trabajo del usuario, recién ahí se justifica un backend.</p><p class="dec-tr"><span>El trade-off</span>Sin cuentas ni datos propios por ahora. Es lo correcto mientras la pregunta sea si hay demanda.</p></section>
+<section class="dec rev"><h3>Serverless de costo cero</h3><p>Hosting en GitHub Pages, DNS en Cloudflare, leads a Google Sheets por un formulario y analítica en GA4. No hay servidor que mantener. Cuando el producto docente necesite guardar el trabajo del usuario, recién ahí se justifica un backend.</p><p class="dec-tr"><span>A cambio</span>Sin cuentas ni datos propios por ahora. Es lo correcto mientras la pregunta sea si hay demanda.</p></section>
 <h2>De la tesis al mercado</h2>
 <p>El plan de negocios de Tecla es el trabajo final de mi MBA en la Universidad de Palermo. El sitio es la validación de mercado de ese plan.</p></div>
     
@@ -94,7 +94,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

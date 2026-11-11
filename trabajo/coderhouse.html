@@ -54,8 +54,8 @@
     
     <div class="prose"><h2>Volver a la escuela, del otro lado</h2>
 <p>Coderhouse es la escuela que me formó. En 2021 hice ahí el curso de Product Manager y terminé en el 10% superior de la cohorte. Ese mismo año entré a trabajar como Growth Product Owner. Rearmar el sitio de la escuela donde había estudiado tuvo algo de devolución.</p>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Rediseño end-to-end del sitio público</h3><p>El sitio es la puerta de entrada de cada estudiante nuevo. Lo migré a una versión nueva, con UI e infraestructura renovadas.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Expansión a México y Brasil</h3><p>El crecimiento ya no estaba solo en Argentina. Trabajé desde producto la expansión regional hacia dos mercados nuevos.</p></section>
+<section class="dec rev"><h3>Rediseño end-to-end del sitio público</h3><p>El sitio es la puerta de entrada de cada estudiante nuevo. Lo migré a una versión nueva, con UI e infraestructura renovadas.</p></section>
+<section class="dec rev"><h3>Expansión a México y Brasil</h3><p>El crecimiento ya no estaba solo en Argentina. Trabajé desde producto la expansión regional hacia dos mercados nuevos.</p></section>
 <p>En paralelo fui tutor de los cursos de Product Manager y de Scrum, dentro de la misma compañía. Con los años volví como alumno: en total hice cinco cursos en Coderhouse.</p></div>
     <p class="tools-used"><span>Herramientas</span>Google Data Studio · Looker · Google Optimize · CMS interno · Jira · Notion</p>
     
@@ -90,7 +90,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

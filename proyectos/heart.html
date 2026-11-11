@@ -54,13 +54,13 @@
     <div class="feats"><section class="feat rev"><h3>Paciente</h3><ul><li>Hoy: los bloques del día con sus remedios; un toque marca la toma y guarda la hora real</li><li>Registro de presión con teclado propio, sin interpretar el número</li><li>Un mensaje por día de la familia y los amigos</li><li>El cierre del día al completar las diez tomas</li></ul></section><section class="feat rev"><h3>Familia</h3><ul><li>Panel en vivo: cuántas tomó, el estado de cada bloque y el remedio que se termina</li><li>Stock por remedio con los días que quedan; cargar una caja muestra la cuenta antes de guardar</li><li>La semana en grilla, como el cuadro impreso</li><li>Moderar el muro de mensajes y repartir el link público</li></ul></section><section class="feat rev"><h3>Accesibilidad</h3><ul><li>Tamaño de letra que agranda toda la pantalla junta</li><li>Cuatro temas, claros y oscuros</li><li>Funciona sin conexión y sincroniza cuando vuelve la señal</li><li>Las actualizaciones avisan, no se instalan solas</li></ul></section></div>
     <h2 class="sec2">Cómo está construido</h2>
     <ol class="stack rev"><li><span class="stack-k">App</span><span>React y Vite como PWA instalable, con service worker y tipografías propias para funcionar offline</span></li><li><span class="stack-k">Datos</span><span>Supabase con RLS: marcar una toma es solo del paciente, por base y por interfaz</span></li><li><span class="stack-k">Integridad</span><span>El stock lo mueven triggers y funciones: nunca se escribe directo y cada movimiento queda registrado</span></li><li><span class="stack-k">Offline primero</span><span>Cola local con reintentos y un identificador por operación para no sumar dos veces</span></li><li><span class="stack-k">Demo</span><span>Build aparte con datos inventados, guardados en el navegador</span></li></ol>
-    <h2 class="sec2">Decisiones de producto</h2>
+    <h2 class="sec2">Cómo lo pensé</h2>
     
     <div class="prose"><h2>Qué hace</h2>
 <p>Él entra y ve Hoy: los cuatro bloques del día con sus remedios. Un toque marca la toma y guarda la hora real. La familia ve el panel: cuántas tomó, el estado de cada bloque y el remedio que se está terminando. Se actualiza solo cuando él marca algo.</p>
 <p>Al completar las diez, la tarjeta se convierte en el cierre del día: un corazón latiendo con el trazo de un monitor y la frase que él dice cada mañana.</p>
 <h2>Decisiones de diseño</h2>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>El día arranca a las 4 AM, no a medianoche</h3><p>Si toma la pastilla para dormir a las 00:30, cuenta para el día anterior.</p></section>
+<section class="dec rev"><h3>El día arranca a las 4 AM, no a medianoche</h3><p>Si toma la pastilla para dormir a las 00:30, cuenta para el día anterior.</p></section>
 <figure class="fig rev"><svg viewBox="0 0 640 150" role="img" aria-label="Línea de tiempo: el día de la app va de 4 AM a 4 AM; una toma a las 00:30 cuenta para el día anterior">
     <line x1="40" y1="70" x2="600" y2="70" class="s-axis"/>
     <rect x="40" y="58" width="560" height="24" rx="12" class="s-acc-bg"/>
@@ -74,9 +74,9 @@
     <text x="518" y="30" text-anchor="middle" class="s-t">00:30 · cuenta para hoy</text>
     <text x="320" y="140" text-anchor="middle" class="s-m">Un día de la app</text>
   </svg><figcaption>El día de la app va de 4 AM a 4 AM.</figcaption></figure>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>La app registra, no interpreta</h3><p>El registro de presión no tiene colores por rango ni tendencias. Interpretar un número es trabajo del médico. El historial se comparte por WhatsApp en un toque.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Nada cambia debajo de sus dedos</h3><p>Desmarcar pide dos toques. Las actualizaciones avisan, no se instalan solas. Todo está en rem: un selector agranda texto, botones y espacios juntos, y la pantalla nunca se sale de cuadro. Sin tipografías web: Roboto ya está en el teléfono y la app funciona sin conexión.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Marcar una toma es solo del paciente</h3><p>Por permisos en la base y por interfaz. Si cualquiera puede tildar, el registro deja de decir lo que pasó.</p></section>
+<section class="dec rev"><h3>La app registra, no interpreta</h3><p>El registro de presión no tiene colores por rango ni tendencias. Interpretar un número es trabajo del médico. El historial se comparte por WhatsApp en un toque.</p></section>
+<section class="dec rev"><h3>Nada cambia debajo de sus dedos</h3><p>Desmarcar pide dos toques. Las actualizaciones avisan, no se instalan solas. Todo está en rem: un selector agranda texto, botones y espacios juntos, y la pantalla nunca se sale de cuadro. Sin tipografías web: Roboto ya está en el teléfono y la app funciona sin conexión.</p></section>
+<section class="dec rev"><h3>Marcar una toma es solo del paciente</h3><p>Por permisos en la base y por interfaz. Si cualquiera puede tildar, el registro deja de decir lo que pasó.</p></section>
 <h2>El stock que se descuenta solo</h2>
 <p>Cada toma descuenta según la dosis y las tarjetas se ordenan por urgencia. Cargar una caja muestra la cuenta antes de guardar: "38 comprimidos, alcanzan 38 días". Un stock vacío y un stock que nadie cargó son dos cosas distintas, y la app las trata distinto.</p></div>
     
@@ -112,7 +112,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

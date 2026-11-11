@@ -54,14 +54,14 @@
     <div class="feats"><section class="feat rev"><h3>Inicio</h3><ul><li>Saldo del mes y lo que le queda a cada uno</li><li>La cuenta completa: entró, gastaron, pagos que faltan, para cada uno y para la casa</li><li>Actividad por día con el saldo al cierre</li><li>Próximos pagos: cuántos, cuánto y cuándo vence el primero</li></ul></section><section class="feat rev"><h3>Cargar y pagar</h3><ul><li>Gasto en tres pasos: monto, categoría y detalle</li><li>Pagos fijos ordenados por vencimiento; marcar pagado crea el gasto</li><li>Recordatorio si pasan 12 horas sin cargar nada</li></ul></section><section class="feat rev"><h3>Entender en qué se va</h3><ul><li>Categorías con techo mensual y el estado en palabras: "Usaron el 31%", "Te pasaste"</li><li>Reparto: cuánto le toca poner a cada uno, cuánto puso y la diferencia</li><li>Tarjeta de cada persona que gira y muestra en qué gasta</li><li>Vista "Los dos" o "Solo yo"</li></ul></section><section class="feat rev"><h3>Ajustes</h3><ul><li>Ingresos, techos y pagos fijos editables sin cambiar el pasado</li><li>Exportar a la planilla por período</li><li>Ocultar los montos con un toque</li><li>Modo claro y oscuro</li></ul></section></div>
     <h2 class="sec2">Cómo está construido</h2>
     <ol class="stack rev"><li><span class="stack-k">App</span><span>Next.js, TypeScript y Tailwind, exportada como sitio estático e instalable como PWA</span></li><li><span class="stack-k">Datos</span><span>Supabase: Postgres con RLS por hogar, un login por persona y Realtime</span></li><li><span class="stack-k">Reglas de negocio</span><span>Funciones puras con tests: las cuentas tienen que cerrar entre todas las pantallas</span></li><li><span class="stack-k">Deploy</span><span>GitHub Actions corre los tests, compila y publica en cada cambio</span></li><li><span class="stack-k">Demo</span><span>El mismo código sin las variables de Supabase: datos ficticios en el navegador</span></li></ol>
-    <h2 class="sec2">Decisiones de producto</h2>
+    <h2 class="sec2">Cómo lo pensé</h2>
     
     <div class="prose"><h2>El problema</h2>
 <p>Los gastos de la casa vivían en una planilla de Google Sheets. Funcionaba, pero cargar un gasto desde el celular era lento y con errores: fila equivocada, hoja equivocada, "quién pagó" elegido a mano en cada fila. Y marcar un pago fijo como pagado no lo registraba como gasto, así que había que cargarlo dos veces y se olvidaba.</p>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Cargar un gasto en tres toques</h3><p>Monto, categoría y detalle. La fecha es hoy y quien pagó es quien tiene la sesión abierta, salvo que se cambie. Si cargar cuesta, no se carga, y una cuenta con huecos no sirve para decidir nada.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Marcar como pagado crea el gasto</h3><p>Los pagos fijos del mes se ordenan por vencimiento. Marcar uno como pagado crea el gasto en su categoría; desmarcarlo lo borra. Una sola acción, un solo registro.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Cada uno pone según lo que gana</h3><p>El reparto no es mitad y mitad. La app calcula cuánto le toca poner a cada uno según su parte del ingreso total, lo compara con lo que puso de verdad y muestra la diferencia. El número que vale es el de fin de mes.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Categorías cerradas, con techo</h3><p>Nada de texto libre en la categoría: en la planilla era la causa de gastos que no sumaban en el mes. Cada categoría tiene un techo mensual y la app muestra en verde lo que queda y en rojo lo que se pasó.</p></section>
+<section class="dec rev"><h3>Cargar un gasto en tres toques</h3><p>Monto, categoría y detalle. La fecha es hoy y quien pagó es quien tiene la sesión abierta, salvo que se cambie. Si cargar cuesta, no se carga, y una cuenta con huecos no sirve para decidir nada.</p></section>
+<section class="dec rev"><h3>Marcar como pagado crea el gasto</h3><p>Los pagos fijos del mes se ordenan por vencimiento. Marcar uno como pagado crea el gasto en su categoría; desmarcarlo lo borra. Una sola acción, un solo registro.</p></section>
+<section class="dec rev"><h3>Cada uno pone según lo que gana</h3><p>El reparto no es mitad y mitad. La app calcula cuánto le toca poner a cada uno según su parte del ingreso total, lo compara con lo que puso de verdad y muestra la diferencia. El número que vale es el de fin de mes.</p></section>
+<section class="dec rev"><h3>Categorías cerradas, con techo</h3><p>Nada de texto libre en la categoría: en la planilla era la causa de gastos que no sumaban en el mes. Cada categoría tiene un techo mensual y la app muestra en verde lo que queda y en rojo lo que se pasó.</p></section>
 <h2>Cómo se calcula el reparto</h2>
 <div class="tbl"><table><thead><tr><th>Concepto</th><th>Cálculo</th></tr></thead><tbody><tr><td>Le toca poner</td><td>Su parte del ingreso total × gasto previsto del mes</td></tr><tr><td>Puso</td><td>Gastos del mes que pagó esa persona</td></tr><tr><td>Diferencia</td><td>Lo que le queda de verdad menos lo que le debería quedar</td></tr></tbody></table></div>
 <h2>Qué construí</h2>
@@ -99,7 +99,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

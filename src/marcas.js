@@ -1,6 +1,6 @@
-// Portadas de los casos de empresa: color y logo de cada marca, más una
-// interfaz ilustrada. Son recreaciones en SVG de pantallas públicas del producto
-// (o abstractas), sin datos reales ni internos.
+// Portadas de los casos de empresa: color y logo de cada marca, más el producto
+// "de juguete": la estructura real de sus pantallas, con bloques en lugar de
+// texto y sin datos reales ni internos.
 
 const MARCAS = {
   bigbox: { bg: '#f1f0ec', fg: '#111111', ac: '#111111', ac2: '#ffd166', logo: 'img/logos/bigbox-negro.png', alto: 0.9 },
@@ -20,177 +20,57 @@ const pantalla = (id, x, y, w, h, contenido, oscura = false) => `
     <g clip-path="none">${contenido}</g>
   </g>`;
 
-// ---------------------------------------------------------------- recreaciones fieles
-const T = (x, y, txt, size = 9, color = '#333', weight = 400, extra = '') =>
-  `<text x="${x}" y="${y}" font-size="${size}" fill="${color}" font-weight="${weight}" ${extra}>${txt}</text>`;
-const sombra = (w, h, r = 12) => `<rect x="8" y="22" width="${w}" height="${h}" rx="${r + 2}" fill="#000" opacity=".16"/><rect x="3" y="10" width="${w}" height="${h}" rx="${r + 1}" fill="#000" opacity=".12"/>`;
-// Ventana de navegador con barra superior y URL.
-const ventana = (w, h, url, contenido, oscura = false) => `
-  ${sombra(w, h)}
-  <rect width="${w}" height="${h}" rx="12" fill="#fff"/>
-  <path d="M0 12a12 12 0 0 1 12-12h${w - 24}a12 12 0 0 1 12 12v12H0z" fill="${oscura ? '#202124' : '#ececee'}"/>
-  ${[0, 1, 2].map((i) => `<circle cx="${14 + i * 11}" cy="12" r="3.6" fill="${['#ff5f57', '#febc2e', '#28c840'][i]}"/>`).join('')}
-  <rect x="${w / 2 - 110}" y="5" width="220" height="14" rx="7" fill="${oscura ? '#35363a' : '#fff'}"/>
-  ${T(w / 2, 15, url, 7.5, oscura ? '#bdc1c6' : '#777', 400, 'text-anchor="middle"')}
-  <g transform="translate(0,24)">${contenido}</g>`;
-const svgMock = (cuerpo, rot = 0, vb = '-20 -20 600 460') =>
-  `<svg class="mock fiel" viewBox="${vb}" aria-hidden="true" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif"><g transform="rotate(${rot} 280 210)">${cuerpo}</g></svg>`;
-const icono = (x, y, c = '#9aa0a6') => `<rect x="${x}" y="${y - 7}" width="9" height="9" rx="2.5" fill="none" stroke="${c}" stroke-width="1.2"/>`;
-
-const FIELES = {
-  // Gestor de pedidos de Mercado Pago Delivery, hoy con la barra amarilla de Mercado Libre.
-  mercadolibre: () => {
-    const W = 540, H = 360;
-    const menu = ['Inicio', 'Tu perfil', 'Ayuda', '', 'Tu dinero', 'Actividad', 'Enviar dinero', '', 'Cobrar en tu local', 'Link de pago', 'Delivery'];
-    let y = 62, items = '';
-    menu.forEach((m) => {
-      if (!m) { items += `<rect x="12" y="${y - 6}" width="106" height="1" fill="#eee"/>`; y += 8; return; }
-      items += icono(14, y) + T(30, y, m, 7.5, '#333'); y += 17;
-    });
-    ['Gestor de pedidos', 'Catálogo para Delivery', 'Configurar tiempos', 'Informes', 'Planes de suscripción'].forEach((m, i) => {
-      items += T(30, y, m, 7, i === 0 ? '#3483fa' : '#333', i === 0 ? 600 : 400); y += 15;
-    });
-    const tabs = [['Para preparar', '1 pedido', '#3483fa'], ['En preparación', '0 pedidos', '#333'], ['En camino', '0 pedidos', '#3483fa'], ['Finalizados', '1 pedido', '#3483fa']];
-    const c = `
-      <rect width="${W}" height="${H - 24}" fill="#ededed"/>
-      <rect width="${W}" height="34" fill="#ffe600"/>
-      <circle cx="20" cy="17" r="9" fill="#fff" opacity=".8"/>${T(34, 14, 'Hola', 6.5, '#555')}${T(34, 24, 'Nivel 1, Mercado Puntos', 7, '#333', 600)}
-      ${T(142, 21, 'Gestor de Pedidos', 9, '#333', 600)}
-      <rect y="34" width="128" height="${H - 58}" fill="#fff"/>
-      ${items}
-      <g transform="translate(150,48)">
-        <rect width="370" height="34" rx="4" fill="#fff"/>
-        <rect x="12" y="11" width="12" height="12" rx="3" fill="#e8f0fe"/>${T(32, 20, 'Local de prueba', 7.5, '#333', 600)}<circle cx="98" cy="17" r="2.5" fill="#00a650"/>${T(104, 20, 'Abierto las 24 hs.', 6.5, '#00a650')}
-        <rect x="296" y="9" width="62" height="16" rx="4" fill="#3483fa"/>${T(327, 20, 'Cerrar local', 7, '#fff', 600, 'text-anchor="middle"')}
-        <rect y="42" width="370" height="38" rx="4" fill="#fff"/>
-        ${tabs.map(([a, b, col], i) => `${T(10 + i * 92, 58, a, 7.5, col, 600)}${T(10 + i * 92, 70, b, 6.5, '#888')}${i === 1 ? `<rect x="${i * 92}" y="42" width="92" height="2" fill="#333"/>` : ''}`).join('')}
-        <rect y="92" width="370" height="20" rx="3" fill="#e5e5e5"/><rect y="92" width="2.5" height="20" fill="#3483fa"/>
-        <circle cx="14" cy="102" r="4" fill="#3483fa"/>${T(24, 105, 'Para iniciar su recorrido, los repartidores deben escanear las etiquetas impresas.', 6.5, '#444')}
-        <rect y="120" width="200" height="16" rx="8" fill="#e2e2e2"/>${T(16, 131, 'Buscar por número de pedido, cliente o producto', 6.5, '#999')}
-        ${T(370, 131, 'Consulta las preguntas frecuentes', 6.5, '#3483fa', 400, 'text-anchor="end"')}
-        <rect y="144" width="370" height="126" rx="4" fill="#e6e6e6"/>
-        <g transform="translate(165,160)" fill="none" stroke="#555" stroke-width="1.3">
-          <path d="M0 14h40v34H0z" fill="#fff"/><path d="M-3 14l5-12h36l5 12" fill="#fff"/><path d="M-3 14q5.5 6 11 0q5.5 6 11 0q5.5 6 11 0q5.5 6 11 0"/>
-          <rect x="6" y="24" width="10" height="14"/><rect x="22" y="26" width="5" height="9"/><rect x="29" y="26" width="5" height="9"/>
-        </g>
-        ${T(185, 230, 'Aún no tienes pedidos', 8.5, '#333', 600, 'text-anchor="middle"')}
-        ${T(185, 243, 'Aquí podrás gestionar todos los pedidos que recibas al abrir el local.', 6.5, '#777', 400, 'text-anchor="middle"')}
-      </g>`;
-    return svgMock(`<g transform="translate(70,40)">${ventana(W, H, 'mercadolibre.com.ar/delivery/gestor-de-pedidos', c)}</g>`, -3);
-  },
-
-  // Visión general del portal de partners de Rappi.
-  rappi: () => {
-    const W = 560, H = 370;
-    const sec = [['INICIO', ['Visión general', 'Notificaciones', 'Centro de ayuda']], ['ANÁLISIS', ['Top Restaurantes', 'Recomendaciones', 'Nivel de servicio', 'Reseñas', 'Ventas']], ['MARKETING', ['RappiAds']]];
-    let y = 58, side = '';
-    sec.forEach(([h, items]) => {
-      side += T(12, y, h, 6, '#999', 600, 'letter-spacing="1"'); y += 16;
-      items.forEach((it) => {
-        const on = it === 'Visión general';
-        if (on) side += `<rect x="0" y="${y - 10}" width="2.5" height="14" fill="#4b6cf7"/>`;
-        side += `<circle cx="17" cy="${y - 3}" r="4" fill="none" stroke="#555" stroke-width="1.1"/>` + T(28, y, it, 7.5, '#222', on ? 600 : 400);
-        y += 17;
-      });
-      y += 6;
-    });
-    const linea = (pts, col, dash = '') => `<polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.6" ${dash}/>`;
-    const c = `
-      <rect width="${W}" height="38" fill="#fff"/><rect y="38" width="${W}" height="1" fill="#eee"/>
-      <text x="14" y="26" font-size="17" font-weight="800" font-style="italic" fill="#ff441f" font-family="Georgia, serif">Rappi</text>
-      <rect x="352" y="10" width="62" height="18" rx="9" fill="#f4f4f4"/><rect x="360" y="15" width="11" height="8" fill="#d52b1e"/><rect x="360" y="15" width="5" height="4" fill="#0033a0"/>${T(376, 23, 'Chile', 8, '#222', 600)}
-      <circle cx="430" cy="19" r="8" fill="#f4f4f4"/>
-      ${T(446, 17, 'tu restaurante', 6.5, '#222', 600)}${T(446, 27, 'Administrador', 6.5, '#888')}<circle cx="532" cy="19" r="9" fill="#44c08a"/>
-      <rect y="39" width="120" height="${H - 63}" fill="#fff"/><rect x="120" y="39" width="1" height="${H - 63}" fill="#eee"/>
-      ${side}
-      <rect x="121" y="39" width="${W - 121}" height="${H - 63}" fill="#fafafa"/>
-      <g transform="translate(136,50)">
-        ${T(0, 12, 'Filtros', 7.5, '#222', 600)}
-        ${['Marca: Tu marca', 'Sucursales: Todas', 'Período: Últimos 7 días'].map((f, i) => `<rect x="${36 + i * 112}" y="2" width="104" height="15" rx="4" fill="#fff" stroke="#eee"/>${T(42 + i * 112, 12, f, 6.5, '#555')}`).join('')}
-        ${T(0, 48, 'Visión general', 17, '#111', 700)}
-        ${['Ventas', 'Órdenes', 'Ticket promedio', 'Clientes'].map((t, i) => T([0, 40, 84, 150][i], 72, t, 7.5, i ? '#333' : '#4b6cf7')).join('')}<rect y="76" width="26" height="2" fill="#4b6cf7"/>
-        <rect y="88" width="260" height="190" rx="6" fill="#fff" stroke="#eee"/>
-        <rect x="10" y="98" width="115" height="48" rx="5" fill="#fff" stroke="#eee"/>${T(18, 112, 'Venta bruta', 7, '#222', 600)}${T(18, 130, '$ 0', 12, '#111', 700)}${T(18, 141, 'Total de órdenes: 0', 5.8, '#666')}
-        <rect x="134" y="98" width="115" height="48" rx="5" fill="#fff" stroke="#eee"/>${T(142, 112, 'Ticket promedio', 7, '#222', 600)}${T(142, 130, '$ 0', 12, '#111', 700)}${T(142, 141, 'Órdenes Pro: $ 0', 5.8, '#666')}
-        ${T(10, 162, 'Comparación en valor de ventas', 7, '#222', 600)}
-        <rect x="10" y="168" width="6" height="6" fill="#ff441f"/>${T(20, 174, 'Período anterior', 6, '#555')}<rect x="80" y="168" width="6" height="6" fill="#7a3ff2"/>${T(90, 174, 'Período actual', 6, '#555')}
-        ${[0, 1, 2, 3].map((i) => `<line x1="30" x2="250" y1="${186 + i * 22}" y2="${186 + i * 22}" stroke="#f1f1f1"/>`).join('')}
-        ${linea('30,250 70,236 110,244 150,214 190,226 230,200 250,206', '#ff441f')}
-        ${linea('30,256 70,246 110,226 150,232 190,204 230,212 250,190', '#7a3ff2', 'stroke-dasharray="3 3"')}
-        <rect x="272" y="88" width="132" height="190" rx="6" fill="#fff" stroke="#eee"/>
-        ${T(282, 106, 'Calificación actual', 7.5, '#222', 600)}${T(282, 116, 'Próxima actualización: Marzo', 5.8, '#777')}
-        <circle cx="384" cy="104" r="20" fill="#111"/><text x="384" y="102" font-size="7.5" font-weight="800" font-style="italic" fill="#fff" text-anchor="middle" font-family="Georgia, serif">Rappi</text><text x="384" y="112" font-size="8" font-weight="900" fill="#ffd400" text-anchor="middle">TOP</text>
-        <path d="M290 136l9-5 9 5v10l-9 5-9-5z" fill="#e8eefc"/>${T(316, 146, 'Básico', 11, '#111', 700)}
-        ${T(282, 170, 'Si mejorás tu servicio, podés', 6.3, '#333')}${T(282, 179, 'ganar estos beneficios:', 6.3, '#333')}
-        ${[0, 1, 2].map((i) => `<rect x="282" y="${190 + i * 24}" width="8" height="12" rx="2" fill="none" stroke="#555"/><rect x="296" y="${192 + i * 24}" width="${90 - i * 14}" height="5" rx="2.5" fill="#e9e9e9"/><rect x="296" y="${200 + i * 24}" width="${60 - i * 8}" height="4" rx="2" fill="#f1f1f1"/>`).join('')}
-      </g>`;
-    return svgMock(`<g transform="translate(40,30)">${ventana(W, H, 'partners.rappi.com/home', c, true)}</g>`, -7);
-  },
-
-  // Home de Bigbox (aproximada) y el canje del agasajado en el celular.
-  bigbox: () => {
-    const W = 500, H = 330;
-    const fotos = [['#c8846a', '#5b3a2e'], ['#6f8fa8', '#23384a'], ['#b9a36b', '#4d4126'], ['#8aa37a', '#2f3f27']];
-    const cats = ['Estadías', 'Gastronomía', 'Aventura', 'Bienestar', 'Regalos'];
-    const c = `
-      <defs>${fotos.map(([a, b], i) => `<linearGradient id="bbf${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`).join('')}
-        <linearGradient id="bbh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#111"/><stop offset=".55" stop-color="#2a2622"/><stop offset="1" stop-color="#8a6a52"/></linearGradient></defs>
-      <rect width="${W}" height="${H - 24}" fill="#fff"/>
-      <text x="16" y="26" font-size="17" font-weight="700" fill="#111" letter-spacing="-0.6">bigbox</text>
-      <rect x="110" y="12" width="230" height="20" rx="10" fill="#f2f2f2"/>${T(124, 25, '¿Qué querés regalar?', 7.5, '#888')}
-      ${T(400, 25, 'Canjear', 7.5, '#111', 600)}<rect x="440" y="13" width="44" height="18" rx="9" fill="#111"/>${T(462, 25, 'Ingresar', 7, '#fff', 600, 'text-anchor="middle"')}
-      ${cats.map((k, i) => `<rect x="${16 + i * 70}" y="42" width="${k.length * 4.6 + 18}" height="16" rx="8" fill="${i ? '#fff' : '#111'}" stroke="#ddd"/>${T(25 + i * 70, 53, k, 7, i ? '#333' : '#fff', 600)}`).join('')}
-      <rect x="16" y="68" width="${W - 32}" height="96" rx="10" fill="url(#bbh)"/>
-      ${T(32, 104, 'Regalá experiencias', 15, '#fff', 700)}${T(32, 120, 'Que quien recibe elija la que más le guste.', 7.5, '#ddd')}
-      <rect x="32" y="132" width="72" height="18" rx="9" fill="#fff"/>${T(68, 144, 'Ver boxes', 7.5, '#111', 600, 'text-anchor="middle"')}
-      ${T(16, 186, 'Los más regalados', 10, '#111', 700)}
-      ${fotos.map((f, i) => `<rect x="${16 + i * 118}" y="194" width="110" height="64" rx="8" fill="url(#bbf${i})"/>
-        <rect x="${16 + i * 118}" y="264" width="${86 - i * 8}" height="6" rx="3" fill="#222"/><rect x="${16 + i * 118}" y="275" width="60" height="5" rx="2.5" fill="#ccc"/>
-        ${T(16 + i * 118, 296, '$' + [89, 125, 64, 149][i] + '.900', 8, '#111', 700)}`).join('')}`;
-    const tel = `
-      ${sombra(150, 290, 24)}
-      <rect width="150" height="290" rx="24" fill="#111"/><rect x="6" y="6" width="138" height="278" rx="19" fill="#fff"/>
-      <rect x="58" y="12" width="34" height="8" rx="4" fill="#111"/>
-      <text x="18" y="44" font-size="12" font-weight="700" fill="#111" letter-spacing="-0.4">bigbox</text>
-      ${T(18, 64, 'Tu regalo', 10, '#111', 700)}${T(18, 76, 'De parte de Ana', 7, '#777')}
-      <rect x="18" y="84" width="114" height="70" rx="8" fill="url(#bbf1)"/>
-      ${T(18, 170, 'Elegí tu experiencia', 8, '#111', 600)}
-      ${[0, 1].map((i) => `<rect x="${18 + i * 59}" y="178" width="55" height="40" rx="6" fill="url(#bbf${i * 2})"/>`).join('')}
-      <rect x="18" y="236" width="114" height="22" rx="11" fill="#111"/>${T(75, 250, 'Canjear', 8, '#fff', 600, 'text-anchor="middle"')}`;
-    return svgMock(`<g transform="translate(20,40)">${ventana(W, H, 'bigbox.com.ar', c)}</g><g transform="translate(410,110)">${tel}</g>`, -4, '-20 -20 600 460');
-  },
-};
-
 function interfaz(slug) {
-  if (FIELES[slug]) return FIELES[slug]();
   const m = MARCAS[slug];
   const id = slug;
   let s = '';
+  // Cada portada es el producto "de juguete": la estructura real de la pantalla,
+  // con bloques en lugar de texto.
+  const foto = (x, y, w, h, n, r = 8) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="url(#ft-${id}-${n % 4})"/>`;
+  const fotosDefs = (pares) => `<defs>${pares.map(([a, b], n) => `<linearGradient id="ft-${id}-${n}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`).join('')}</defs>`;
+  const corazon = (x, y) => `<circle cx="${x}" cy="${y}" r="7" fill="#ffffff" opacity=".9"/><path d="M${x} ${y + 3}c-3-2.4-4.5-3.8-4.5-5.3 0-1.3 1-2.2 2.1-2.2.9 0 1.6.5 2.4 1.4.8-.9 1.5-1.4 2.4-1.4 1.1 0 2.1.9 2.1 2.2 0 1.5-1.5 2.9-4.5 5.3z" fill="#111"/>`;
   if (slug === 'bigbox') {
-    const fotos = ['#ff7a59', '#ffd166', '#5ec2b7', '#8f7bff', '#f25f8b', '#4aa3ff'];
-    s += pantalla(id, 0, 0, 330, 250, `
-      ${barra(20, 20, 90, '#2f2559', 10)}${barra(240, 20, 70, '#ececf2', 10)}
-      ${fotos.map((c, i) => `${caja(20 + (i % 3) * 100, 50 + Math.floor(i / 3) * 96, 90, 58, c, 8)}${barra(20 + (i % 3) * 100, 114 + Math.floor(i / 3) * 96, 70, '#e3e3ea', 6)}${barra(20 + (i % 3) * 100, 126 + Math.floor(i / 3) * 96, 40, '#efeff4', 6)}`).join('')}`);
-    s += pantalla(id, 300, 150, 200, 210, `
-      ${barra(18, 20, 80, '#2f2559', 9)}
-      ${Array.from({ length: 28 }, (_, i) => `<circle cx="${30 + (i % 7) * 24}" cy="${52 + Math.floor(i / 7) * 24}" r="8" fill="${i === 17 ? '#ff7a59' : '#f1f0f6'}"/>`).join('')}
-      ${caja(18, 158, 164, 34, '#2f2559', 17)}${barra(60, 171, 80, '#ffffff', 8)}`);
-    s += pantalla(id, 40, 270, 220, 120, `
-      <path d="M38 52c-9-7-14-12-14-18 0-5 4-8 8-8 3 0 5 2 6 4 1-2 3-4 6-4 4 0 8 3 8 8 0 6-5 11-14 18z" fill="#f25f8b"/>
-      ${barra(70, 30, 120, '#2f2559', 9)}${barra(70, 48, 90, '#e3e3ea', 7)}${caja(20, 76, 180, 28, '#ffd166', 14)}`);
+    s += fotosDefs([['#c98a62', '#4a2e22'], ['#7b8f6a', '#26301f'], ['#6f86a0', '#1f2c3b'], ['#b07a8a', '#3e2430']]);
+    // Home: franja negra, header con buscador, menú, banner con fotos, "Lo más regalado".
+    s += pantalla(id, 0, 0, 380, 262, `
+      <path d="M0 16a16 16 0 0 1 16-16h348a16 16 0 0 1 16 16v4H0z" fill="#1d1d1d"/>${barra(150, 7, 80, '#ffffff', 5)}
+      ${barra(16, 32, 52, '#111', 11)}<rect x="84" y="30" width="120" height="16" rx="5" fill="none" stroke="#d6d6d6"/>
+      <rect x="300" y="30" width="64" height="16" rx="5" fill="none" stroke="#5b5bd6" stroke-width="1.5"/>${barra(312, 35, 40, '#5b5bd6', 6)}
+      ${[0, 1, 2, 3, 4].map((k) => barra(16 + k * 46, 56, 36, '#3a3a3a', 6)).join('')}
+      ${caja(16, 72, 348, 70, '#3b2f29', 8)}${barra(28, 92, 84, '#ffffff', 9)}${barra(28, 106, 60, '#ffffff', 9)}${caja(28, 122, 46, 13, '#e8776a', 4)}
+      ${[0, 1, 2, 3].map((k) => foto(168 + k * 48, 80, 44, 54, k, 3)).join('')}
+      <rect x="150" y="150" width="80" height="16" rx="5" fill="none" stroke="#5b5bd6" stroke-width="1.5"/>
+      ${barra(16, 176, 76, '#111', 9)}${barra(98, 178, 26, '#5b5bd6', 6)}
+      ${[0, 1, 2, 3].map((k) => `${foto(16 + k * 88, 192, 80, 54, k)}${corazon(84 + k * 88, 202)}${caja(22 + k * 88, 232, 40, 9, '#ffffff', 4.5)}`).join('')}`);
+    // Detalle de una box en el celular.
+    s += pantalla(id, 316, 120, 170, 260, `
+      ${foto(10, 10, 150, 104, 0, 10)}${corazon(144, 26)}${caja(18, 96, 52, 11, '#ffffff', 5.5)}
+      ${barra(14, 126, 80, '#111', 10)}<path d="M18 145l2 4 4.5.6-3.3 3 .8 4.4-4-2.2-4 2.2.8-4.4-3.3-3 4.5-.6z" fill="#f2b736"/>${barra(30, 146, 70, '#cfcfcf', 6)}
+      ${barra(14, 164, 130, '#ececec', 6)}${barra(14, 175, 100, '#ececec', 6)}
+      ${caja(14, 190, 60, 14, '#f1f1f1', 7)}${caja(80, 190, 60, 14, '#f1f1f1', 7)}
+      ${barra(14, 214, 64, '#111', 10)}${caja(14, 232, 142, 20, '#e8776a', 6)}${barra(60, 239, 50, '#ffffff', 6)}`);
   }
   if (slug === 'mercadolibre') {
-    s += pantalla(id, 0, 0, 340, 240, `
-      ${caja(0, 0, 340, 36, '#ffe600', 16)}${caja(0, 20, 340, 16, '#ffe600', 0)}${barra(16, 14, 70, '#2d3277', 9)}
-      <path d="M60 150a60 60 0 0 1 120 0" fill="none" stroke="#e8e8ee" stroke-width="16" stroke-linecap="round"/>
-      <path d="M60 150a60 60 0 0 1 104 -41" fill="none" stroke="#00a650" stroke-width="16" stroke-linecap="round"/>
-      ${barra(96, 160, 48, '#2d3277', 9)}
-      ${[0, 1, 2, 3].map((i) => `<circle cx="214" cy="${78 + i * 36}" r="9" fill="${['#00a650', '#3483fa', '#00a650', '#ffb020'][i]}"/>${barra(232, 74 + i * 36, 80 - (i % 2) * 20, '#e6e6ec', 8)}`).join('')}
-      ${barra(20, 200, 300, '#f3f3f6', 10)}`);
-    s += pantalla(id, 290, 120, 210, 250, `
-      ${barra(18, 18, 90, '#2d3277', 9)}
-      ${caja(18, 46, 140, 34, '#f1f1f5', 14)}${caja(52, 92, 140, 46, '#3483fa', 14)}${barra(66, 104, 100, '#ffffff', 7)}${barra(66, 118, 70, '#cfe1ff', 7)}
-      ${caja(18, 150, 120, 34, '#f1f1f5', 14)}${caja(72, 196, 120, 34, '#3483fa', 14)}${barra(86, 209, 80, '#ffffff', 7)}`);
+    // Gestor de pedidos: barra amarilla, menú lateral, local, pestañas y estado vacío.
+    s += pantalla(id, 0, 0, 370, 252, `
+      <path d="M0 16a16 16 0 0 1 16-16h338a16 16 0 0 1 16 16v14H0z" fill="#ffe600"/>
+      <circle cx="18" cy="15" r="7" fill="#ffffff"/>${barra(30, 12, 40, '#2d3277', 6)}${barra(96, 11, 70, '#333', 8)}
+      <rect y="30" width="82" height="222" fill="#ffffff"/><rect x="82" y="30" width="1" height="222" fill="#eeeeee"/>
+      ${[0, 1, 2, 4, 5, 6, 8, 9, 10].map((k) => `<rect x="12" y="${44 + k * 15}" width="7" height="7" rx="2" fill="none" stroke="#999"/>${barra(24, 45 + k * 15, 40 - (k % 3) * 8, k === 10 ? '#3483fa' : '#d9d9d9', 5)}`).join('')}
+      <rect x="83" y="30" width="287" height="222" fill="#ededed"/>
+      ${caja(96, 42, 262, 26, '#ffffff', 4)}<circle cx="108" cy="55" r="4" fill="#00a650"/>${barra(118, 52, 70, '#333', 6)}${caja(310, 48, 40, 14, '#3483fa', 4)}
+      ${caja(96, 74, 262, 30, '#ffffff', 4)}${[0, 1, 2, 3].map((k) => `${barra(104 + k * 65, 82, 42, k === 1 ? '#333' : '#3483fa', 6)}${barra(104 + k * 65, 92, 28, '#cfcfcf', 5)}`).join('')}<rect x="161" y="74" width="65" height="2" fill="#333"/>
+      ${caja(96, 112, 262, 16, '#e2e2e2', 3)}<rect x="96" y="112" width="2.5" height="16" fill="#3483fa"/>${barra(108, 117, 170, '#bdbdbd', 5)}
+      ${caja(96, 136, 262, 104, '#e4e4e4', 4)}
+      <g transform="translate(208,156)"><path d="M0 12h38v32H0z" fill="#ffffff" stroke="#666" stroke-width="1.4"/><path d="M-4 12l5-11h36l5 11z" fill="#ffffff" stroke="#666" stroke-width="1.4"/><rect x="6" y="22" width="10" height="14" fill="none" stroke="#666" stroke-width="1.2"/><rect x="22" y="24" width="10" height="8" fill="none" stroke="#666" stroke-width="1.2"/></g>
+      ${barra(186, 212, 80, '#555', 7)}${barra(166, 224, 120, '#c4c4c4', 5)}`);
+    // En el celular: un pedido nuevo con sus estados.
+    s += pantalla(id, 318, 112, 170, 262, `
+      <path d="M0 16a16 16 0 0 1 16-16h138a16 16 0 0 1 16 16v14H0z" fill="#ffe600"/>${barra(14, 12, 60, '#333', 7)}
+      ${[0, 1, 2].map((k) => `${caja(12, 42 + k * 70, 146, 60, '#f5f5f5', 8)}${barra(22, 52 + k * 70, 60, '#333', 7)}${caja(110, 50 + k * 70, 38, 11, ['#e6f7ee', '#e8f0fe', '#fff4d6'][k], 5.5)}${barra(22, 66 + k * 70, 100, '#d6d6d6', 5)}${caja(22, 78 + k * 70, 56, 14, '#3483fa', 4)}`).join('')}`);
+    // El agente de soporte con IA del Help Center.
+    s += pantalla(id, 40, 268, 200, 110, `
+      ${caja(14, 14, 120, 22, '#f1f1f1', 11)}${caja(66, 44, 120, 30, '#3483fa', 12)}${barra(78, 52, 90, '#ffffff', 5)}${barra(78, 62, 60, '#cfe1ff', 5)}${caja(14, 82, 90, 18, '#f1f1f1', 9)}`);
   }
   if (slug === 'henry') {
     s += pantalla(id, 0, 0, 350, 240, `
@@ -207,18 +87,27 @@ function interfaz(slug) {
       ${barra(14, 16, 60, '#111', 8)}${caja(14, 34, 92, 52, '#7b5cff', 10)}${barra(24, 46, 50, '#ffffff', 6)}${barra(14, 98, 92, '#ececec', 7)}${barra(14, 114, 70, '#ececec', 7)}`);
   }
   if (slug === 'rappi') {
-    s += pantalla(id, 0, 0, 360, 230, `
-      ${barra(20, 20, 110, '#1a1a1a', 10)}
-      ${[0, 1, 2].map((i) => `
-        ${caja(20 + i * 110, 48, 100, 160, i === 1 ? '#ff441f' : '#f6f4f3', 12)}
-        ${barra(32 + i * 110, 64, 50, i === 1 ? '#ffffff' : '#1a1a1a', 8)}
-        ${barra(32 + i * 110, 84, 70, i === 1 ? '#ffd0c4' : '#ddd8d6', 14)}
-        ${[0, 1, 2].map((k) => barra(32 + i * 110, 116 + k * 18, 70 - k * 10, i === 1 ? '#ffb5a3' : '#e6e1df', 7)).join('')}
-        ${caja(32 + i * 110, 174, 76, 22, i === 1 ? '#ffffff' : '#1a1a1a', 11)}`).join('')}`);
-    s += pantalla(id, 300, 130, 200, 240, `
-      ${barra(18, 20, 90, '#1a1a1a', 9)}
-      ${[52, 80, 64, 104, 92, 124].map((h, i) => caja(22 + i * 27, 140 - h, 18, h, i === 5 ? '#29c46f' : '#ffd0c4', 5)).join('')}
-      ${[0, 1, 2].map((i) => `<circle cx="30" cy="${168 + i * 24}" r="8" fill="#ff441f"/>${barra(46, 164 + i * 24, 110 - i * 20, '#efeae8', 8)}`).join('')}`);
+    // Portal de partners: menú, filtros, "Visión general", métricas y el gráfico comparativo.
+    s += pantalla(id, 0, 0, 380, 256, `
+      ${barra(16, 14, 40, '#ff441f', 11)}${caja(270, 12, 40, 14, '#f3f3f3', 7)}<circle cx="324" cy="19" r="7" fill="#f3f3f3"/><circle cx="352" cy="19" r="8" fill="#44c08a"/>
+      <rect y="38" width="380" height="1" fill="#eeeeee"/><rect x="84" y="38" width="1" height="218" fill="#eeeeee"/>
+      ${[0, 1, 2, 4, 5, 6, 7, 8].map((k) => `${k === 0 ? '<rect x="0" y="50" width="2.5" height="11" fill="#4b6cf7"/>' : ''}<circle cx="16" cy="${56 + k * 19}" r="4" fill="none" stroke="#666" stroke-width="1.2"/>${barra(26, 53 + k * 19, 44 - (k % 3) * 8, k === 0 ? '#222' : '#cfcfcf', 6)}`).join('')}
+      ${[0, 1, 2].map((k) => `<rect x="${100 + k * 82}" y="48" width="76" height="13" rx="4" fill="none" stroke="#e6e6e6"/>${barra(106 + k * 82, 52, 50, '#bdbdbd', 5)}`).join('')}
+      ${barra(100, 72, 110, '#111', 13)}
+      ${[0, 1, 2, 3].map((k) => barra(100 + k * 46, 94, 36, k ? '#cfcfcf' : '#4b6cf7', 5)).join('')}<rect x="100" y="102" width="36" height="2" fill="#4b6cf7"/>
+      ${[0, 1].map((k) => `<rect x="${100 + k * 92}" y="112" width="84" height="44" rx="6" fill="#ffffff" stroke="#ececec"/>${barra(108 + k * 92, 120, 46, '#333', 6)}${barra(108 + k * 92, 132, 30, '#111', 10)}${barra(108 + k * 92, 146, 54, '#d6d6d6', 4)}`).join('')}
+      <rect x="100" y="164" width="176" height="80" rx="6" fill="#ffffff" stroke="#ececec"/>
+      ${[0, 1, 2].map((k) => `<rect x="110" y="${184 + k * 18}" width="156" height="1" fill="#f1f1f1"/>`).join('')}
+      <polyline points="110,228 136,218 162,224 188,204 214,212 240,192 266,198" fill="none" stroke="#ff441f" stroke-width="2"/>
+      <polyline points="110,234 136,226 162,212 188,216 214,196 240,202 266,184" fill="none" stroke="#7a3ff2" stroke-width="2" stroke-dasharray="3 3"/>
+      <rect x="284" y="112" width="84" height="132" rx="6" fill="#ffffff" stroke="#ececec"/>
+      <circle cx="346" cy="132" r="15" fill="#111"/>${barra(334, 126, 24, '#ffffff', 5)}${barra(336, 135, 20, '#ffd400', 6)}
+      <path d="M294 158l8-4.5 8 4.5v9l-8 4.5-8-4.5z" fill="#e8eefc"/>${barra(316, 159, 36, '#111', 8)}
+      ${[0, 1, 2].map((k) => barra(294, 184 + k * 16, 62 - k * 10, '#e6e6e6', 6)).join('')}`);
+    // Planes de pago para restaurantes del long tail.
+    s += pantalla(id, 300, 150, 196, 210, `
+      ${barra(14, 16, 80, '#111', 9)}
+      ${[0, 1, 2].map((k) => `${caja(12 + k * 60, 40, 54, 150, k === 1 ? '#ff441f' : '#f6f4f3', 9)}${barra(20 + k * 60, 54, 30, k === 1 ? '#ffffff' : '#111', 7)}${barra(20 + k * 60, 70, 38, k === 1 ? '#ffd0c4' : '#ddd8d6', 12)}${[0, 1, 2].map((r) => barra(20 + k * 60, 98 + r * 14, 36 - r * 6, k === 1 ? '#ffb5a3' : '#e6e1df', 5)).join('')}${caja(20 + k * 60, 164, 38, 16, k === 1 ? '#ffffff' : '#111', 8)}`).join('')}`);
   }
   return `<svg class="mock" viewBox="-30 -30 580 460" aria-hidden="true">
     <g transform="rotate(-12 260 200)">${s}</g>

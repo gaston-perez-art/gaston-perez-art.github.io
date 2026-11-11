@@ -87,8 +87,8 @@
     <div class="prose"><h2>An all-in-one platform</h2>
 <p>I built from zero to one the complete new version of the education platform: admission, onboarding, checkout, student platform, payment management and internal back office. Then, the collections platform. Two products taken from a blank page to production, with sustained CSAT and NPS increases.</p>
 <h2>AI applied to operations</h2>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Project grading with OpenAI</h3><p>I integrated the OpenAI API to automate grading of student projects: 35% lower operating cost and faster grades.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Invoices with AI</h3><p>I implemented AI invoice processing in payments: a 50% efficiency gain in the flow and fewer manual errors.</p></section></div>
+<section class="dec rev"><h3>Project grading with OpenAI</h3><p>I integrated the OpenAI API to automate grading of student projects: 35% lower operating cost and faster grades.</p></section>
+<section class="dec rev"><h3>Invoices with AI</h3><p>I implemented AI invoice processing in payments: a 50% efficiency gain in the flow and fewer manual errors.</p></section></div>
     <p class="tools-used"><span>Tools</span>SQL · BigQuery · Mixpanel · OpenAI API · Make · Figma · Jira · Notion</p>
     <p class="note">Told without internal screens or data: the interface on the cover is an illustration. The metrics are the ones I share publicly on my profile.</p>
   </div>
@@ -122,7 +122,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

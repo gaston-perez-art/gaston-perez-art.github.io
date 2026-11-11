@@ -87,8 +87,8 @@
     <div class="prose"><h2>Una plataforma all-in-one</h2>
 <p>Construí de cero a uno la nueva versión completa de la plataforma educativa: admisión, onboarding, checkout, plataforma de estudiantes, gestión de pagos y back office interno. Después, la plataforma de cobranzas. Dos productos llevados de la hoja en blanco a producción, con incrementos sostenidos de CSAT y NPS.</p>
 <h2>IA aplicada a la operación</h2>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Corrección de proyectos con OpenAI</h3><p>Integré la API de OpenAI para automatizar la corrección de proyectos de estudiantes: 35% menos de costo operativo y calificaciones más rápidas.</p></section>
-<section class="dec rev"><p class="dec-k">Decisión</p><h3>Facturas con IA</h3><p>Implementé procesamiento de facturas con IA en el área de pagos: 50% de mejora en la eficiencia del flujo y menos error manual.</p></section></div>
+<section class="dec rev"><h3>Corrección de proyectos con OpenAI</h3><p>Integré la API de OpenAI para automatizar la corrección de proyectos de estudiantes: 35% menos de costo operativo y calificaciones más rápidas.</p></section>
+<section class="dec rev"><h3>Facturas con IA</h3><p>Implementé procesamiento de facturas con IA en el área de pagos: 50% de mejora en la eficiencia del flujo y menos error manual.</p></section></div>
     <p class="tools-used"><span>Herramientas</span>SQL · BigQuery · Mixpanel · API de OpenAI · Make · Figma · Jira · Notion</p>
     <p class="note">Contado sin pantallas ni datos internos: la interfaz de la portada es una ilustración. Las métricas son las que comparto públicamente en mi perfil.</p>
   </div>
@@ -122,7 +122,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

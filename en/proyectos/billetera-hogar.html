@@ -54,14 +54,14 @@
     <div class="feats"><section class="feat rev"><h3>Home</h3><ul><li>Month balance and what each person has left</li><li>The full math: money in, spent, pending payments, for each person and for the house</li><li>Daily activity with the closing balance</li><li>Upcoming payments: how many, how much and when the first is due</li></ul></section><section class="feat rev"><h3>Log and pay</h3><ul><li>Expense in three steps: amount, category and detail</li><li>Fixed payments sorted by due date; marking one paid creates the expense</li><li>Reminder after 12 hours without logging anything</li></ul></section><section class="feat rev"><h3>Understand spending</h3><ul><li>Categories with a monthly cap and status in words: "31% used", "Over budget"</li><li>Split: how much each person should chip in, what they paid and the difference</li><li>A card per person that flips to show where they spend</li><li>"Both of us" or "Just me" view</li></ul></section><section class="feat rev"><h3>Settings</h3><ul><li>Income, caps and fixed payments editable without rewriting the past</li><li>Export to the spreadsheet by period</li><li>Hide amounts with one tap</li><li>Light and dark mode</li></ul></section></div>
     <h2 class="sec2">How it is built</h2>
     <ol class="stack rev"><li><span class="stack-k">App</span><span>Next.js, TypeScript and Tailwind, exported as a static site and installable as a PWA</span></li><li><span class="stack-k">Data</span><span>Supabase: Postgres with per-household RLS, one login per person and Realtime</span></li><li><span class="stack-k">Business rules</span><span>Pure functions with tests: the numbers must add up across every screen</span></li><li><span class="stack-k">Deploy</span><span>GitHub Actions runs the tests, builds and publishes on every change</span></li><li><span class="stack-k">Demo</span><span>The same code without Supabase variables: fictional data in the browser</span></li></ol>
-    <h2 class="sec2">Product decisions</h2>
+    <h2 class="sec2">How I thought it through</h2>
     
     <div class="prose"><h2>The problem</h2>
 <p>Household expenses lived in a Google Sheets spreadsheet. It worked, but logging an expense from a phone was slow and error-prone: wrong row, wrong sheet, "who paid" picked by hand on every row. And marking a fixed payment as paid did not record it as an expense, so it had to be entered twice, and it got forgotten.</p>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Log an expense in three taps</h3><p>Amount, category and detail. The date is today and the payer is whoever is signed in, unless changed. If logging is costly, it does not get done, and an account with gaps is useless for deciding anything.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Marking as paid creates the expense</h3><p>The month’s fixed payments are sorted by due date. Marking one as paid creates the expense in its category; unmarking deletes it. One action, one record.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Each one pays in proportion to what they earn</h3><p>The split is not fifty-fifty. The app calculates how much each person should chip in based on their share of total income, compares it with what they actually paid and shows the difference. The number that counts is the end-of-month one.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Closed categories, with a cap</h3><p>No free text for categories: in the spreadsheet that was why some expenses never added up in the month. Each category has a monthly cap and the app shows what is left in green and any overspend in red.</p></section>
+<section class="dec rev"><h3>Log an expense in three taps</h3><p>Amount, category and detail. The date is today and the payer is whoever is signed in, unless changed. If logging is costly, it does not get done, and an account with gaps is useless for deciding anything.</p></section>
+<section class="dec rev"><h3>Marking as paid creates the expense</h3><p>The month’s fixed payments are sorted by due date. Marking one as paid creates the expense in its category; unmarking deletes it. One action, one record.</p></section>
+<section class="dec rev"><h3>Each one pays in proportion to what they earn</h3><p>The split is not fifty-fifty. The app calculates how much each person should chip in based on their share of total income, compares it with what they actually paid and shows the difference. The number that counts is the end-of-month one.</p></section>
+<section class="dec rev"><h3>Closed categories, with a cap</h3><p>No free text for categories: in the spreadsheet that was why some expenses never added up in the month. Each category has a monthly cap and the app shows what is left in green and any overspend in red.</p></section>
 <h2>How the split is calculated</h2>
 <div class="tbl"><table><thead><tr><th>Concept</th><th>Calculation</th></tr></thead><tbody><tr><td>Should chip in</td><td>Their share of total income × expected spending for the month</td></tr><tr><td>Paid</td><td>Expenses this month paid by that person</td></tr><tr><td>Difference</td><td>What they really have left minus what they should have left</td></tr></tbody></table></div>
 <h2>What I built</h2>
@@ -99,7 +99,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

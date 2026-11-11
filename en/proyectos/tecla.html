@@ -54,11 +54,11 @@
     <div class="feats"><section class="feat rev"><h3>Site</h3><ul><li>Switch between IT Support and For Teachers, each with its own color</li><li>Sticky contact button that opens the form</li><li>Team with photos and LinkedIn, and a ribbon of companies where we worked</li><li>Mobile-first design</li></ul></section><section class="feat rev"><h3>Growth</h3><ul><li>Every lead goes straight into a Google Sheet</li><li>Analytics with GA4</li><li>SEO: structured data, sitemap and Open Graph</li></ul></section></div>
     <h2 class="sec2">How it is built</h2>
     <ol class="stack rev"><li><span class="stack-k">Site</span><span>A single HTML file with CSS and JS, no build step</span></li><li><span class="stack-k">Hosting</span><span>GitHub Pages with its own domain and HTTPS</span></li><li><span class="stack-k">Leads</span><span>Google Forms stores each lead in Google Sheets</span></li><li><span class="stack-k">Analytics</span><span>Google Analytics 4</span></li><li><span class="stack-k">Monthly cost</span><span>Zero. No server to maintain</span></li></ol>
-    <h2 class="sec2">Product decisions</h2>
+    <h2 class="sec2">How I thought it through</h2>
     
     <div class="prose"><h2>Two businesses, one landing page</h2>
 <p>A switch at the top separates the two units. The site does not sell or charge: it presents, measures and collects leads.</p>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Zero-cost serverless</h3><p>Hosting on GitHub Pages, DNS on Cloudflare, leads to Google Sheets through a form and analytics in GA4. There is no server to maintain. When the teacher product needs to store the user’s work, that is when a backend is justified.</p><p class="dec-tr"><span>The trade-off</span>No accounts or own data for now. That is right while the question is whether there is demand.</p></section>
+<section class="dec rev"><h3>Zero-cost serverless</h3><p>Hosting on GitHub Pages, DNS on Cloudflare, leads to Google Sheets through a form and analytics in GA4. There is no server to maintain. When the teacher product needs to store the user’s work, that is when a backend is justified.</p><p class="dec-tr"><span>The cost</span>No accounts or own data for now. That is right while the question is whether there is demand.</p></section>
 <h2>From thesis to market</h2>
 <p>Tecla’s business plan is the final project of my MBA at Universidad de Palermo. The site is the market validation of that plan.</p></div>
     
@@ -94,7 +94,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);

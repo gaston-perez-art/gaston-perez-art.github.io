@@ -54,13 +54,13 @@
     <div class="feats"><section class="feat rev"><h3>Patient</h3><ul><li>Today: the day’s blocks with their pills; one tap marks the dose and stores the real time</li><li>Blood pressure log with its own keypad, without interpreting the number</li><li>One message a day from family and friends</li><li>The day’s closing card when all ten doses are done</li></ul></section><section class="feat rev"><h3>Family</h3><ul><li>Live dashboard: how many he took, the status of each block and the pill that is running out</li><li>Stock per medication with days left; adding a box shows the math before saving</li><li>The week as a grid, like the printed chart</li><li>Moderate the message wall and share its public link</li></ul></section><section class="feat rev"><h3>Accessibility</h3><ul><li>Text size that scales the whole screen together</li><li>Four themes, light and dark</li><li>Works offline and syncs when the signal returns</li><li>Updates notify, they never install themselves</li></ul></section></div>
     <h2 class="sec2">How it is built</h2>
     <ol class="stack rev"><li><span class="stack-k">App</span><span>React and Vite as an installable PWA, with a service worker and self-hosted fonts to work offline</span></li><li><span class="stack-k">Data</span><span>Supabase with RLS: only the patient can mark a dose, enforced by the database and the UI</span></li><li><span class="stack-k">Integrity</span><span>Stock is moved by triggers and functions: never written directly, every movement logged</span></li><li><span class="stack-k">Offline first</span><span>Local queue with retries and an operation ID so nothing is counted twice</span></li><li><span class="stack-k">Demo</span><span>Separate build with made-up data stored in the browser</span></li></ol>
-    <h2 class="sec2">Product decisions</h2>
+    <h2 class="sec2">How I thought it through</h2>
     
     <div class="prose"><h2>What it does</h2>
 <p>He opens the app and sees Today: the four blocks of the day with their medications. One tap marks the dose and stores the real time. The family sees the dashboard: how many he took, the status of each block and the medication that is running out. It updates on its own when he marks something.</p>
 <p>When all ten are done, the card turns into the day’s closing: a beating heart with a monitor trace and the phrase he says every morning.</p>
 <h2>Design decisions</h2>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>The day starts at 4 AM, not midnight</h3><p>If he takes his sleeping pill at 00:30, it counts for the previous day.</p></section>
+<section class="dec rev"><h3>The day starts at 4 AM, not midnight</h3><p>If he takes his sleeping pill at 00:30, it counts for the previous day.</p></section>
 <figure class="fig rev"><svg viewBox="0 0 640 150" role="img" aria-label="Timeline: the app day runs from 4 AM to 4 AM; a dose at 00:30 counts for the previous day">
     <line x1="40" y1="70" x2="600" y2="70" class="s-axis"/>
     <rect x="40" y="58" width="560" height="24" rx="12" class="s-acc-bg"/>
@@ -74,9 +74,9 @@
     <text x="518" y="30" text-anchor="middle" class="s-t">00:30 · counts for today</text>
     <text x="320" y="140" text-anchor="middle" class="s-m">One app day</text>
   </svg><figcaption>The app day runs from 4 AM to 4 AM.</figcaption></figure>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>The app records, it does not interpret</h3><p>The blood pressure log has no color ranges or trends. Interpreting a number is the doctor’s job. The history is shared over WhatsApp in one tap.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Nothing changes under his fingers</h3><p>Unmarking takes two taps. Updates notify, they do not install themselves. Everything is in rem: one selector enlarges text, buttons and spacing together, and the screen never overflows. No web fonts: Roboto is already on the phone and the app works offline.</p></section>
-<section class="dec rev"><p class="dec-k">Decision</p><h3>Only the patient marks a dose</h3><p>Enforced by database permissions and by the interface. If anyone can tick, the log stops telling what happened.</p></section>
+<section class="dec rev"><h3>The app records, it does not interpret</h3><p>The blood pressure log has no color ranges or trends. Interpreting a number is the doctor’s job. The history is shared over WhatsApp in one tap.</p></section>
+<section class="dec rev"><h3>Nothing changes under his fingers</h3><p>Unmarking takes two taps. Updates notify, they do not install themselves. Everything is in rem: one selector enlarges text, buttons and spacing together, and the screen never overflows. No web fonts: Roboto is already on the phone and the app works offline.</p></section>
+<section class="dec rev"><h3>Only the patient marks a dose</h3><p>Enforced by database permissions and by the interface. If anyone can tick, the log stops telling what happened.</p></section>
 <h2>Stock that counts itself down</h2>
 <p>Each dose subtracts according to the dosage, and cards are sorted by urgency. Adding a box shows the math before saving: "38 tablets, enough for 38 days". An empty stock and a stock nobody entered are two different things, and the app treats them differently.</p></div>
     
@@ -112,7 +112,7 @@
   });
   // Los números cuentan desde cero cuando aparecen.
   const contar = (el) => {
-    if (quieto || el.dataset.ok) return;
+    if (quieto || el.dataset.ok || !el.textContent.includes('%')) return;
     el.dataset.ok = 1;
     const final = el.textContent;
     const nums = final.match(/\d+(?:[.,]\d+)?/g);
