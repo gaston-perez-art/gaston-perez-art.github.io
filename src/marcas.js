@@ -3,7 +3,7 @@
 // pantallas reales ni muestran datos internos.
 
 const MARCAS = {
-  bigbox: { bg: '#2f2559', fg: '#efeaff', ac: '#ff7a59', ac2: '#ffd166', logo: null, texto: 'bigbox' },
+  bigbox: { bg: '#2f2559', fg: '#efeaff', ac: '#ff7a59', ac2: '#ffd166', logo: 'img/logos/bigbox.png', alto: 0.9 },
   mercadolibre: { bg: '#ffe600', fg: '#2d3277', ac: '#3483fa', ac2: '#00a650', logo: 'img/logos/mercadolibre.svg', alto: 1.05 },
   henry: { bg: '#0d0d0d', fg: '#f5f5f5', ac: '#ffff01', ac2: '#7b5cff', logo: 'img/logos/henry.svg', alto: 0.42 },
   rappi: { bg: '#ff441f', fg: '#fff4f0', ac: '#ff441f', ac2: '#29c46f', logo: 'img/logos/rappi.svg', alto: 0.85 },
