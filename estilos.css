@@ -452,3 +452,13 @@ body { letter-spacing: -0.011em; }
   .case:hover .case-mock svg { transform: none; }
   @view-transition { navigation: none; }
 }
+
+/* ---------------------------------------------------------------- donde empecé */
+.sub-k { margin: 48px 0 16px; }
+.starts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.start { display: flex; flex-direction: column; gap: 8px; text-decoration: none; padding: 24px 28px; border-radius: 18px; background: var(--card); box-shadow: 0 0 0 1px var(--line); transition: box-shadow .35s; }
+.start:hover { color: inherit; box-shadow: 0 0 0 1px var(--fg2); }
+.start .eyebrow { margin: 0; }
+.start h3 { font-size: 19px; line-height: 1.3; font-weight: 600; }
+.start p:not(.eyebrow) { margin: 0; color: var(--fg2); font-size: 15px; }
+@media (max-width: 680px) { .starts { grid-template-columns: 1fr; } .start { padding: 20px 22px; } }

@@ -15,7 +15,7 @@ Senior Product Manager con ocho años construyendo producto en Mercado Libre, Ra
 | **Entrená con Jime** | Web y herramientas de trabajo para una entrenadora de fuerza | En vivo | [sitio](https://entrenaconjime.com) · [código](https://github.com/gaston-perez-art/jimenapp) |
 | **Fulbito** | Tabla de un torneo familiar de fútbol 5 donde compite el jugador | En vivo | [sitio](https://gaston-perez-art.github.io/fulbito/) · [código](https://github.com/gaston-perez-art/fulbito) |
 
-También hay casos de estudio de mi trabajo en Bigbox, Mercado Libre, Henry y Rappi, contados sin pantallas ni datos internos.
+También hay casos de estudio de mi trabajo en Bigbox, Mercado Libre, Henry y Rappi, contados sin pantallas ni datos internos, y de mis comienzos en Coderhouse y Starter.pe.
 
 ## Cómo está hecho
 

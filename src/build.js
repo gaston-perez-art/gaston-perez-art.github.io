@@ -24,6 +24,7 @@ const UI = {
     secTrabajo: ['01 · Trabajo', 'Producto en empresas que operan a escala', 'Cuatro casos contados por sus decisiones: qué problema había, qué elegí, qué resigné y qué pasó.'],
     secProyectos: ['02 · Proyectos', 'Lo que construyo con mis manos', (n) => `${n} productos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.`],
     numeros: { 5: 'Cinco', 6: 'Seis', 7: 'Siete' },
+    comienzos: 'Donde empecé',
     secProceso: ['03 · Proceso', 'Cómo trabajo'],
     homeTitle: 'Gastón Pérez · Product Builder',
     homeDesc: 'Senior Product Manager y Product Builder. Casos de producto en Mercado Libre, Rappi, Henry y Bigbox, y los productos que construyo de punta a punta.',
@@ -42,6 +43,7 @@ const UI = {
     secTrabajo: ['01 · Work', 'Product at companies operating at scale', 'Four cases told through their decisions: what the problem was, what I chose, what I gave up and what happened.'],
     secProyectos: ['02 · Projects', 'What I build with my own hands', (n) => `${n} end-to-end products. Each one solves a real problem for someone I know, and each one has a decision that defines it.`],
     numeros: { 5: 'Five', 6: 'Six', 7: 'Seven' },
+    comienzos: 'Where I started',
     secProceso: ['03 · Process', 'How I work'],
     homeTitle: 'Gastón Pérez · Product Builder',
     homeDesc: 'Senior Product Manager and Product Builder. Product cases at Mercado Libre, Rappi, Henry and Bigbox, and the products I build end to end.',
@@ -60,6 +62,8 @@ function generar(lang) {
   const FIG = figuras(lang === 'en');
   const base = lang === 'es' ? 0 : 1; // profundidad de la raíz del idioma
   const empresas = CASOS.filter((c) => c.tipo === 'empresa');
+  const principales = empresas.filter((c) => !c.menor);
+  const comienzos = empresas.filter((c) => c.menor);
   const propios = CASOS.filter((c) => c.tipo === 'propio');
 
   // rel: ruta de la página dentro del idioma (ej. "trabajo/bigbox.html").
@@ -202,6 +206,16 @@ ${body}
 </a>`;
   }
 
+  // Los primeros lugares de trabajo: tarjetas chicas, sin portada.
+  function cardComienzo(c) {
+    return `<a class="start rev" href="trabajo/${c.slug}.html">
+  <p class="eyebrow">${esc(c.nombre)} · ${esc(c.periodo)}</p>
+  <h3>${esc(c.titulo)}</h3>
+  <p>${esc(c.corto)}</p>
+  <span class="more">${t.leerCaso}</span>
+</a>`;
+  }
+
   // Portada de marca: color, logo e interfaz ilustrada. Comparte nombre de transición
   // con la página del caso, así la tarjeta se expande al entrar.
   function portada(c, a, grande = false) {
@@ -253,13 +267,13 @@ ${body}
     ${c.links && c.links.length ? `<p class="cta-row">${c.links.map(([x, h], k) => `<a class="btn${k ? ' btn-ghost' : ''}" href="${h}">${esc(x)} ↗</a>`).join('')}</p>` : ''}
     ${c.nota ? `<p class="note">${esc(c.nota)}</p>` : ''}
   </header>
-  ${c.tipo === 'propio' ? `<div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base + 1))}</div></div>` : `<div class="w-wide cs-cover">${portada(c, assets(base + 1), true)}</div>`}
+  ${c.menor ? '' : c.tipo === 'propio' ? `<div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base + 1))}</div></div>` : `<div class="w-wide cs-cover">${portada(c, assets(base + 1), true)}</div>`}
   <div class="w">
     <dl class="meta">${c.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
     ${c.resultados ? `<div class="results">${c.resultados.map(([n, x]) => `<div class="rev"><strong class="count">${esc(n)}</strong><span>${esc(x)}</span></div>`).join('')}</div>` : ''}
     <div class="prose">${c.cuerpo.map(bloque).join('\n')}</div>
     ${c.herramientas ? `<p class="tools-used"><span>${t.herramientas}</span>${esc(c.herramientas)}</p>` : ''}
-    ${c.tipo === 'empresa' ? `<p class="note">${t.notaEmpresa}</p>` : ''}
+    ${c.tipo === 'empresa' && !c.menor ? `<p class="note">${t.notaEmpresa}</p>` : ''}
   </div>
   <a class="next w" href="${sig.slug}.html"><span class="muted small">${t.siguiente}</span><span class="next-t">${esc(sig.nombre)} →</span></a>
 </article>`;
@@ -291,7 +305,9 @@ ${body}
 
 <section id="trabajo" class="w-wide sec">
   <div class="sec-head"><p class="kicker">${t.secTrabajo[0]}</p><h2 class="h2">${t.secTrabajo[1]}</h2><p class="muted">${t.secTrabajo[2]}</p></div>
-  <div class="cases">${empresas.map(cardEmpresa).join('\n')}</div>
+  <div class="cases">${principales.map(cardEmpresa).join('\n')}</div>
+  <p class="kicker sub-k">${t.comienzos}</p>
+  <div class="starts">${comienzos.map(cardComienzo).join('\n')}</div>
 </section>
 
 <section id="proyectos" class="w-wide sec">
@@ -310,7 +326,7 @@ ${body}
     const body = `
 <article class="w about">
   <p class="eyebrow">${t.sobreEyebrow}</p>
-  <h1 class="display sm">${t.sobreH1}</h1>
+  <h1 class="display sm">${SOBRE.h1}</h1>
   <div class="prose">${SOBRE.parrafos.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
   <h2 class="h3">${t.trayectoria}</h2>
   <ul class="tl">${SOBRE.trayectoria

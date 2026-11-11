@@ -170,6 +170,54 @@ const CASOS = [
     herramientas: 'Amplitude · Tableau · Power BI · Figma · Jira',
   },
 
+  {
+    slug: 'coderhouse',
+    tipo: 'empresa',
+    menor: true,
+    nombre: 'Coderhouse',
+    periodo: '2021 – 2022',
+    corto: 'Rediseño del sitio público y expansión a México y Brasil, en la escuela donde me formé.',
+    titulo: 'Rediseñar la escuela donde aprendí producto',
+    bajada:
+      'Growth Product Owner en la escuela donde me formé. Llevé el sitio público a una versión nueva, con UI e infraestructura renovadas, y trabajé la expansión a México y Brasil.',
+    meta: [
+      ['Rol', 'Growth Product Owner'],
+      ['Alcance', 'Sitio público, captación y expansión regional a México y Brasil'],
+      ['En paralelo', 'Tutor de los cursos de Product Manager y de Scrum'],
+      ['Período', 'Mayo 2021 – Mayo 2022, remoto'],
+    ],
+    cuerpo: [
+      ['h', 'Volver a la escuela, del otro lado'],
+      ['p', 'Coderhouse es la escuela que me formó. En 2021 hice ahí el curso de Product Manager y terminé en el 10% superior de la cohorte. Ese mismo año entré a trabajar como Growth Product Owner. Rearmar el sitio de la escuela donde había estudiado tuvo algo de devolución.'],
+      ['decision', 'Rediseño end-to-end del sitio público', 'El sitio es la puerta de entrada de cada estudiante nuevo. Lo migré a una versión nueva, con UI e infraestructura renovadas.'],
+      ['decision', 'Expansión a México y Brasil', 'El crecimiento ya no estaba solo en Argentina. Trabajé desde producto la expansión regional hacia dos mercados nuevos.'],
+      ['p', 'En paralelo fui tutor de los cursos de Product Manager y de Scrum, dentro de la misma compañía. Con los años volví como alumno: en total hice cinco cursos en Coderhouse.'],
+    ],
+    herramientas: 'Google Data Studio · Looker · Google Optimize · CMS interno · Jira · Notion',
+  },
+  {
+    slug: 'starter',
+    tipo: 'empresa',
+    menor: true,
+    nombre: 'Starter.pe',
+    periodo: '2021',
+    corto: 'Product Owner remoto para una startup de Lima. Donde aprendí el oficio.',
+    titulo: 'Mi primer rol formal en producto',
+    bajada:
+      'Product Owner en una startup de Lima, Perú, trabajando de forma remota desde Buenos Aires. Ahí aprendí el oficio.',
+    meta: [
+      ['Rol', 'Product Owner'],
+      ['Desde', 'Buenos Aires, remoto para Lima, Perú'],
+      ['Prácticas', 'Backlog, planning, review y Agile Inception'],
+      ['Período', 'Enero – Mayo 2021'],
+    ],
+    cuerpo: [
+      ['h', 'Aprender el oficio'],
+      ['p', 'Llevé el backlog, la planificación y las reviews, y facilité la Agile Inception del equipo. Ahí entendí cómo se construye un producto de cero a uno.'],
+      ['p', 'También fue la primera vez que traté con stakeholders. Aprendí a comunicar, que en producto es medio trabajo.'],
+    ],
+  },
+
   // ---------------------------------------------------------- PROPIOS
   {
     slug: 'donar',
@@ -374,27 +422,29 @@ const CASOS = [
 
 const SOBRE = {
   titulo: 'Sobre mí',
+  h1: 'De la línea de montaje <em>al producto</em>.',
   parrafos: [
-    'Hago producto digital desde hace ocho años. Empecé lejos del software, en logística y manufactura en Penalty: coordiné una operación de más de once personas, implementé lean y Kanban en la línea de montaje y diseñé procesos que siguen en uso.',
-    'En 2018 fundé Mobius, una app Android que replicaba la forma de hablar de seres queridos que ya no están, con aprendizaje automático. No escaló, pero ahí armé mi primer equipo desde cero y construí con aprendizaje automático en 2018.',
-    'Desde entonces hice producto en Coderhouse, Rappi, Henry, Mercado Libre y Bigbox. Defino y lanzo de punta a punta, del discovery al go-live, con UX, Tecnología, Data, Operaciones, CX y Legales. Decido con datos y con experimentación continua.',
-    'Hoy además construyo con mis manos. Me mueven la tecnología, crear producto con impacto y mejorar la vida de las personas.',
+    'Empecé lejos del software. En 2015 entré a Penalty como asistente de ingeniería y planificación, y seis años después era Project Manager. Coordiné una operación de más de once personas, implementé lean y Kanban en la línea de montaje y diseñé procesos que todavía se usan.',
+    'La tecnología la fui aprendiendo en paralelo. Mientras trabajaba en la fábrica daba clases particulares de Excel y de Python, y en 2018 cofundé Mobius, una app que replicaba la forma de hablar de seres queridos que ya no están, con aprendizaje automático. No escaló. Pero ahí armé mi primer equipo y vi por primera vez una idea mía funcionando.',
+    'En 2021 llegó mi primer rol formal en producto, como Product Owner remoto para una startup de Lima. Ese mismo año terminé el curso de Product Manager de Coderhouse en el 10% superior de la cohorte y entré a trabajar ahí. Después vinieron Rappi, Henry, Mercado Libre y Bigbox.',
+    'Lo que no sabía lo fui estudiando en el camino: cinco cursos en Coderhouse, Reforge, Product School y un MBA en la Universidad de Palermo, que terminé de cursar con 9,13 de promedio.',
+    'De la fábrica me quedó una forma de trabajar: mirar el proceso entero, medir y mejorar lo que ya funciona. Hoy hago lo mismo con producto, con equipos y con mis manos.',
   ],
   trayectoria: [
     ['2026 – hoy', 'Senior Product Owner', 'Bigbox', 'bigbox'],
     ['2025 – 2026', 'Product Shipping Specialist', 'Mercado Libre', 'mercadolibre'],
     ['2022 – 2025', 'Product Manager', 'Henry', 'henry'],
     ['2022', 'Product Lead', 'Rappi', 'rappi'],
-    ['2021 – 2022', 'Growth Product Owner', 'Coderhouse'],
-    ['2021', 'Product Owner', 'Starter.pe'],
+    ['2021 – 2022', 'Growth Product Owner', 'Coderhouse', 'coderhouse'],
+    ['2021', 'Product Owner', 'Starter.pe', 'starter'],
     ['2018 – 2021', 'Cofundador y Product', 'Mobius'],
-    ['2015 – 2021', 'Logística y Manufactura', 'Penalty'],
+    ['2015 – 2021', 'De asistente de ingeniería a Project Manager', 'Penalty'],
   ],
   formacion: [
     ['MBA Candidate', 'Universidad de Palermo, 2023 – 2026. Cursada finalizada con promedio 9,13; defensa de tesis en noviembre de 2026'],
     ['Certificaciones', 'Reforge Product Management · Product School Product Strategy · Pendo AI for Product Management · Coderhouse Product Manager (top 10%), Data Science, SQL y Vibe Coding'],
+    ['Docencia', 'Tutor de Product Manager y de Scrum en Coderhouse · Clases particulares de Excel y Python · Product Mentor en ADPList desde 2023'],
     ['Idiomas', 'Español nativo · Inglés B2, en camino a C1'],
-    ['Mentoría', 'Product Mentor en ADPList desde 2023'],
   ],
 };
 
