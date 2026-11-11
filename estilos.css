@@ -468,3 +468,11 @@ html:not(.js) .rev { opacity: 1; transform: none; }
 .case-mock { will-change: auto; }
 @media (max-width: 680px) { .lava { animation: none; } .lava i { animation-duration: 60s; } }
 .stat strong .count { font-size: inherit; color: inherit; line-height: inherit; }
+
+/* Recreaciones fieles: la ventana entra desde la derecha y se corta abajo. */
+.case-mock:has(.fiel) { width: 96%; left: 16%; right: auto; top: 20%; bottom: auto; }
+.case-cover-big .case-mock:has(.fiel) { width: 78%; left: 26%; top: 8%; }
+@media (max-width: 680px) {
+  .case-mock:has(.fiel) { width: 120%; left: 6%; top: 24%; }
+  .case-cover-big .case-mock:has(.fiel) { width: 125%; left: 4%; top: 26%; }
+}
