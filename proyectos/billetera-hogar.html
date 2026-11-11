@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<title>Billetera Hogar · Gastón Pérez</title>
+<meta name="description" content="Una webapp tipo billetera para que una pareja cargue los gastos de la casa desde el celular y vea, cada mes, cuánto le toca poner a cada uno y cuánto le queda de verdad.">
+<meta property="og:title" content="Billetera Hogar · Gastón Pérez">
+<meta property="og:description" content="Una webapp tipo billetera para que una pareja cargue los gastos de la casa desde el celular y vea, cada mes, cuánto le toca poner a cada uno y cuánto le queda de verdad.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="alternate" hreflang="es" href="https://gaston-perez-art.github.io/proyectos/billetera-hogar.html">
+<link rel="alternate" hreflang="en" href="https://gaston-perez-art.github.io/en/proyectos/billetera-hogar.html">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../estilos.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Ir al contenido</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="logo" href="../index.html" aria-label="Inicio">Gastón Pérez</a>
+    <nav aria-label="Principal">
+      <a class="nav-l" href="../index.html#trabajo">Trabajo</a>
+      <a class="nav-l" href="../index.html#proyectos" aria-current="page">Proyectos</a>
+      <a class="nav-l" href="../sobre-mi.html">Sobre mí</a>
+      <a class="nav-cta" href="mailto:gaston.product.expert@gmail.com">Contacto</a>
+    </nav>
+    <div class="tools">
+      <a class="tool tool-lang" href="../en/proyectos/billetera-hogar.html" hreflang="en" lang="en" aria-label="Read in English" title="Read in English">EN</a>
+      <button class="tool tool-tema" type="button" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar entre modo claro y oscuro"><svg class="i-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="i-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+    </div>
+  </div>
+</header>
+<div id="contenido">
+<article class="cs">
+  <header class="cs-head w">
+    <a class="back" href="../index.html#proyectos">← Proyectos</a>
+    <p class="eyebrow">Billetera Hogar · 2026 · <span class="badge live">En uso en casa</span></p>
+    <h1>Una billetera para dos que reemplazó a la planilla</h1>
+    <p class="lede">Una webapp tipo billetera para que una pareja cargue los gastos de la casa desde el celular y vea, cada mes, cuánto le toca poner a cada uno y cuánto le queda de verdad.</p>
+    <p class="cta-row"><a class="btn" href="https://gaston-perez-art.github.io/demos/billetera/" target="_blank" rel="noopener">Probar la demo ↗</a><a class="btn btn-ghost" href="https://github.com/gaston-perez-art/billetera-hogar" target="_blank" rel="noopener">Código ↗</a></p>
+    <p class="note">La demo usa montos inventados y guarda todo en tu navegador, sin login. Podés cargar un gasto, marcar un pago fijo como pagado y ver cómo cambia el reparto. "Volver a los datos de demo", en Ajustes, deja todo como al principio.</p>
+  </header>
+  <div class="cs-hero w-wide"><div class="phone"><img src="../img/billetera.png" alt="Inicio de Billetera Hogar: lo que tienen entre los dos y lo que le queda a cada uno" loading="lazy" width="390" height="844"></div></div>
+  <div class="w">
+    <dl class="meta"><div><dt>Rol</dt><dd>Todo: producto, diseño y desarrollo</dd></div><div><dt>Estado</dt><dd>En uso, reemplazó a la planilla de la casa</dd></div><div><dt>Stack</dt><dd>Next.js · TypeScript · Tailwind · Supabase con RLS y Realtime · PWA</dd></div><div><dt>Usuarios</dt><dd>Dos personas que comparten los gastos de la casa, cada una con su login</dd></div></dl>
+    
+    <div class="prose"><h2>El problema</h2>
+<p>Los gastos de la casa vivían en una planilla de Google Sheets. Funcionaba, pero cargar un gasto desde el celular era lento y con errores: fila equivocada, hoja equivocada, "quién pagó" elegido a mano en cada fila. Y marcar un pago fijo como pagado no lo registraba como gasto, así que había que cargarlo dos veces y se olvidaba.</p>
+<section class="dec rev"><p class="dec-k">Decisión</p><h3>Cargar un gasto en tres toques</h3><p>Monto, categoría y detalle. La fecha es hoy y quien pagó es quien tiene la sesión abierta, salvo que se cambie. Si cargar cuesta, no se carga, y una cuenta con huecos no sirve para decidir nada.</p></section>
+<section class="dec rev"><p class="dec-k">Decisión</p><h3>Marcar como pagado crea el gasto</h3><p>Los pagos fijos del mes se ordenan por vencimiento. Marcar uno como pagado crea el gasto en su categoría; desmarcarlo lo borra. Una sola acción, un solo registro.</p></section>
+<section class="dec rev"><p class="dec-k">Decisión</p><h3>Cada uno pone según lo que gana</h3><p>El reparto no es mitad y mitad. La app calcula cuánto le toca poner a cada uno según su parte del ingreso total, lo compara con lo que puso de verdad y muestra la diferencia. El número que vale es el de fin de mes.</p></section>
+<section class="dec rev"><p class="dec-k">Decisión</p><h3>Categorías cerradas, con techo</h3><p>Nada de texto libre en la categoría: en la planilla era la causa de gastos que no sumaban en el mes. Cada categoría tiene un techo mensual y la app muestra en verde lo que queda y en rojo lo que se pasó.</p></section>
+<h2>Cómo se calcula el reparto</h2>
+<div class="tbl"><table><thead><tr><th>Concepto</th><th>Cálculo</th></tr></thead><tbody><tr><td>Le toca poner</td><td>Su parte del ingreso total × gasto previsto del mes</td></tr><tr><td>Puso</td><td>Gastos del mes que pagó esa persona</td></tr><tr><td>Diferencia</td><td>Lo que le queda de verdad menos lo que le debería quedar</td></tr></tbody></table></div>
+<h2>Qué construí</h2>
+<ul class="list"><li>Inicio del mes: lo que entra, lo gastado, los pagos que faltan y lo que queda de verdad.</li><li>Login por persona y cambios en tiempo real: lo que carga uno, el otro lo ve al instante.</li><li>Instalable en el celular como app, con un recordatorio cuando pasa medio día sin cargar nada.</li><li>Un ojo para ocultar los montos y una exportación para seguir usando la planilla cuando hace falta.</li><li>Un modo demo con datos ficticios en el navegador, el mismo que podés probar acá.</li></ul></div>
+    <p class="tools-used"><span>Herramientas</span>Claude Code · Next.js · Supabase · Vitest · GitHub Actions</p>
+    
+  </div>
+  <a class="next w" href="heart.html"><span class="muted small">Siguiente</span><span class="next-t">Heart →</span></a>
+</article>
+</div>
+<footer class="foot">
+  <div class="lava lava-soft" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="w">
+    <p class="foot-big">¿Construimos algo?</p>
+    <p><a class="foot-mail" href="mailto:gaston.product.expert@gmail.com">gaston.product.expert@gmail.com</a></p>
+    <p class="foot-links"><a href="https://linkedin.com/in/gastonmartinperez" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/gaston-perez-art" target="_blank" rel="noopener">GitHub</a><a href="https://adplist.org/mentors/gaston-perez" target="_blank" rel="noopener">ADPList</a></p>
+    <p class="muted small">Este sitio también lo construí yo: HTML y CSS generados desde un archivo de contenido. <a href="https://github.com/gaston-perez-art/gaston-perez-art.github.io" target="_blank" rel="noopener">Código</a></p>
+  </div>
+</footer>
+<script>
+  document.querySelector('.tool-tema').addEventListener('click', () => {
+    const h = document.documentElement;
+    const nuevo = h.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    h.setAttribute('data-theme', nuevo);
+    try { localStorage.setItem('tema', nuevo); } catch (e) {}
+  });
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rev').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>

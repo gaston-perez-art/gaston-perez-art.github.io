@@ -9,6 +9,7 @@ Senior Product Manager con ocho años construyendo producto en Mercado Libre, Ra
 | Proyecto | Qué es | Estado | Links |
 |---|---|---|---|
 | **donAR** | Colectas solidarias P2P donde el dinero va directo de persona a persona | Demo web en vivo | [demo](https://gaston-perez-art.github.io/donAR/) · [código](https://github.com/gaston-perez-art/donAR) |
+| **Billetera Hogar** | Gastos de una pareja en tres toques, repartidos según lo que gana cada uno | En uso | [demo](https://gaston-perez-art.github.io/demos/billetera/) · [código](https://github.com/gaston-perez-art/billetera-hogar) |
 | **Heart** | Control diario de medicación para un familiar, con vista para la familia | En uso diario | código privado (datos de salud) |
 | **Tecla** | Servicio técnico y soporte a docentes bonaerenses, serverless de costo cero | En vivo, validando | [sitio](https://www.somostecla.com) · [código](https://github.com/gaston-perez-art/tecla) |
 | **Entrená con Jime** | Web y herramientas de trabajo para una entrenadora de fuerza | En vivo | [sitio](https://entrenaconjime.com) · [código](https://github.com/gaston-perez-art/jimenapp) |
@@ -21,10 +22,12 @@ También hay casos de estudio de mi trabajo en Bigbox, Mercado Libre, Henry y Ra
 HTML y CSS estáticos, generados con Node sin dependencias. Se publica con GitHub Pages desde `main`.
 
 ```
-src/contenido.js   Todo el texto del sitio. Se edita acá.
+src/contenido.js     Todo el texto del sitio en español. Se edita acá.
+src/contenido.en.js  La versión en inglés (se publica en /en/). Mismos slugs: editar los dos.
 src/figuras.js     Diagramas e ilustraciones en SVG.
-src/build.js       Genera index.html, sobre-mi.html, trabajo/ y proyectos/.
-estilos.css        Estilos, con modo claro y oscuro.
+src/build.js         Genera index.html, sobre-mi.html, trabajo/ y proyectos/, en español y en en/.
+estilos.css          Estilos. Oscuro por defecto; el botón del menú pasa a claro y lo recuerda.
+demos/               Builds de demo con datos ficticios (Heart, Billetera Hogar).
 img/               Capturas de los proyectos.
 ```
 
