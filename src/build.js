@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const figuras = require('./figuras');
 const marcas = require('./marcas');
+const detalle = require('./detalle');
 
 const ROOT = path.join(__dirname, '..');
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -24,7 +25,7 @@ const UI = {
     secTrabajo: ['01 · Trabajo', 'Producto en empresas que operan a escala', 'Cuatro casos contados por sus decisiones: qué problema había, qué elegí, qué resigné y qué pasó.'],
     secProyectos: ['02 · Proyectos', 'Lo que construyo con mis manos', (n) => `${n} productos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.`],
     numeros: { 5: 'Cinco', 6: 'Seis', 7: 'Siete' },
-    comienzos: 'Donde empecé',
+    comienzos: 'Donde empecé', tldr: 'En 30 segundos', funciones: 'Qué se puede hacer', arquitectura: 'Cómo está construido', decisiones: 'Decisiones de producto',
     secProceso: ['03 · Proceso', 'Cómo trabajo'],
     homeTitle: 'Gastón Pérez · Product Builder',
     homeDesc: 'Senior Product Manager y Product Builder. Casos de producto en Mercado Libre, Rappi, Henry y Bigbox, y los productos que construyo de punta a punta.',
@@ -43,7 +44,7 @@ const UI = {
     secTrabajo: ['01 · Work', 'Product at companies operating at scale', 'Four cases told through their decisions: what the problem was, what I chose, what I gave up and what happened.'],
     secProyectos: ['02 · Projects', 'What I build with my own hands', (n) => `${n} end-to-end products. Each one solves a real problem for someone I know, and each one has a decision that defines it.`],
     numeros: { 5: 'Five', 6: 'Six', 7: 'Seven' },
-    comienzos: 'Where I started',
+    comienzos: 'Where I started', tldr: 'In 30 seconds', funciones: 'What you can do', arquitectura: 'How it is built', decisiones: 'Product decisions',
     secProceso: ['03 · Process', 'How I work'],
     homeTitle: 'Gastón Pérez · Product Builder',
     homeDesc: 'Senior Product Manager and Product Builder. Product cases at Mercado Libre, Rappi, Henry and Bigbox, and the products I build end to end.',
@@ -273,7 +274,21 @@ ${body}
   </header>
   ${c.menor ? '' : c.tipo === 'propio' ? `<div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base + 1))}</div></div>` : `<div class="w-wide cs-cover">${portada(c, assets(base + 1), true)}</div>`}
   <div class="w">
+    ${(() => {
+      const d = detalle[lang][c.slug];
+      if (!d) return '';
+      return `<section class="tldr rev"><p class="tldr-k">${t.tldr}</p><dl>${d.resumen.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></section>`;
+    })()}
     <dl class="meta">${c.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+    ${(() => {
+      const d = detalle[lang][c.slug];
+      if (!d) return '';
+      return `<h2 class="sec2">${t.funciones}</h2>
+    <div class="feats">${d.funciones.map(([g, items]) => `<section class="feat rev"><h3>${esc(g)}</h3><ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul></section>`).join('')}</div>
+    <h2 class="sec2">${t.arquitectura}</h2>
+    <ol class="stack rev">${d.arquitectura.map(([k, v]) => `<li><span class="stack-k">${esc(k)}</span><span>${esc(v)}</span></li>`).join('')}</ol>
+    <h2 class="sec2">${t.decisiones}</h2>`;
+    })()}
     ${c.resultados ? `<div class="results">${c.resultados.map(([n, x]) => `<div class="rev"><strong class="count">${esc(n)}</strong><span>${esc(x)}</span></div>`).join('')}</div>` : ''}
     <div class="prose">${c.cuerpo.map(bloque).join('\n')}</div>
     ${c.herramientas ? `<p class="tools-used"><span>${t.herramientas}</span>${esc(c.herramientas)}</p>` : ''}
