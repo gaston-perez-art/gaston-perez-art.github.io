@@ -422,13 +422,13 @@ const CASOS = [
 
 const SOBRE = {
   titulo: 'Sobre mí',
-  h1: 'De la línea de montaje <em>al producto</em>.',
+  h1: 'De la línea de montaje <em>al MBA</em>.',
   parrafos: [
-    'Empecé lejos del software. En 2015 entré a Penalty como asistente de ingeniería y planificación, y seis años después era Project Manager. Coordiné una operación de más de once personas, implementé lean y Kanban en la línea de montaje y diseñé procesos que todavía se usan.',
+    'Empecé haciendo zapatillas. En 2015 entré a Penalty como asistente de ingeniería y planificación, y seis años después era Project Manager. Coordiné una operación de más de once personas, implementé lean y Kanban en la línea de montaje y diseñé procesos que todavía se usan.',
     'La tecnología la fui aprendiendo en paralelo. Mientras trabajaba en la fábrica daba clases particulares de Excel y de Python, y en 2018 cofundé Mobius, una app que replicaba la forma de hablar de seres queridos que ya no están, con aprendizaje automático. No escaló. Pero ahí armé mi primer equipo y vi por primera vez una idea mía funcionando.',
     'En 2021 llegó mi primer rol formal en producto, como Product Owner remoto para una startup de Lima. Ese mismo año terminé el curso de Product Manager de Coderhouse en el 10% superior de la cohorte y entré a trabajar ahí. Después vinieron Rappi, Henry, Mercado Libre y Bigbox.',
-    'Lo que no sabía lo fui estudiando en el camino: cinco cursos en Coderhouse, Reforge, Product School y un MBA en la Universidad de Palermo, que terminé de cursar con 9,13 de promedio.',
-    'De la fábrica me quedó una forma de trabajar: mirar el proceso entero, medir y mejorar lo que ya funciona. Hoy hago lo mismo con producto, con equipos y con mis manos.',
+    'Y nunca dejé de estudiar. Hice cinco cursos en Coderhouse, Reforge y Product School, y en 2023 empecé el MBA de la Universidad de Palermo. Terminé la cursada con 9,13 de promedio y en noviembre de 2026 defiendo la tesis: el plan de negocios de Tecla, que además salí a validar en el mercado.',
+    'Empecé en una línea de montaje y estoy terminando un MBA. De la fábrica me quedó mirar el proceso entero y mejorar lo que ya funciona. Del MBA, pensar el negocio detrás de cada decisión de producto. Las dos cosas las uso todos los días, con equipos y con mis manos.',
   ],
   trayectoria: [
     ['2026 – hoy', 'Senior Product Owner', 'Bigbox', 'bigbox'],

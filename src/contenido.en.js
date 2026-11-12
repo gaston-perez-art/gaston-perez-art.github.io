@@ -407,13 +407,13 @@ const CASOS = [
 
 const SOBRE = {
   titulo: 'About',
-  h1: 'From the assembly line <em>to product</em>.',
+  h1: 'From the assembly line <em>to an MBA</em>.',
   parrafos: [
-    'I started far from software. In 2015 I joined Penalty as an engineering and planning assistant, and six years later I was a Project Manager. I coordinated an operation of more than eleven people, implemented lean and Kanban on the assembly line and designed processes that are still in use.',
+    'I started out making sneakers. In 2015 I joined Penalty as an engineering and planning assistant, and six years later I was a Project Manager. I coordinated an operation of more than eleven people, implemented lean and Kanban on the assembly line and designed processes that are still in use.',
     'I learned technology on the side. While working at the factory I gave private Excel and Python lessons, and in 2018 I co-founded Mobius, an app that replicated the way lost loved ones used to talk, using machine learning. It did not scale. But there I built my first team and saw an idea of mine working for the first time.',
     'In 2021 I landed my first formal product role, as a remote Product Owner for a startup in Lima. That same year I finished Coderhouse’s Product Manager course in the top 10% of my cohort and joined the company. Then came Rappi, Henry, Mercado Libre and Bigbox.',
-    'Whatever I did not know, I studied along the way: five Coderhouse courses, Reforge, Product School and an MBA at Universidad de Palermo, where I finished coursework with a 9.13 GPA (out of 10).',
-    'The factory left me with a way of working: look at the whole process, measure, and improve what already works. Today I do the same with product, with teams and with my own hands.',
+    'And I never stopped studying. I took five Coderhouse courses, Reforge and Product School, and in 2023 I started the MBA at Universidad de Palermo. I finished coursework with a 9.13 GPA (out of 10) and in November 2026 I defend my thesis: the business plan for Tecla, which I also took to market to validate.',
+    'I started on an assembly line and I am finishing an MBA. The factory taught me to look at the whole process and improve what already works. The MBA taught me to think about the business behind every product decision. I use both every day, with teams and with my own hands.',
   ],
   trayectoria: [
     ['2026 – today', 'Senior Product Owner', 'Bigbox', 'bigbox'],
