@@ -570,3 +570,4 @@ html:not(.js) .rev { opacity: 1; transform: none; }
 .foot-slim .foot-links { margin: 0; order: 2; }
 .foot-slim .muted { margin: 0; }
 .foot-slim .lava { display: none; }
+html.sin-anim .rev { opacity: 1 !important; transform: none !important; }

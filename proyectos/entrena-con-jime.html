@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__ok)document.documentElement.classList.add('sin-anim')},2000);try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <title>Entrená con Jime · Gastón Pérez</title>
 <meta name="description" content="Jimena es profesora de Educación Física y entrenadora de fuerza especializada en recomposición corporal femenina. Construí su presencia online y las herramientas que usa con cada alumna.">
 <meta property="og:title" content="Entrená con Jime · Gastón Pérez">
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../estilos.css?v=ed05713d">
+<link rel="stylesheet" href="../estilos.css?v=4ebdc9fe">
 </head>
 <body>
 <a class="skip" href="#contenido">Ir al contenido</a>
@@ -121,9 +121,7 @@
   document.querySelectorAll('.ct-f').forEach((f) => f.addEventListener('submit', (ev) => {
     ev.preventDefault();
     const d = new FormData(f);
-    const cuerpo = d.get('mensaje') + '
-
-' + d.get('nombre') + ' · ' + d.get('mail');
+    const cuerpo = d.get('mensaje') + '\n\n' + d.get('nombre') + ' · ' + d.get('mail');
     location.href = 'mailto:' + f.dataset.mail + '?subject=' + encodeURIComponent(f.dataset.asunto + ': ' + d.get('nombre')) + '&body=' + encodeURIComponent(cuerpo);
   }));
   // La línea de cada título se llena a medida que se recorre su sección.
@@ -160,6 +158,7 @@
     mover();
   }
   } catch (e) { mostrarTodo(); }
+  window.__ok = true;
 </script>
 </body>
 </html>

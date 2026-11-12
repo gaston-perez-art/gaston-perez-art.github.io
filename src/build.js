@@ -70,7 +70,7 @@ const UI = {
 };
 
 // Tema: oscuro por defecto; la elección se recuerda en el navegador.
-const HEAD_TEMA = `<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>`;
+const HEAD_TEMA = `<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__ok)document.documentElement.classList.add('sin-anim')},2000);try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>`;
 const ICONO_TEMA = `<svg class="i-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="i-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>`;
 
 function generar(lang) {
@@ -188,7 +188,7 @@ ${body}
   document.querySelectorAll('.ct-f').forEach((f) => f.addEventListener('submit', (ev) => {
     ev.preventDefault();
     const d = new FormData(f);
-    const cuerpo = d.get('mensaje') + '\n\n' + d.get('nombre') + ' · ' + d.get('mail');
+    const cuerpo = d.get('mensaje') + '\\n\\n' + d.get('nombre') + ' · ' + d.get('mail');
     location.href = 'mailto:' + f.dataset.mail + '?subject=' + encodeURIComponent(f.dataset.asunto + ': ' + d.get('nombre')) + '&body=' + encodeURIComponent(cuerpo);
   }));
   // La línea de cada título se llena a medida que se recorre su sección.
@@ -225,6 +225,7 @@ ${body}
     mover();
   }
   } catch (e) { mostrarTodo(); }
+  window.__ok = true;
 </script>
 </body>
 </html>
@@ -444,13 +445,21 @@ ${contacto()}`;
   // Los links a otros sitios abren en una pestaña nueva.
   const externos = (html) => html.replace(/<a ([^>]*?)href="(https?:\/\/[^"]+)"/g, '<a $1href="$2" target="_blank" rel="noopener"');
 
+  // Antes de escribir: el script de cada página tiene que ser JavaScript válido.
+  const revisar = (html, nombre) => {
+    for (const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
+      try { new Function(m[1]); } catch (e) { throw new Error(`Script inválido en ${lang}/${nombre}: ${e.message}`); }
+    }
+    return html;
+  };
+  const externosOk = (html, nombre) => revisar(externos(html), nombre);
   const dir = lang === 'es' ? ROOT : path.join(ROOT, 'en');
   fs.mkdirSync(path.join(dir, 'trabajo'), { recursive: true });
   fs.mkdirSync(path.join(dir, 'proyectos'), { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), externos(home()));
-  fs.writeFileSync(path.join(dir, 'sobre-mi.html'), externos(sobre()));
-  empresas.forEach((c, i, l) => fs.writeFileSync(path.join(dir, 'trabajo', `${c.slug}.html`), externos(paginaCaso(c, i, l))));
-  propios.forEach((c, i, l) => fs.writeFileSync(path.join(dir, 'proyectos', `${c.slug}.html`), externos(paginaCaso(c, i, l))));
+  fs.writeFileSync(path.join(dir, 'index.html'), externosOk(home(), 'index'));
+  fs.writeFileSync(path.join(dir, 'sobre-mi.html'), externosOk(sobre(), 'sobre-mi'));
+  empresas.forEach((c, i, l) => fs.writeFileSync(path.join(dir, 'trabajo', `${c.slug}.html`), externosOk(paginaCaso(c, i, l), c.slug)));
+  propios.forEach((c, i, l) => fs.writeFileSync(path.join(dir, 'proyectos', `${c.slug}.html`), externosOk(paginaCaso(c, i, l), c.slug)));
   console.log(`OK ${lang}: index, sobre-mi, ${empresas.length} casos, ${propios.length} proyectos`);
 }
 
