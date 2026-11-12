@@ -9,6 +9,8 @@ const marcas = require('./marcas');
 const detalle = require('./detalle');
 
 const ROOT = path.join(__dirname, '..');
+// Versión de los estilos: cambia con cada edición, así el navegador nunca mezcla una página nueva con estilos viejos.
+const VERSION_CSS = require('crypto').createHash('md5').update(fs.readFileSync(path.join(ROOT, 'estilos.css'))).digest('hex').slice(0, 8);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // Textos de interfaz por idioma.
@@ -111,7 +113,7 @@ ${HEAD_TEMA}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${a}estilos.css">
+<link rel="stylesheet" href="${a}estilos.css?v=${VERSION_CSS}">
 </head>
 <body>
 <a class="skip" href="#contenido">${t.skip}</a>
