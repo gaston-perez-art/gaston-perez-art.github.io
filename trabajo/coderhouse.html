@@ -17,9 +17,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../estilos.css?v=d5ebce9f">
+<link rel="stylesheet" href="../estilos.css?v=148e61ba">
 </head>
 <body>
+<div class="fx-luz" aria-hidden="true"></div>
 <a class="skip" href="#contenido">Ir al contenido</a>
 <header class="nav">
   <div class="nav-in">
@@ -121,6 +122,18 @@
     const cuerpo = d.get('mensaje') + '\n\n' + d.get('nombre') + ' · ' + d.get('mail');
     location.href = 'mailto:' + f.dataset.mail + '?subject=' + encodeURIComponent(f.dataset.asunto + ': ' + d.get('nombre')) + '&body=' + encodeURIComponent(cuerpo);
   }));
+  // Una luz muy suave sigue al cursor (solo con mouse y si no se pidió menos movimiento).
+  const luz = document.querySelector('.fx-luz');
+  if (luz && !quieto && matchMedia('(pointer: fine)').matches) {
+    let lx = innerWidth / 2, ly = innerHeight / 3, cx = lx, cy = ly, corriendo = false;
+    const mover = () => {
+      cx += (lx - cx) * 0.12; cy += (ly - cy) * 0.12;
+      luz.style.transform = 'translate(' + (cx - 400) + 'px,' + (cy - 400) + 'px)';
+      if (Math.abs(lx - cx) + Math.abs(ly - cy) > 0.5) requestAnimationFrame(mover); else corriendo = false;
+    };
+    addEventListener('pointermove', (e) => { lx = e.clientX; ly = e.clientY; luz.classList.add('on'); if (!corriendo) { corriendo = true; requestAnimationFrame(mover); } }, { passive: true });
+    document.addEventListener('pointerleave', () => luz.classList.remove('on'));
+  }
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
   if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {

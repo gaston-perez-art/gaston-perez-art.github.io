@@ -571,3 +571,21 @@ html:not(.js) .rev { opacity: 1; transform: none; }
 .foot-slim .lava { display: none; }
 html.sin-anim .rev { opacity: 1 !important; transform: none !important; }
 @media (max-width: 680px) { .logo-txt { font-size: 16px; } }
+
+/* ---------------------------------------------------------------- fondo de color por proyecto */
+.proj-media.tinte, .cs-hero.tinte { background: radial-gradient(120% 95% at 25% 0%, var(--t1), var(--t2)); position: relative; }
+.proj-media.tinte::after, .cs-hero.tinte::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 50% at 80% 100%, rgba(255,255,255,.14), transparent 70%); pointer-events: none; }
+.proj-media.tinte .phone img, .cs-hero.tinte .phone img { box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 30px 60px -20px rgba(0,0,0,.55); }
+.cs-hero.tinte { border-radius: 28px; max-width: 1112px; margin-left: auto; margin-right: auto; }
+@media (max-width: 680px) { .cs-hero.tinte { border-radius: 0; } }
+
+/* ---------------------------------------------------------------- efectos de fondo */
+/* Grano fino sobre toda la página, como papel */
+body::after { content: ""; position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: .045; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+:root[data-theme="light"] body::after { opacity: .06; mix-blend-mode: multiply; }
+/* Luz suave que sigue al cursor */
+.fx-luz { position: fixed; left: 0; top: 0; width: 800px; height: 800px; border-radius: 50%; pointer-events: none; z-index: 0; opacity: 0; transition: opacity .6s; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%); will-change: transform; }
+.fx-luz.on { opacity: 1; }
+:root[data-theme="light"] .fx-luz { background: radial-gradient(circle, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%); }
+#contenido, .foot { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce), (pointer: coarse) { .fx-luz { display: none; } }

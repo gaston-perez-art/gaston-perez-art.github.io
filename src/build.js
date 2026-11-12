@@ -116,6 +116,7 @@ ${HEAD_TEMA}
 <link rel="stylesheet" href="${a}estilos.css?v=${VERSION_CSS}">
 </head>
 <body>
+<div class="fx-luz" aria-hidden="true"></div>
 <a class="skip" href="#contenido">${t.skip}</a>
 <header class="nav">
   <div class="nav-in">
@@ -191,6 +192,18 @@ ${body}
     const cuerpo = d.get('mensaje') + '\\n\\n' + d.get('nombre') + ' · ' + d.get('mail');
     location.href = 'mailto:' + f.dataset.mail + '?subject=' + encodeURIComponent(f.dataset.asunto + ': ' + d.get('nombre')) + '&body=' + encodeURIComponent(cuerpo);
   }));
+  // Una luz muy suave sigue al cursor (solo con mouse y si no se pidió menos movimiento).
+  const luz = document.querySelector('.fx-luz');
+  if (luz && !quieto && matchMedia('(pointer: fine)').matches) {
+    let lx = innerWidth / 2, ly = innerHeight / 3, cx = lx, cy = ly, corriendo = false;
+    const mover = () => {
+      cx += (lx - cx) * 0.12; cy += (ly - cy) * 0.12;
+      luz.style.transform = 'translate(' + (cx - 400) + 'px,' + (cy - 400) + 'px)';
+      if (Math.abs(lx - cx) + Math.abs(ly - cy) > 0.5) requestAnimationFrame(mover); else corriendo = false;
+    };
+    addEventListener('pointermove', (e) => { lx = e.clientX; ly = e.clientY; luz.classList.add('on'); if (!corriendo) { corriendo = true; requestAnimationFrame(mover); } }, { passive: true });
+    document.addEventListener('pointerleave', () => luz.classList.remove('on'));
+  }
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
   if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {
@@ -254,11 +267,22 @@ ${body}
   </div>`;
   }
 
+  // Fondo de color propio para cada proyecto, igual en modo claro y oscuro.
+  const TINTES = {
+    donar: ['#5aa2f0', '#123a78'],
+    'billetera-hogar': ['#f08a6c', '#3b1810'],
+    heart: ['#e98a8a', '#4a1a22'],
+    tecla: ['#f5c7a2', '#b9572f'],
+    'entrena-con-jime': ['#e9b7c7', '#7d3b52'],
+    fulbito: ['#6a5bd6', '#16122b'],
+  };
+  const tinte = (slug) => (TINTES[slug] ? `--t1:${TINTES[slug][0]};--t2:${TINTES[slug][1]}` : '');
+
   function cardPropio(c, i, lista) {
     // La primera va ancha; si sobra una sola en la última fila, va a lo ancho.
     const cls = i === 0 ? ' proj-wide' : i === lista.length - 1 && (lista.length + 1) % 3 === 1 ? ' proj-wide proj-full' : '';
     return `<a class="proj rev${cls}" href="proyectos/${c.slug}.html">
-  <div class="proj-media" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base))}</div>
+  <div class="proj-media tinte" style="view-transition-name:shot-${c.slug};${tinte(c.slug)}">${arte(c, assets(base))}</div>
   <div class="proj-body">
     <div class="proj-top"><h3>${esc(c.nombre)}</h3><span class="badge ${c.estado[0]}">${esc(c.estado[1])}</span></div>
     <p>${esc(c.corto)}</p>
@@ -296,7 +320,7 @@ ${body}
     ${c.links && c.links.length ? `<p class="cta-row">${c.links.map(([x, h], k) => `<a class="btn${k ? ' btn-ghost' : ''}" href="${h}">${esc(x)} ↗</a>`).join('')}</p>` : ''}
     ${c.nota ? `<p class="note">${esc(c.nota)}</p>` : ''}
   </header>
-  ${c.menor ? '' : c.tipo === 'propio' ? `<div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base + 1))}</div></div>` : `<div class="w-wide cs-cover">${portada(c, assets(base + 1), true)}</div>`}
+  ${c.menor ? '' : c.tipo === 'propio' ? `<div class="cs-hero w-wide tinte" style="${tinte(c.slug)}"><div class="cs-shot" style="view-transition-name:shot-${c.slug}">${arte(c, assets(base + 1))}</div></div>` : `<div class="w-wide cs-cover">${portada(c, assets(base + 1), true)}</div>`}
   <div class="w">
     ${(() => {
       const d = detalle[lang][c.slug];

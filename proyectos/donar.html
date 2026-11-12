@@ -17,9 +17,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../estilos.css?v=d5ebce9f">
+<link rel="stylesheet" href="../estilos.css?v=148e61ba">
 </head>
 <body>
+<div class="fx-luz" aria-hidden="true"></div>
 <a class="skip" href="#contenido">Ir al contenido</a>
 <header class="nav">
   <div class="nav-in">
@@ -46,7 +47,7 @@
     <p class="cta-row"><a class="btn" href="https://gaston-perez-art.github.io/donAR/" target="_blank" rel="noopener">Probar la demo ↗</a><a class="btn btn-ghost" href="https://github.com/gaston-perez-art/donAR" target="_blank" rel="noopener">Código ↗</a></p>
     <p class="note">La demo funciona con datos de ejemplo guardados en tu navegador, sin crear cuenta. Podés donar, confirmar una transferencia como dueño de una causa y aprobar causas como curador. En la app real la identidad es obligatoria.</p>
   </header>
-  <div class="cs-hero w-wide"><div class="cs-shot" style="view-transition-name:shot-donar"><div class="phone"><img src="../img/donar.png" alt="Feed de causas verificadas de donAR" loading="lazy" width="390" height="844"></div></div></div>
+  <div class="cs-hero w-wide tinte" style="--t1:#5aa2f0;--t2:#123a78"><div class="cs-shot" style="view-transition-name:shot-donar"><div class="phone"><img src="../img/donar.png" alt="Feed de causas verificadas de donAR" loading="lazy" width="390" height="844"></div></div></div>
   <div class="w">
     <section class="tldr rev"><p class="tldr-k">En 30 segundos</p><dl><div><dt>Problema</dt><dd>Las colectas entre desconocidos funcionan, pero la confianza es el punto frágil. Las plataformas locales trabajan con ONGs, no con personas.</dd></div><div><dt>Para quién</dt><dd>Quien necesita ayuda para algo concreto y quien quiere ayudar sabiendo a dónde va la plata.</dd></div><div><dt>Qué resuelve</dt><dd>Colectas persona a persona con curaduría humana antes de publicar, plata directa al beneficiado y el recorrido de cada aporte a la vista.</dd></div><div><dt>Estado</dt><dd>POC funcionando en iOS, Android y web, con datos reales. Listo para validar las tres hipótesis del MVP.</dd></div></dl></section>
     <dl class="meta"><div><dt>Rol</dt><dd>Fundador y Product Builder. Todo</dd></div><div><dt>Estado</dt><dd>POC funcionando, iOS, Android y web</dd></div><div><dt>Stack</dt><dd>React Native · Expo · TypeScript · Supabase</dd></div><div><dt>Documentos</dt><dd>Paper fundacional, go-to-market, modelo de amenaza, privacidad y términos</dd></div></dl>
@@ -148,6 +149,18 @@
     const cuerpo = d.get('mensaje') + '\n\n' + d.get('nombre') + ' · ' + d.get('mail');
     location.href = 'mailto:' + f.dataset.mail + '?subject=' + encodeURIComponent(f.dataset.asunto + ': ' + d.get('nombre')) + '&body=' + encodeURIComponent(cuerpo);
   }));
+  // Una luz muy suave sigue al cursor (solo con mouse y si no se pidió menos movimiento).
+  const luz = document.querySelector('.fx-luz');
+  if (luz && !quieto && matchMedia('(pointer: fine)').matches) {
+    let lx = innerWidth / 2, ly = innerHeight / 3, cx = lx, cy = ly, corriendo = false;
+    const mover = () => {
+      cx += (lx - cx) * 0.12; cy += (ly - cy) * 0.12;
+      luz.style.transform = 'translate(' + (cx - 400) + 'px,' + (cy - 400) + 'px)';
+      if (Math.abs(lx - cx) + Math.abs(ly - cy) > 0.5) requestAnimationFrame(mover); else corriendo = false;
+    };
+    addEventListener('pointermove', (e) => { lx = e.clientX; ly = e.clientY; luz.classList.add('on'); if (!corriendo) { corriendo = true; requestAnimationFrame(mover); } }, { passive: true });
+    document.addEventListener('pointerleave', () => luz.classList.remove('on'));
+  }
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
   if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {

@@ -31,46 +31,33 @@ function interfaz(slug) {
   const corazon = (x, y) => `<circle cx="${x}" cy="${y}" r="7" fill="#ffffff" opacity=".9"/><path d="M${x} ${y + 3}c-3-2.4-4.5-3.8-4.5-5.3 0-1.3 1-2.2 2.1-2.2.9 0 1.6.5 2.4 1.4.8-.9 1.5-1.4 2.4-1.4 1.1 0 2.1.9 2.1 2.2 0 1.5-1.5 2.9-4.5 5.3z" fill="#111"/>`;
   if (slug === 'bigbox') {
     s += fotosDefs([['#c98a62', '#4a2e22'], ['#7b8f6a', '#26301f'], ['#6f86a0', '#1f2c3b'], ['#b07a8a', '#3e2430']]);
-    // Home: franja negra, header con buscador, menú, banner con fotos, "Lo más regalado".
-    s += pantalla(id, 0, 0, 380, 262, `
-      <path d="M0 16a16 16 0 0 1 16-16h348a16 16 0 0 1 16 16v4H0z" fill="#1d1d1d"/>${barra(150, 7, 80, '#ffffff', 5)}
-      ${barra(16, 32, 52, '#111', 11)}<rect x="84" y="30" width="120" height="16" rx="5" fill="none" stroke="#d6d6d6"/>
-      <rect x="300" y="30" width="64" height="16" rx="5" fill="none" stroke="#5b5bd6" stroke-width="1.5"/>${barra(312, 35, 40, '#5b5bd6', 6)}
-      ${[0, 1, 2, 3, 4].map((k) => barra(16 + k * 46, 56, 36, '#3a3a3a', 6)).join('')}
-      ${caja(16, 72, 348, 70, '#3b2f29', 8)}${barra(28, 92, 84, '#ffffff', 9)}${barra(28, 106, 60, '#ffffff', 9)}${caja(28, 122, 46, 13, '#e8776a', 4)}
-      ${[0, 1, 2, 3].map((k) => foto(168 + k * 48, 80, 44, 54, k, 3)).join('')}
-      <rect x="150" y="150" width="80" height="16" rx="5" fill="none" stroke="#5b5bd6" stroke-width="1.5"/>
-      ${barra(16, 176, 76, '#111', 9)}${barra(98, 178, 26, '#5b5bd6', 6)}
-      ${[0, 1, 2, 3].map((k) => `${foto(16 + k * 88, 192, 80, 54, k)}${corazon(84 + k * 88, 202)}${caja(22 + k * 88, 232, 40, 9, '#ffffff', 4.5)}`).join('')}`);
-    // Detalle de una box en el celular.
-    s += pantalla(id, 316, 120, 170, 260, `
-      ${foto(10, 10, 150, 104, 0, 10)}${corazon(144, 26)}${caja(18, 96, 52, 11, '#ffffff', 5.5)}
-      ${barra(14, 126, 80, '#111', 10)}<path d="M18 145l2 4 4.5.6-3.3 3 .8 4.4-4-2.2-4 2.2.8-4.4-3.3-3 4.5-.6z" fill="#f2b736"/>${barra(30, 146, 70, '#cfcfcf', 6)}
-      ${barra(14, 164, 130, '#ececec', 6)}${barra(14, 175, 100, '#ececec', 6)}
-      ${caja(14, 190, 60, 14, '#f1f1f1', 7)}${caja(80, 190, 60, 14, '#f1f1f1', 7)}
-      ${barra(14, 214, 64, '#111', 10)}${caja(14, 232, 142, 20, '#e8776a', 6)}${barra(60, 239, 50, '#ffffff', 6)}`);
+    // Home simplificada: buscador, banner con fotos y tres boxes.
+    s += pantalla(id, 0, 0, 350, 240, `
+      ${barra(18, 20, 56, '#111', 12)}<rect x="96" y="18" width="120" height="16" rx="8" fill="none" stroke="#d9d9d9"/><rect x="262" y="18" width="70" height="16" rx="8" fill="none" stroke="#5b5bd6" stroke-width="1.6"/>
+      ${caja(18, 50, 314, 78, '#2b2420', 12)}${barra(32, 70, 90, '#ffffff', 10)}${barra(32, 86, 64, '#ffffff', 10)}${caja(32, 104, 52, 14, '#e8776a', 7)}
+      ${foto(196, 60, 58, 58, 0, 6)}${foto(262, 60, 58, 58, 2, 6)}
+      ${[0, 1, 2].map((k) => `${foto(18 + k * 108, 142, 98, 62, k + 1)}${corazon(102 + k * 108, 154)}${barra(18 + k * 108, 212, 70, '#222', 7)}`).join('')}`);
+    // En el celular: una box con su foto y el botón de regalar.
+    s += pantalla(id, 300, 110, 180, 250, `
+      ${foto(14, 14, 152, 120, 0, 12)}${corazon(150, 30)}
+      ${barra(16, 150, 100, '#111', 11)}${barra(16, 170, 130, '#e6e6e6', 8)}${barra(16, 186, 90, '#e6e6e6', 8)}
+      ${caja(16, 210, 148, 24, '#e8776a', 12)}${barra(60, 218, 60, '#ffffff', 8)}`);
   }
   if (slug === 'mercadolibre') {
-    // Gestor de pedidos: barra amarilla, menú lateral, local, pestañas y estado vacío.
-    s += pantalla(id, 0, 0, 370, 252, `
-      <path d="M0 16a16 16 0 0 1 16-16h338a16 16 0 0 1 16 16v14H0z" fill="#ffe600"/>
-      <circle cx="18" cy="15" r="7" fill="#ffffff"/>${barra(30, 12, 40, '#2d3277', 6)}${barra(96, 11, 70, '#333', 8)}
-      <rect y="30" width="82" height="222" fill="#ffffff"/><rect x="82" y="30" width="1" height="222" fill="#eeeeee"/>
-      ${[0, 1, 2, 4, 5, 6, 8, 9, 10].map((k) => `<rect x="12" y="${44 + k * 15}" width="7" height="7" rx="2" fill="none" stroke="#999"/>${barra(24, 45 + k * 15, 40 - (k % 3) * 8, k === 10 ? '#3483fa' : '#d9d9d9', 5)}`).join('')}
-      <rect x="83" y="30" width="287" height="222" fill="#ededed"/>
-      ${caja(96, 42, 262, 26, '#ffffff', 4)}<circle cx="108" cy="55" r="4" fill="#00a650"/>${barra(118, 52, 70, '#333', 6)}${caja(310, 48, 40, 14, '#3483fa', 4)}
-      ${caja(96, 74, 262, 30, '#ffffff', 4)}${[0, 1, 2, 3].map((k) => `${barra(104 + k * 65, 82, 42, k === 1 ? '#333' : '#3483fa', 6)}${barra(104 + k * 65, 92, 28, '#cfcfcf', 5)}`).join('')}<rect x="161" y="74" width="65" height="2" fill="#333"/>
-      ${caja(96, 112, 262, 16, '#e2e2e2', 3)}<rect x="96" y="112" width="2.5" height="16" fill="#3483fa"/>${barra(108, 117, 170, '#bdbdbd', 5)}
-      ${caja(96, 136, 262, 104, '#e4e4e4', 4)}
-      <g transform="translate(208,156)"><path d="M0 12h38v32H0z" fill="#ffffff" stroke="#666" stroke-width="1.4"/><path d="M-4 12l5-11h36l5 11z" fill="#ffffff" stroke="#666" stroke-width="1.4"/><rect x="6" y="22" width="10" height="14" fill="none" stroke="#666" stroke-width="1.2"/><rect x="22" y="24" width="10" height="8" fill="none" stroke="#666" stroke-width="1.2"/></g>
-      ${barra(186, 212, 80, '#555', 7)}${barra(166, 224, 120, '#c4c4c4', 5)}`);
-    // En el celular: un pedido nuevo con sus estados.
-    s += pantalla(id, 318, 112, 170, 262, `
-      <path d="M0 16a16 16 0 0 1 16-16h138a16 16 0 0 1 16 16v14H0z" fill="#ffe600"/>${barra(14, 12, 60, '#333', 7)}
-      ${[0, 1, 2].map((k) => `${caja(12, 42 + k * 70, 146, 60, '#f5f5f5', 8)}${barra(22, 52 + k * 70, 60, '#333', 7)}${caja(110, 50 + k * 70, 38, 11, ['#e6f7ee', '#e8f0fe', '#fff4d6'][k], 5.5)}${barra(22, 66 + k * 70, 100, '#d6d6d6', 5)}${caja(22, 78 + k * 70, 56, 14, '#3483fa', 4)}`).join('')}`);
-    // El agente de soporte con IA del Help Center.
-    s += pantalla(id, 40, 268, 200, 110, `
-      ${caja(14, 14, 120, 22, '#f1f1f1', 11)}${caja(66, 44, 120, 30, '#3483fa', 12)}${barra(78, 52, 90, '#ffffff', 5)}${barra(78, 62, 60, '#cfe1ff', 5)}${caja(14, 82, 90, 18, '#f1f1f1', 9)}`);
+    // Gestor de pedidos simplificado: barra amarilla, menú, pestañas y el local vacío.
+    s += pantalla(id, 0, 0, 350, 240, `
+      <path d="M0 16a16 16 0 0 1 16-16h318a16 16 0 0 1 16 16v14H0z" fill="#ffe600"/>${barra(18, 11, 70, '#2d3277', 9)}
+      ${caja(0, 30, 74, 210, '#f6f6f6', 0)}<path d="M0 224a16 16 0 0 0 16 16h58V224z" fill="#f6f6f6"/>
+      ${[0, 1, 2, 3].map((k) => barra(14, 52 + k * 24, 44, k === 3 ? '#3483fa' : '#e2e2e2', 10)).join('')}
+      ${barra(92, 48, 110, '#333', 11)}
+      ${[0, 1, 2].map((k) => caja(92 + k * 82, 72, 74, 26, k === 0 ? '#3483fa' : '#f1f1f1', 13)).join('')}
+      ${caja(92, 112, 240, 108, '#f3f3f3', 12)}
+      <g transform="translate(190,134)"><path d="M0 14h44v38H0z" fill="#ffffff" stroke="#9a9a9a" stroke-width="2"/><path d="M-5 14l6-13h42l6 13z" fill="#ffe600" stroke="#9a9a9a" stroke-width="2"/></g>
+      ${barra(168, 198, 88, '#cfcfcf', 8)}`);
+    // En el celular: pedidos nuevos para aceptar.
+    s += pantalla(id, 300, 110, 180, 250, `
+      <path d="M0 16a16 16 0 0 1 16-16h148a16 16 0 0 1 16 16v14H0z" fill="#ffe600"/>${barra(16, 11, 60, '#2d3277', 9)}
+      ${[0, 1].map((k) => `${caja(14, 46 + k * 96, 152, 84, '#f5f5f5', 12)}${barra(26, 60 + k * 96, 80, '#333', 9)}${barra(26, 78 + k * 96, 110, '#dcdcdc', 7)}${caja(26, 98 + k * 96, 70, 20, '#3483fa', 10)}`).join('')}`);
   }
   if (slug === 'henry') {
     s += pantalla(id, 0, 0, 350, 240, `
