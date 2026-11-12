@@ -589,3 +589,39 @@ body::after { content: ""; position: fixed; inset: 0; z-index: 100; pointer-even
 :root[data-theme="light"] .fx-luz { background: radial-gradient(circle, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%); }
 #contenido, .foot { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce), (pointer: coarse) { .fx-luz { display: none; } }
+
+/* ---------------------------------------------------------------- pasada mobile */
+.fig-hint { display: none; }
+@media (max-width: 680px) {
+  /* Diagramas: legibles, con desplazamiento lateral */
+  .fig { margin: 28px 0; border-radius: 16px; padding: 20px 0 14px; overflow: hidden; }
+  .fig-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 16px; }
+  .fig-scroll::-webkit-scrollbar { display: none; }
+  .fig-scroll svg { min-width: 600px; }
+  .fig figcaption { padding: 0 16px; }
+  .fig-hint { display: block; margin-top: 4px; font-size: 12px; opacity: .8; }
+  .fig-hint::after { content: " →"; }
+
+  /* Zonas táctiles de 44 px */
+  .nav-in { padding-top: 10px; padding-bottom: 10px; }
+  .tool { height: 40px; min-width: 40px; }
+  .nav-cta { padding: 10px 16px; }
+  .logo { padding: 8px 0; }
+  .back { padding: 10px 0; margin-bottom: 24px; }
+  .more { padding-top: 12px; }
+
+  /* Logos del inicio: los cinco en una fila */
+  .logos-row { gap: 12px 20px; }
+  .logos-row img { transform: none; max-height: 22px; height: auto !important; max-width: 64px; object-fit: contain; }
+  .logo-txt { font-size: 14px; }
+}
+@media (max-width: 360px) {
+  .logos-row { gap: 10px 14px; }
+  .logos-row img { max-width: 54px; }
+}
+@media (max-width: 680px) {
+  .logos-row { flex-wrap: nowrap; justify-content: space-between; gap: 10px; }
+  .logos-row img { max-width: 56px; max-height: 20px; }
+  .logo-txt { font-size: 13px; white-space: nowrap; }
+}
+@media (max-width: 680px) { .logos-row img[alt="Bigbox"] { max-height: 16px; } }

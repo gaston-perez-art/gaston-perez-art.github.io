@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../estilos.css?v=148e61ba">
+<link rel="stylesheet" href="../../estilos.css?v=3d60d501">
 </head>
 <body>
 <div class="fx-luz" aria-hidden="true"></div>
@@ -61,7 +61,7 @@
 <p>Solidarity between strangers already works at scale, but with no infrastructure to support it. Viral fundraisers prove two things at once: people give money when a cause feels fair, and trust is the weak point. In 2023 Argentina’s corporate regulator declared the trust behind one of the country’s best-known fundraisers irregular. The money arrived; the way it was managed came under suspicion.</p>
 <p>The platforms in Argentina work with NGOs, not with people. GoFundMe allows individual fundraisers, but it neither verifies them nor turns traceability into a product. I found none that combined three things: person-to-person fundraising, a trust layer and a reason to come back.</p>
 <section class="dec rev"><h3>Connect without holding the money</h3><p>Money goes directly from donor to recipient and never passes through the app. Central bank regulation is triggered by holding third-party balances, not by connecting people. No custody: less friction, zero third-party funds and a clean regulatory frame. I backed it with a money-laundering risk analysis and a sharp question for the lawyer.</p><p class="dec-tr"><span>The cost</span>The platform can never technically prove a transfer arrived, because it never sees it. Accepting that was the design premise.</p></section>
-<figure class="fig rev"><svg viewBox="0 0 640 300" role="img" aria-label="Three layers of trust: transparency, human confirmation and verified identity">
+<figure class="fig rev"><div class="fig-scroll"><svg viewBox="0 0 640 300" role="img" aria-label="Three layers of trust: transparency, human confirmation and verified identity">
     <g transform="translate(40,20)">
       <rect width="560" height="76" rx="14" class="s-box"/>
       <text x="24" y="34" class="s-t">1 · Transparency</text>
@@ -77,7 +77,7 @@
       <text x="24" y="34" class="s-t">3 · Verified identity</text>
       <text x="24" y="56" class="s-m">Whoever asks and whoever gives are real people. Lying exposes you.</text>
     </g>
-  </svg><figcaption>If the app never sees the money, trust is built in three layers.</figcaption></figure>
+  </svg></div><figcaption>If the app never sees the money, trust is built in three layers.<span class="fig-hint">Swipe to see the full diagram</span></figcaption></figure>
 <section class="dec rev"><h3>Only confirmed money counts</h3><p>A donation with an uploaded receipt but no confirmation stays pending: it does not add to the goal, earn points or trigger recognition. It only counts once the recipient confirms it arrived. The recipient is the only one who sees the money come in and gains nothing by confirming what they did not receive. If they do not respond within 48 hours, it confirms itself, so nobody gets stuck.</p></section>
 <section class="dec rev"><h3>Gamification through recognition, no prizes</h3><p>Levels, badges and a monthly ranking of top helpers, at no monetary cost. If the reward is material, you attract donors who want the prize, not the cause. And it lets you measure what matters: whether people come back for the cause.</p></section>
 <h2>What the MVP validates</h2>
@@ -125,7 +125,7 @@
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
       el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);

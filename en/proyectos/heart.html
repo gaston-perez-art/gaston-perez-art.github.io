@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../estilos.css?v=148e61ba">
+<link rel="stylesheet" href="../../estilos.css?v=3d60d501">
 </head>
 <body>
 <div class="fx-luz" aria-hidden="true"></div>
@@ -62,7 +62,7 @@
 <p>When all ten are done, the card turns into the day’s closing: a beating heart with a monitor trace and the phrase he says every morning.</p>
 <h2>Design decisions</h2>
 <section class="dec rev"><h3>The day starts at 4 AM, not midnight</h3><p>If he takes his sleeping pill at 00:30, it counts for the previous day.</p></section>
-<figure class="fig rev"><svg viewBox="0 0 640 150" role="img" aria-label="Timeline: the app day runs from 4 AM to 4 AM; a dose at 00:30 counts for the previous day">
+<figure class="fig rev"><div class="fig-scroll"><svg viewBox="0 0 640 150" role="img" aria-label="Timeline: the app day runs from 4 AM to 4 AM; a dose at 00:30 counts for the previous day">
     <line x1="40" y1="70" x2="600" y2="70" class="s-axis"/>
     <rect x="40" y="58" width="560" height="24" rx="12" class="s-acc-bg"/>
     <text x="40" y="112" text-anchor="middle" class="s-m">4:00</text>
@@ -74,7 +74,7 @@
     <circle cx="518" cy="70" r="7" class="s-dot"/>
     <text x="518" y="30" text-anchor="middle" class="s-t">00:30 · counts for today</text>
     <text x="320" y="140" text-anchor="middle" class="s-m">One app day</text>
-  </svg><figcaption>The app day runs from 4 AM to 4 AM.</figcaption></figure>
+  </svg></div><figcaption>The app day runs from 4 AM to 4 AM.<span class="fig-hint">Swipe to see the full diagram</span></figcaption></figure>
 <section class="dec rev"><h3>The app records, it does not interpret</h3><p>The blood pressure log has no color ranges or trends. Interpreting a number is the doctor’s job. The history is shared over WhatsApp in one tap.</p></section>
 <section class="dec rev"><h3>Nothing changes under his fingers</h3><p>Unmarking takes two taps. Updates notify, they do not install themselves. Everything is in rem: one selector enlarges text, buttons and spacing together, and the screen never overflows. No web fonts: Roboto is already on the phone and the app works offline.</p></section>
 <section class="dec rev"><h3>Only the patient marks a dose</h3><p>Enforced by database permissions and by the interface. If anyone can tick, the log stops telling what happened.</p></section>
@@ -120,7 +120,7 @@
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
       el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);

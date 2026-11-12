@@ -27,7 +27,7 @@ const UI = {
     secTrabajo: ['01 · Trabajo', 'Producto en empresas que operan a escala', 'Cuatro casos contados por sus decisiones: qué problema había, qué elegí, qué resigné y qué pasó.'],
     secProyectos: ['02 · Proyectos', 'Lo que construyo con mis manos', (n) => `${n} productos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.`],
     numeros: { 5: 'Cinco', 6: 'Seis', 7: 'Siete' },
-    comienzos: 'Donde empecé',
+    comienzos: 'Donde empecé', deslizar: 'Deslizá para ver el diagrama completo',
     marquee: ['Discovery', '0 → 1', 'Marketplaces', 'IA aplicada', 'Growth', 'E-commerce', 'Delivery', 'EdTech'],
     titulos: { trabajo: 'Trabajo', proyectos: 'Proyectos', proceso: 'Proceso', quien: 'Quién soy', contacto: 'Contacto' },
     quien: ['De la línea de montaje al producto.', 'Empecé en 2015 en una fábrica, coordinando logística y procesos. Aprendí tecnología en paralelo, cofundé mi primera app en 2018 y en 2021 llegué a producto. Desde entonces hice producto en Coderhouse, Rappi, Henry, Mercado Libre y Bigbox, y en 2026 cierro el círculo con un MBA.', 'Conocé mi historia'],
@@ -53,7 +53,7 @@ const UI = {
     secTrabajo: ['01 · Work', 'Product at companies operating at scale', 'Four cases told through their decisions: what the problem was, what I chose, what I gave up and what happened.'],
     secProyectos: ['02 · Projects', 'What I build with my own hands', (n) => `${n} end-to-end products. Each one solves a real problem for someone I know, and each one has a decision that defines it.`],
     numeros: { 5: 'Five', 6: 'Six', 7: 'Seven' },
-    comienzos: 'Where I started',
+    comienzos: 'Where I started', deslizar: 'Swipe to see the full diagram',
     marquee: ['Discovery', '0 → 1', 'Marketplaces', 'Applied AI', 'Growth', 'E-commerce', 'Delivery', 'EdTech'],
     titulos: { trabajo: 'Work', proyectos: 'Projects', proceso: 'Process', quien: 'Who I am', contacto: 'Contact' },
     quien: ['From the assembly line to product.', 'I started in 2015 at a factory, coordinating logistics and processes. I learned technology on the side, co-founded my first app in 2018 and moved into product in 2021. Since then I have done product at Coderhouse, Rappi, Henry, Mercado Libre and Bigbox, and in 2026 I close the loop with an MBA.', 'Read my story'],
@@ -168,7 +168,7 @@ ${body}
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
       el.textContent = final.replace(/\\d+(?:[.,]\\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
@@ -304,7 +304,7 @@ ${body}
       return `<section class="dec rev"><h3>${esc(a[0])}</h3><p>${esc(a[1])}</p>${
         a[2] ? `<p class="dec-tr"><span>${t.tradeoff}</span>${esc(a[2])}</p>` : ''
       }</section>`;
-    if (k === 'fig') return `<figure class="fig rev">${FIG[a[0]]}<figcaption>${esc(a[1])}</figcaption></figure>`;
+    if (k === 'fig') return `<figure class="fig rev"><div class="fig-scroll">${FIG[a[0]]}</div><figcaption>${esc(a[1])}<span class="fig-hint">${t.deslizar}</span></figcaption></figure>`;
     throw new Error('bloque desconocido: ' + k);
   }
 

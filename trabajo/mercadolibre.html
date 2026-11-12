@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../estilos.css?v=148e61ba">
+<link rel="stylesheet" href="../estilos.css?v=3d60d501">
 </head>
 <body>
 <div class="fx-luz" aria-hidden="true"></div>
@@ -84,7 +84,7 @@
 <p>Lancé un agente de soporte con IA dentro del Help Center del seller. Resolvía de forma autónoma entre el 75% y el 80% de las consultas mensuales, con reducción directa del costo operativo de atención.</p>
 <h2>Sistema de Reputación</h2>
 <section class="dec rev"><h3>Reputación adaptada a food delivery</h3><p>Diseñé el Sistema de Reputación de Restaurantes partiendo del modelo del Marketplace, con métricas, umbrales y beneficios propios de food delivery. Redujo el Issue Rate en 1 punto porcentual y habilitó los primeros 3 beneficios.</p></section>
-<figure class="fig rev"><svg viewBox="0 0 640 260" role="img" aria-label="Métricas de operación se comparan contra umbrales y definen beneficios o penalizaciones">
+<figure class="fig rev"><div class="fig-scroll"><svg viewBox="0 0 640 260" role="img" aria-label="Métricas de operación se comparan contra umbrales y definen beneficios o penalizaciones">
     <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-arrowhead"/></marker></defs>
     
   <g transform="translate(20,98)">
@@ -114,7 +114,7 @@
     <path d="M406 120 L444 70" class="s-arrow" marker-end="url(#ah)"/>
     <path d="M406 140 L444 190" class="s-arrow" marker-end="url(#ah)"/>
     <text x="320" y="230" text-anchor="middle" class="s-m">Issue Rate −1 pp</text>
-  </svg><figcaption>Cómo funciona un sistema de reputación: la métrica se compara contra umbrales y define beneficios o penalizaciones.</figcaption></figure>
+  </svg></div><figcaption>Cómo funciona un sistema de reputación: la métrica se compara contra umbrales y define beneficios o penalizaciones.<span class="fig-hint">Deslizá para ver el diagrama completo</span></figcaption></figure>
 <section class="dec rev"><h3>Penalizar con respaldo legal</h3><p>Definí desde producto el alcance de las penalizaciones por baja reputación y lo validé con Legales en sucesivas revisiones. El sistema salió a producción sin exposición para la compañía.</p></section>
 <h2>Hablar con el seller</h2>
 <p>No había canales oficiales de contacto entre los sellers y Mercado Libre. Establecí los primeros tres touchpoints, con CX, Tecnología y Negocio.</p>
@@ -160,7 +160,7 @@
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
       el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);

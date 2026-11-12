@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../estilos.css?v=148e61ba">
+<link rel="stylesheet" href="../estilos.css?v=3d60d501">
 </head>
 <body>
 <div class="fx-luz" aria-hidden="true"></div>
@@ -62,7 +62,7 @@
 <p>Al completar las diez, la tarjeta se convierte en el cierre del día: un corazón latiendo con el trazo de un monitor y la frase que él dice cada mañana.</p>
 <h2>Decisiones de diseño</h2>
 <section class="dec rev"><h3>El día arranca a las 4 AM, no a medianoche</h3><p>Si toma la pastilla para dormir a las 00:30, cuenta para el día anterior.</p></section>
-<figure class="fig rev"><svg viewBox="0 0 640 150" role="img" aria-label="Línea de tiempo: el día de la app va de 4 AM a 4 AM; una toma a las 00:30 cuenta para el día anterior">
+<figure class="fig rev"><div class="fig-scroll"><svg viewBox="0 0 640 150" role="img" aria-label="Línea de tiempo: el día de la app va de 4 AM a 4 AM; una toma a las 00:30 cuenta para el día anterior">
     <line x1="40" y1="70" x2="600" y2="70" class="s-axis"/>
     <rect x="40" y="58" width="560" height="24" rx="12" class="s-acc-bg"/>
     <text x="40" y="112" text-anchor="middle" class="s-m">4:00</text>
@@ -74,7 +74,7 @@
     <circle cx="518" cy="70" r="7" class="s-dot"/>
     <text x="518" y="30" text-anchor="middle" class="s-t">00:30 · cuenta para hoy</text>
     <text x="320" y="140" text-anchor="middle" class="s-m">Un día de la app</text>
-  </svg><figcaption>El día de la app va de 4 AM a 4 AM.</figcaption></figure>
+  </svg></div><figcaption>El día de la app va de 4 AM a 4 AM.<span class="fig-hint">Deslizá para ver el diagrama completo</span></figcaption></figure>
 <section class="dec rev"><h3>La app registra, no interpreta</h3><p>El registro de presión no tiene colores por rango ni tendencias. Interpretar un número es trabajo del médico. El historial se comparte por WhatsApp en un toque.</p></section>
 <section class="dec rev"><h3>Nada cambia debajo de sus dedos</h3><p>Desmarcar pide dos toques. Las actualizaciones avisan, no se instalan solas. Todo está en rem: un selector agranda texto, botones y espacios juntos, y la pantalla nunca se sale de cuadro. Sin tipografías web: Roboto ya está en el teléfono y la app funciona sin conexión.</p></section>
 <section class="dec rev"><h3>Marcar una toma es solo del paciente</h3><p>Por permisos en la base y por interfaz. Si cualquiera puede tildar, el registro deja de decir lo que pasó.</p></section>
@@ -120,7 +120,7 @@
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
       el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);

@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../estilos.css?v=148e61ba">
+<link rel="stylesheet" href="../estilos.css?v=3d60d501">
 </head>
 <body>
 <div class="fx-luz" aria-hidden="true"></div>
@@ -61,7 +61,7 @@
 <p>La solidaridad entre desconocidos ya funciona a gran escala, pero sin infraestructura que la sostenga. Las colectas virales prueban dos cosas a la vez: que la gente pone plata cuando la causa se percibe justa, y que la confianza es el punto frágil. En 2023 la Inspección General de Justicia declaró irregular el fideicomiso de una de las colectas más conocidas del país. La plata llegó; el modelo de administración quedó bajo sospecha.</p>
 <p>Las plataformas que existen en Argentina trabajan con ONGs, no con personas. GoFundMe permite colectas individuales, pero no verifica ni hace de la trazabilidad un producto. No encontré ninguna que junte las tres cosas: colecta persona a persona, una capa de confianza y una razón para volver.</p>
 <section class="dec rev"><h3>Conectar sin custodiar</h3><p>La plata va directo del donante al beneficiado y nunca pasa por la app. La regulación del BCRA se dispara por tener saldos de terceros, no por conectar personas. Sin custodia: menos fricción, cero fondos ajenos y un encuadre regulatorio limpio. Lo respaldé con análisis de riesgo de lavado y una pregunta afinada para el abogado.</p><p class="dec-tr"><span>A cambio</span>La plataforma nunca puede probar técnicamente que una transferencia llegó, porque no la ve pasar. Aceptarlo fue la premisa de diseño.</p></section>
-<figure class="fig rev"><svg viewBox="0 0 640 300" role="img" aria-label="Tres capas de confianza: transparencia, confirmación humana e identidad verificada">
+<figure class="fig rev"><div class="fig-scroll"><svg viewBox="0 0 640 300" role="img" aria-label="Tres capas de confianza: transparencia, confirmación humana e identidad verificada">
     <g transform="translate(40,20)">
       <rect width="560" height="76" rx="14" class="s-box"/>
       <text x="24" y="34" class="s-t">1 · Transparencia</text>
@@ -77,7 +77,7 @@
       <text x="24" y="34" class="s-t">3 · Identidad verificada</text>
       <text x="24" y="56" class="s-m">Quien pide y quien da son personas reales. Mentir expone.</text>
     </g>
-  </svg><figcaption>Si la app no ve la plata, la confianza se construye en tres capas.</figcaption></figure>
+  </svg></div><figcaption>Si la app no ve la plata, la confianza se construye en tres capas.<span class="fig-hint">Deslizá para ver el diagrama completo</span></figcaption></figure>
 <section class="dec rev"><h3>Solo la plata confirmada cuenta</h3><p>Un aporte con comprobante subido pero sin confirmar queda pendiente: no suma a la meta, no da puntos, no dispara el reconocimiento. Recién cuando el beneficiado confirma que le llegó, cuenta. El beneficiado es el único que ve la plata entrar y no gana nada confirmando lo que no recibió. Si no responde en 48 horas, el aporte se confirma solo, para que nadie quede trabado.</p></section>
 <section class="dec rev"><h3>Gamificación por reconocimiento, sin premios</h3><p>Niveles, medallas y ranking mensual de quienes más ayudan, sin costo monetario. Si el premio es material, atraés donantes que buscan el premio y no la causa. Y así se puede medir lo que importa: si la gente vuelve por la causa.</p></section>
 <h2>Qué valida el MVP</h2>
@@ -125,7 +125,7 @@
     if (!nums) return;
     const t0 = performance.now(), dur = 1100;
     const paso = (t) => {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);
       el.textContent = final.replace(/\d+(?:[.,]\d+)?/g, (n) => {
         const sep = n.includes(',') ? ',' : '.', dec = (n.split(/[.,]/)[1] || '').length;
         return (parseFloat(n.replace(',', '.')) * e).toFixed(dec).replace('.', sep);
