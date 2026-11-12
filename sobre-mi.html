@@ -16,7 +16,7 @@
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
@@ -28,7 +28,7 @@
       <a class="nav-l" href="index.html#trabajo">Trabajo</a>
       <a class="nav-l" href="index.html#proyectos">Proyectos</a>
       <a class="nav-l" href="sobre-mi.html" aria-current="page">Sobre mí</a>
-      <a class="nav-cta" href="mailto:gaston.product.expert@gmail.com">Contacto</a>
+      <a class="nav-cta" href="index.html#contacto">Contacto</a>
     </nav>
     <div class="tools">
       <a class="tool tool-lang" href="en/sobre-mi.html" hreflang="en" lang="en" aria-label="Read in English" title="Read in English">EN</a>
@@ -48,12 +48,27 @@
   <dl class="meta meta-1"><div><dt>MBA Candidate</dt><dd>Universidad de Palermo, 2023 – 2026. Cursada finalizada con promedio 9,13; defensa de tesis en noviembre de 2026</dd></div><div><dt>Certificaciones</dt><dd>Reforge Product Management · Product School Product Strategy · Pendo AI for Product Management · Coderhouse Product Manager (top 10%), Data Science, SQL y Vibe Coding</dd></div><div><dt>Docencia</dt><dd>Tutor de Product Manager y de Scrum en Coderhouse · Clases particulares de Excel y Python · Product Mentor en ADPList desde 2023</dd></div><div><dt>Idiomas</dt><dd>Español nativo · Inglés B2, en camino a C1</dd></div></dl>
   <p class="cta-row"><a class="btn" href="mailto:gaston.product.expert@gmail.com">Escribime</a><a class="btn btn-ghost" href="https://linkedin.com/in/gastonmartinperez" target="_blank" rel="noopener">LinkedIn ↗</a></p>
 </article>
+<section id="contacto" class="w-wide sec">
+  <div class="shead"><h2 class="shead-t">Contacto</h2><span class="shead-l" aria-hidden="true"><i></i></span></div>
+  <div class="ct">
+    <div class="ct-l rev">
+      <p class="ct-big">¿Construimos algo?</p>
+      <p class="ct-txt">Si estás armando un equipo de producto o tenés un problema que vale la pena resolver, escribime. Respondo cada mensaje.</p>
+      <p class="ct-dat">Buenos Aires, Argentina<br><a href="mailto:gaston.product.expert@gmail.com">gaston.product.expert@gmail.com</a><br><a href="https://linkedin.com/in/gastonmartinperez" target="_blank" rel="noopener">LinkedIn</a></p>
+    </div>
+    <form class="ct-f rev" data-mail="gaston.product.expert@gmail.com" data-asunto="Contacto desde el portfolio">
+      <div class="ct-2"><input name="nombre" required placeholder="Tu nombre" aria-label="Tu nombre"><input name="mail" type="email" required placeholder="tu@mail.com" aria-label="tu@mail.com"></div>
+      <textarea name="mensaje" required rows="6" placeholder="Contame en qué estás trabajando…" aria-label="Contame en qué estás trabajando…"></textarea>
+      <button type="submit">Enviar</button>
+      <p class="ct-nota">Se abre tu programa de correo con el mensaje listo.</p>
+    </form>
+  </div>
+</section>
 </div>
-<footer class="foot">
+<footer class="foot foot-slim">
   <div class="lava lava-soft" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="w">
-    <p class="foot-big">¿Construimos algo?</p>
-    <p><a class="foot-mail" href="mailto:gaston.product.expert@gmail.com">gaston.product.expert@gmail.com</a></p>
+    
     <p class="foot-links"><a href="https://linkedin.com/in/gastonmartinperez" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/gaston-perez-art" target="_blank" rel="noopener">GitHub</a><a href="https://adplist.org/mentors/gaston-perez" target="_blank" rel="noopener">ADPList</a></p>
     <p class="muted small">Este sitio también lo construí yo: HTML y CSS generados desde un archivo de contenido. <a href="https://github.com/gaston-perez-art/gaston-perez-art.github.io" target="_blank" rel="noopener">Código</a></p>
   </div>
@@ -100,6 +115,31 @@
     io.unobserve(e.target);
   }), { rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
+  // Formulario de contacto: arma el mail y abre el programa de correo.
+  document.querySelectorAll('.ct-f').forEach((f) => f.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const d = new FormData(f);
+    const cuerpo = d.get('mensaje') + '
+
+' + d.get('nombre') + ' · ' + d.get('mail');
+    location.href = 'mailto:' + f.dataset.mail + '?subject=' + encodeURIComponent(f.dataset.asunto + ': ' + d.get('nombre')) + '&body=' + encodeURIComponent(cuerpo);
+  }));
+  // La línea de cada título se llena a medida que se recorre su sección.
+  const lineas = [...document.querySelectorAll('.shead')].map((h) => [h, h.closest('section')]);
+  if (lineas.length) {
+    let pend = false;
+    const llenar = () => {
+      pend = false;
+      const vh = innerHeight;
+      lineas.forEach(([h, sec]) => {
+        const r = sec.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height || 1)));
+        h.style.setProperty('--p', p.toFixed(3));
+      });
+    };
+    addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(llenar); } }, { passive: true });
+    llenar();
+  }
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
   if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {
