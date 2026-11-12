@@ -28,7 +28,7 @@ const UI = {
     secProyectos: ['02 · Proyectos', 'Lo que construyo con mis manos', (n) => `${n} productos de punta a punta. Cada uno resuelve un problema real de alguien que conozco, y cada uno tiene una decisión que lo define.`],
     numeros: { 5: 'Cinco', 6: 'Seis', 7: 'Siete' },
     comienzos: 'Donde empecé',
-    marquee: [['Product Strategy', 'Discovery', '0 → 1', 'Marketplaces', 'Growth'], ['Productos con IA', 'E-commerce', 'Delivery', 'EdTech', 'Product Builder']],
+    marquee: ['Discovery', '0 → 1', 'Marketplaces', 'IA aplicada', 'Growth', 'E-commerce', 'Delivery', 'EdTech'],
     titulos: { trabajo: 'Trabajo', proyectos: 'Proyectos', proceso: 'Proceso', quien: 'Quién soy', contacto: 'Contacto' },
     quien: ['De la línea de montaje al producto.', 'Empecé en 2015 en una fábrica, coordinando logística y procesos. Aprendí tecnología en paralelo, cofundé mi primera app en 2018 y en 2021 llegué a producto. Desde entonces hice producto en Coderhouse, Rappi, Henry, Mercado Libre y Bigbox.', 'Conocé mi historia'],
     hitos: [['2015', 'Penalty', 'Logística y procesos en una fábrica'], ['2018', 'Mobius', 'Cofundo mi primera app, con aprendizaje automático'], ['2021', 'Starter.pe y Coderhouse', 'Primer rol formal en producto'], ['2022', 'Rappi y Henry', 'Product Lead y dos productos de cero a uno'], ['2025', 'Mercado Libre', 'Portal de restaurantes de food delivery'], ['2026', 'Bigbox y MBA', 'E-commerce B2C en cinco países']],
@@ -54,7 +54,7 @@ const UI = {
     secProyectos: ['02 · Projects', 'What I build with my own hands', (n) => `${n} end-to-end products. Each one solves a real problem for someone I know, and each one has a decision that defines it.`],
     numeros: { 5: 'Five', 6: 'Six', 7: 'Seven' },
     comienzos: 'Where I started',
-    marquee: [['Product Strategy', 'Discovery', '0 → 1', 'Marketplaces', 'Growth'], ['AI Products', 'E-commerce', 'Delivery', 'EdTech', 'Product Builder']],
+    marquee: ['Discovery', '0 → 1', 'Marketplaces', 'Applied AI', 'Growth', 'E-commerce', 'Delivery', 'EdTech'],
     titulos: { trabajo: 'Work', proyectos: 'Projects', proceso: 'Process', quien: 'Who I am', contacto: 'Contact' },
     quien: ['From the assembly line to product.', 'I started in 2015 at a factory, coordinating logistics and processes. I learned technology on the side, co-founded my first app in 2018 and moved into product in 2021. Since then I have done product at Coderhouse, Rappi, Henry, Mercado Libre and Bigbox.', 'Read my story'],
     hitos: [['2015', 'Penalty', 'Logistics and processes at a factory'], ['2018', 'Mobius', 'I co-found my first app, built with machine learning'], ['2021', 'Starter.pe and Coderhouse', 'First formal product role'], ['2022', 'Rappi and Henry', 'Product Lead and two products from zero to one'], ['2025', 'Mercado Libre', 'Food delivery restaurant portal'], ['2026', 'Bigbox and MBA', 'B2C e-commerce in five countries']],
@@ -112,7 +112,7 @@ ${HEAD_TEMA}
 <link rel="icon" href="${a}img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${a}estilos.css?v=${VERSION_CSS}">
 </head>
 <body>
@@ -183,7 +183,7 @@ ${body}
     if (e.target.classList.contains('count')) contar(e.target);
     io.unobserve(e.target);
   }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.rev, .stats, .case-body').forEach((el) => io.observe(el));
+  document.querySelectorAll('.rev, .stats, .case-body, .shead').forEach((el) => io.observe(el));
   // Formulario de contacto: arma el mail y abre el programa de correo.
   document.querySelectorAll('.ct-f').forEach((f) => f.addEventListener('submit', (ev) => {
     ev.preventDefault();
@@ -191,22 +191,6 @@ ${body}
     const cuerpo = d.get('mensaje') + '\\n\\n' + d.get('nombre') + ' · ' + d.get('mail');
     location.href = 'mailto:' + f.dataset.mail + '?subject=' + encodeURIComponent(f.dataset.asunto + ': ' + d.get('nombre')) + '&body=' + encodeURIComponent(cuerpo);
   }));
-  // La línea de cada título se llena a medida que se recorre su sección.
-  const lineas = [...document.querySelectorAll('.shead')].map((h) => [h, h.closest('section')]);
-  if (lineas.length) {
-    let pend = false;
-    const llenar = () => {
-      pend = false;
-      const vh = innerHeight;
-      lineas.forEach(([h, sec]) => {
-        const r = sec.getBoundingClientRect();
-        const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height || 1)));
-        h.style.setProperty('--p', p.toFixed(3));
-      });
-    };
-    addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(llenar); } }, { passive: true });
-    llenar();
-  }
   // Parallax suave de las interfaces dentro de las portadas.
   const capas = [...document.querySelectorAll('[data-parallax]')];
   if (!quieto && capas.length && matchMedia('(pointer: fine) and (min-width: 900px)').matches) {
@@ -346,20 +330,20 @@ ${body}
   }
 
   // Título de sección: palabra condensada y una línea que se llena al bajar.
-  const titulo = (txt) => `<div class="shead"><h2 class="shead-t">${esc(txt)}</h2><span class="shead-l" aria-hidden="true"><i></i></span></div>`;
+  const titulo = (txt, n) => `<div class="shead"><span class="shead-n">0${n}</span><h2 class="shead-t">${esc(txt)}</h2><span class="shead-l" aria-hidden="true"><i></i></span></div>`;
 
-  const chispa = '<svg class="mq-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.6 6.6 5.4 11.4 12 12-6.6.6-11.4 5.4-12 12-.6-6.6-5.4-11.4-12-12C6.6 11.4 11.4 6.6 12 0z"/></svg>';
-  const marquee = () => `<section class="mq" aria-hidden="true">${t.marquee.map((fila, k) => {
-    const items = fila.map((x) => `<span>${esc(x)}</span>${chispa}`).join('');
-    return `<div class="mq-row${k ? ' mq-rev' : ''}"><div class="mq-track">${items}${items}</div></div>`;
-  }).join('')}</section>`;
+  // Una sola fila de palabras, alternando rellenas y con contorno, separadas por un punto.
+  const marquee = () => {
+    const items = t.marquee.map((x, k) => `<span class="${k % 2 ? 'mq-o' : ''}">${esc(x)}</span><i class="mq-dot"></i>`).join('');
+    return `<section id="banda" class="mq" aria-hidden="true"><div class="mq-track">${items}${items}</div></section>`;
+  };
 
   const LOGOS = [['Mercado Libre', 'img/logos/mercadolibre.svg', 30], ['Rappi', 'img/logos/rappi.svg', 24], ['Henry', 'img/logos/henry.svg', 14], ['Bigbox', 'img/logos/bigbox-negro.png', 20]];
   const logos = (a) => `<div class="logos-row" aria-label="${t.empresas}">${LOGOS.map(([n, src, h]) => `<img src="${a}${src}" alt="${n}" style="height:${h}px">`).join('')}<span class="logo-txt">coderhouse</span></div>`;
 
   const contacto = () => `
 <section id="contacto" class="w-wide sec">
-  ${titulo(t.titulos.contacto)}
+  ${titulo(t.titulos.contacto, 5)}
   <div class="ct">
     <div class="ct-l rev">
       <p class="ct-big">${t.contactoTxt[0]}</p>
@@ -386,7 +370,6 @@ ${body}
   ${logos(assets(base))}
 </section></div>
 
-${marquee()}
 
 <section class="w-wide" aria-label="${t.impacto}">
   <div class="stats">${HOME.metricas
@@ -395,27 +378,29 @@ ${marquee()}
 </section>
 
 <section id="trabajo" class="w-wide sec">
-  ${titulo(t.titulos.trabajo)}
+  ${titulo(t.titulos.trabajo, 1)}
   <div class="sec-head"><h2 class="h2">${t.secTrabajo[1]}</h2><p class="muted">${t.secTrabajo[2]}</p></div>
   <div class="cases">${principales.map(cardEmpresa).join('\n')}</div>
   <p class="kicker sub-k">${t.comienzos}</p>
   <div class="starts">${comienzos.map(cardComienzo).join('\n')}</div>
 </section>
 
+${marquee()}
+
 <section id="proyectos" class="w-wide sec">
-  ${titulo(t.titulos.proyectos)}
+  ${titulo(t.titulos.proyectos, 2)}
   <div class="sec-head"><h2 class="h2">${t.secProyectos[1]}</h2><p class="muted">${t.secProyectos[2](t.numeros[propios.length] || propios.length)}</p></div>
   <div class="projs">${propios.map(cardPropio).join('\n')}</div>
 </section>
 
 <section class="w-wide sec">
-  ${titulo(t.titulos.proceso)}
+  ${titulo(t.titulos.proceso, 3)}
   <div class="sec-head"><h2 class="h2">${t.secProceso[1]}</h2></div>
   <ol class="princ">${HOME.principios.map(([x, d], i) => `<li class="rev"><span class="pn">0${i + 1}</span><strong>${esc(x)}</strong><span>${esc(d)}</span></li>`).join('')}</ol>
 </section>
 
 <section class="w-wide sec">
-  ${titulo(t.titulos.quien)}
+  ${titulo(t.titulos.quien, 4)}
   <div class="who">
     <div class="who-l rev"><h2 class="h2">${t.quien[0]}</h2><p class="muted">${t.quien[1]}</p><p class="cta-row"><a class="btn btn-ghost" href="sobre-mi.html">${t.quien[2]} →</a></p></div>
     <ol class="hitos">${t.hitos.map(([y, n, d]) => `<li class="rev"><span class="h-y">${y}</span><span class="h-n">${esc(n)}</span><span class="h-d">${esc(d)}</span></li>`).join('')}</ol>
